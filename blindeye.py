@@ -25,8 +25,7 @@ assert "WhatsApp" in driver.title
 # finds the target and navigate to it
 x_arg = '//span[contains(@title, '+ '"' +target + '"'+ ')]'
 print(x_arg)
-person_title = wait.until(EC.presence_of_element_located((
-    By.XPATH, x_arg)))
+person_title = wait.until(EC.presence_of_element_located((By.XPATH, x_arg)))
 print(person_title)
 person_title.click()
 
@@ -34,7 +33,7 @@ person_title.click()
 while True:
 	online = driver.find_element_by_class_name('O90ur').text
 	if online == 'online':
-		print(target + ' is online!')
+		print('online')
 	else:
 		print("offline")
 	time.sleep(5)
