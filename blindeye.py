@@ -34,7 +34,7 @@ person_title.click()
 while True:
 	online = driver.find_element_by_class_name('O90ur').text
 	if online == 'online':
-		print(TARGET + ' is online!')
+		print(target + ' is online!')
 	else:
 		print("offline")
 	time.sleep(5)
