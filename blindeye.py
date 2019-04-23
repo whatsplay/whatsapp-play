@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 import time
+import datetime
 
 
 print("* * *    *      * * *  *    *  * * *     * * *  *    *  * * *")
@@ -36,5 +37,6 @@ while True:
         status = driver.find_element_by_class_name('O90ur').text
     except NoSuchElementException:
         status = 'offline'
+    print(datetime.datetime.now())
     print(status)
     time.sleep(5)
