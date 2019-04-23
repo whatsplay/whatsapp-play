@@ -3,6 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
+from selenium.common.exceptions import NoSuchElementException
 import time
 
 
@@ -31,9 +32,9 @@ person_title.click()
 
 # check status
 while True:
-	online = driver.find_element_by_class_name('O90ur').text
-	if online == 'online':
-		print('online')
-	else:
-		print("offline")
-	time.sleep(5)
+    try:
+        status = driver.find_element_by_class_name('O90ur').text
+    except NoSuchElementException:
+        status = 'offline'
+    print(status)
+    time.sleep(5)
