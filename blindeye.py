@@ -26,17 +26,34 @@ assert "WhatsApp" in driver.title
 
 # finds the target and navigate to it
 x_arg = '//span[contains(@title, '+ '"' +target + '"'+ ')]'
-print(x_arg)
 person_title = wait.until(EC.presence_of_element_located((By.XPATH, x_arg)))
-print(person_title)
+print(target)
 person_title.click()
 
 # check status
 while True:
-    try:
-        status = driver.find_element_by_class_name('O90ur').text
-    except NoSuchElementException:
-        status = 'offline'
-    print(datetime.datetime.now())
-    print(status)
-    time.sleep(5)
+	i=0
+	try:
+		status = driver.find_element_by_class_name('O90ur').text
+		i=1
+	except NoSuchElementException:
+		status = 'offline'
+		i=0
+	print(datetime.datetime.now())
+	print(status)
+	while True:
+		if i == 1:
+			try:
+				re_status = driver.find_element_by_class_name('O90ur').text
+				continue
+			except NoSuchElementException:
+				re_status = 'offline'
+				break
+		else:
+			try:
+				re_status = driver.find_element_by_class_name('O90ur').text
+				break
+			except NoSuchElementException:
+				re_status = 'offline'
+				continue
+	time.sleep(1)
