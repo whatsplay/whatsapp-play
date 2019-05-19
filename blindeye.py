@@ -30,6 +30,8 @@ person_title = wait.until(EC.presence_of_element_located((By.XPATH, x_arg)))
 print(target)
 person_title.click()
 
+f=open('status.txt','w')
+f.close()
 # check status
 while True:
 	i=0
@@ -41,6 +43,10 @@ while True:
 		i=0
 	print(datetime.datetime.now())
 	print(status)
+	f=open('status.txt','a')
+	f.write(str(datetime.datetime.now()))
+	f.write(status)
+	f.close()
 	while True:
 		if i == 1:
 			try:
