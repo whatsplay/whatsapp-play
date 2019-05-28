@@ -7,6 +7,11 @@ from selenium.common.exceptions import NoSuchElementException
 import time
 import datetime
 
+import os
+import sys
+
+script_path = sys.path[0]
+
 
 print("* * *    *      * * *  *    *  * * *     * * *  *    *  * * *")
 print("*    *   *        *    * *  *  *    *    *       *  *   *    ")
@@ -19,7 +24,7 @@ target = str(input("Enter the name of target: "))
 
 # chrome driver
 chrome_options = Options()
-driver = webdriver.Chrome('/home/rohit/blind-eye/chromedriver')
+driver = webdriver.Chrome(os.path.join(script_path, 'chromedriver'))
 driver.get("https://web.whatsapp.com/")
 wait = WebDriverWait(driver, 600)
 assert "WhatsApp" in driver.title
