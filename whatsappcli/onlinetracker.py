@@ -6,20 +6,13 @@ from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 import time
 import datetime
-
 import os
 import sys
 
+
 script_path = sys.path[0]
 
-
-print("* * *    *      * * *  *    *  * * *     * * *  *    *  * * *")
-print("*    *   *        *    * *  *  *    *    *       *  *   *    ")
-print("* * *    *        *    *  * *  *     *   * *      **    * *  ")
-print("*    *   *        *    *   **  *    *    *        *     *    ")
-print("* * *    * * *  * * *  *    *  * * *     * * *   *      * * *")
-
-# enter the number of the person by the user
+# enter the name of the person by the user
 target = str(input("Enter the name of target: "))
 
 # chrome driver
