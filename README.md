@@ -31,9 +31,9 @@ It is command line software through which you can play with your WhatsApp. It is
 ---
 
 ## Things to do
-[ ] argument parser to connect all scripts to one script.<br>
-[ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot. <br>
-[ ] improve wchat script for chatting.<br>
+- [ ] argument parser to connect all scripts to one script.
+- [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot. 
+- [ ] improve wchat script for chatting.<br>
 (If you have any new idea for this software, please open issue for that :) )
 
 ## Disclaimer
