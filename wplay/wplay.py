@@ -1,5 +1,5 @@
 import argparse
-import onlinetracker
+from wplay import onlinetracker
 
 # parse positional and optional arguments
 def parse_args():
@@ -12,7 +12,7 @@ def parse_args():
 	args = parser.parse_args()
 
 
-def Main():
+def main():
 	parser=parse_args()
 
     # do not pass filename as positional argument
@@ -33,4 +33,4 @@ def Main():
 		messageblast.blast(raw_args)
 
 if __name__=='__main__':
-	Main()
+	main()

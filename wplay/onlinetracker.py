@@ -9,7 +9,7 @@ import datetime
 import os
 import sys
 
-def tracker(name)
+def tracker(name):
 	script_path = sys.path[0]
 
 	# enter the name of the person by the user
