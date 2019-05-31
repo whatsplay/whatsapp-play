@@ -1,9 +1,11 @@
 import argparse
 from wplay import onlinetracker
+from wplay import messageblast
+from wplay import wchat
 
 # parse positional and optional arguments
 def parse_args():
-	parser = argparse.ArgumentParser(description='WhatApp command line interface')
+	parser = argparse.ArgumentParser(description='WhatApp-play')
 	group = parser.add_mutually_exclusive_group(required=True)
 	group.add_argument("-wc", "--wchat", help="chatting from command line")
 	group.add_argument("-wb", "--wblast", help="message blast to a person")
