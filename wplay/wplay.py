@@ -7,42 +7,34 @@ import sys
 # parse positional and optional arguments
 def get_arguments():
 	parser = argparse.ArgumentParser(description='WhatApp-play')
+	parser.add_argument("name", metavar="NAME", type=str, help="contact name of the target")
+
 	group = parser.add_mutually_exclusive_group(required=True)
-	group.add_argument("-wc", "--wchat", help="chatting from command line")
-	group.add_argument("-wb", "--wblast", help="message blast to a person")
-	group.add_argument("-wt", "--wtrack", help="track online status of person")
+	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
+	group.add_argument("-wb", "--wblast", action="store_true", help="message blast to a person")
+	group.add_argument("-wt", "--wtrack", action="store_true", help="track online status of person")
 
 	args = parser.parse_args()
 	return args
 
-def match_args(args=None, raw_args=None):
+def match_args(args):
 	if args.wtrack:
-		onlinetracker.tracker(raw_args)
+		onlinetracker.tracker(args.name)
 
 	elif args.wchat:
-		wchat.chat(raw_args)
+		wchat.chat(args.name)
 
 	elif args.wblast:
-		messageblast.blast(raw_args)
+		messageblast.blast(args.name)
 
 def main():
 	args = get_arguments()
-
-    # do not pass filename as positional argument
-	raw_args = sys.argv[1]
-	#args = parser.parse_args(raw_args)
-
-	#if not args.query:
-	#	parser.print_help()
-	#	exit()
-
 	try:
-		match_args(args, raw_args)
+		match_args(args)
 		sys.exit(0)
 	except KeyboardInterrupt as e:
 		sys.exit(0)
 
-	
 
 if __name__=='__main__':
 	main()
