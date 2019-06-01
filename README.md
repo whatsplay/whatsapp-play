@@ -31,8 +31,13 @@ optional arguments:
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 
 ## Things to do
+- [x] onlinetracker script - to track the online/offline status.
+- [ ] wchat script - to chat with contact from command line.
+- [ ] messageblast script - to send message repeatedly to a person.
 - [x] argument parser to connect all scripts to one script.
 - [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot. 
+- [x] improve onlinetracker script.
+- [ ] improve messageblast script.
 - [ ] improve wchat script for chatting.<br>
 (If you have any new idea for this software, please open issue for that :) )
 
