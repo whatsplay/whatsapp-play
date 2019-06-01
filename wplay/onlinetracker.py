@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import datetime
@@ -35,9 +35,9 @@ def tracker(name):
 	while True:
 		i=0
 		try:
-			status = driver.find_element_by_class_name('O90ur').text
+			status = driver.find_element_by_class_name('_315-i').text
 			i=1
-		except NoSuchElementException:
+		except (NoSuchElementException, StaleElementReferenceException):
 			status = 'offline'
 			i=0
 		print(datetime.datetime.now())
@@ -49,16 +49,16 @@ def tracker(name):
 		while True:
 			if i == 1:
 				try:
-					re_status = driver.find_element_by_class_name('O90ur').text
+					re_status = driver.find_element_by_class_name('_315-i').text
 					continue
-				except NoSuchElementException:
+				except (NoSuchElementException, StaleElementReferenceException):
 					re_status = 'offline'
 					break
 			else:
 				try:
-					re_status = driver.find_element_by_class_name('O90ur').text
+					re_status = driver.find_element_by_class_name('_315-i').text
 					break
-				except NoSuchElementException:
+				except (NoSuchElementException, StaleElementReferenceException):
 					re_status = 'offline'
 					continue
 		time.sleep(1)
