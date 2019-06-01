@@ -2,3 +2,4 @@ selenium >= 3.141.0
 python-telegram-bot >= 11.1.0
 datetime >= 4.3
 argparse >= 1.4.0
+webdriver-manager >= 1.7

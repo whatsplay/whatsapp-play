@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
+from webdriver_manager.chrome import ChromeDriverManager
 import time
 import datetime
 import os
@@ -17,7 +18,7 @@ def tracker(name):
 
 	# chrome driver
 	chrome_options = Options()
-	driver = webdriver.Chrome(os.path.join(script_path, 'chromedriver'))
+	driver = webdriver.Chrome(ChromeDriverManager().install())
 	driver.get("https://web.whatsapp.com/")
 	wait = WebDriverWait(driver, 600)
 	assert "WhatsApp" in driver.title

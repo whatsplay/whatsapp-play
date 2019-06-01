@@ -5,10 +5,11 @@ with open("README.md", "r") as f:
 
 setup(
 	name="wplay",
-	version="1.0.1",
+	version="1.0.2",
 	install_requires=["selenium >= 3.141.0",
                     "python-telegram-bot >= 11.1.0",
-                    "datetime >= 4.3"],
+                    "datetime >= 4.3",
+                    "webdriver-manager >= 1.7"],
 	packages=find_packages(),
 	description="command line software to play with your WhatsApp",
     long_description=long_description,
