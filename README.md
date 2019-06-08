@@ -38,11 +38,13 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot. 
 - [x] improve onlinetracker script.
 - [ ] improve messageblast script.
-- [ ] improve wchat script for chatting.<br>
+- [ ] improve wchat script for chatting.
+- [ ] telegram bot script for onlinetracker script to send the online status on telegram.
+- [ ] a sound notification in pc system when the person gets online.<br>
 (If you have any new idea for this software, please open issue for that :) )
 
 ## Disclaimer
-This software is for educational purpose only.
+This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
 
 ## License
 MIT license
