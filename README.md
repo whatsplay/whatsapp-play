@@ -14,19 +14,18 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ## Usage
 ```
-usage: wplay [-h] (-wc WCHAT | -wb WBLAST | -wt WTRACK)
+usage: wplay [-h] (-wc | -wb | -wt) NAME
 
 WhatApp-play
 
-optional arguments:
-  -h, --help            show this help message and exit
-  -wc WCHAT, --wchat WCHAT
-                        chatting from command line
-  -wb WBLAST, --wblast WBLAST
-                        message blast to a person
-  -wt WTRACK, --wtrack WTRACK
-                        track online status of person
+positional arguments:
+  NAME           contact name of the target
 
+optional arguments:
+  -h, --help     show this help message and exit
+  -wc, --wchat   chatting from command line
+  -wb, --wblast  message blast to a person
+  -wt, --wtrack  track online status of person
 ```
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 
