@@ -30,13 +30,13 @@ def blast(name):
 			message = str(input("Enter your message: "))
 
 			# finds the person and navigate to it
-			x_arg = '//span[contains(@title, '+ '"' +target + '"'+ ')]'
+			x_arg = '//span[contains(@title, '+ '"' +receiver + '"'+ ')]'
 			person_title = wait.until(EC.presence_of_element_located((By.XPATH, x_arg)))
-			print(target)
+			print(receiver)
 			person_title.click()
 
 			# navigate to text part
-			xpath = '//div[@class="_2S1VP copyable-text selectable-text"]'
+			xpath = '//div[@class="_3u328 copyable-text selectable-text"]'
 			message_area = wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
 
 			# sends message

@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 import os
 import sys
 
@@ -14,7 +15,7 @@ def blast(name):
 	# enter the number of the person by the user
 	target = str(name) #str(input("Enter the name of target: "))
 	message = str(input("Enter your message: "))
-	n = str(input("Enter the number of messages to blast: "))
+	n = int(input("Enter the number of messages to blast: "))
 
 	# chrome driver
 	chrome_options = Options()
@@ -30,7 +31,7 @@ def blast(name):
 	person_title.click()
 
 	# navigate to text part
-	xpath = '//div[@class="_2S1VP copyable-text selectable-text"]'
+	xpath = '//div[@class="_3u328 copyable-text selectable-text"]'
 	message_area = wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
 
 	# sends message multiple times
