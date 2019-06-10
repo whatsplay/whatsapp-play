@@ -5,10 +5,11 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.common.keys import Keys
 import os
 import sys
 
-def blast(name):
+def chat(name):
 	script_path = sys.path[0]
 
 	# chrome driver
