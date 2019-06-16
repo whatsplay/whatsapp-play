@@ -7,7 +7,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***messageblast*** is a message bomb script. It sends messages to your WhatsApp contact continously. The number of messages is decided by you. You can blast infinite number of messages to your WhatsApp contact.
 
-***savechat*** is a script to save the chat of the person. It sends the .txt file of the chat to our mail.
+***savechat*** is a script to save the chat of the person. It sends the .txt file of the chat to our mail. (script is in progress)
 
 ---
 
@@ -43,7 +43,8 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [x] improve wchat script for chatting.
 - [ ] a sound notification in pc system when the person gets online.
 - [ ] script to save the whole chat of a person.
-- [ ] docker image for wchat.<br>
+- [ ] docker image for wchat.
+- [ ] .travis.yml script for travis check<br>
 (If you have any new idea for this software, please open issue for that :) )
 
 ## Disclaimer
