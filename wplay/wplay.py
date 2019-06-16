@@ -2,6 +2,7 @@ import argparse
 from wplay import onlinetracker
 from wplay import messageblast
 from wplay import wchat
+from wplay import savechat
 import sys
 
 # parse positional and optional arguments
@@ -13,6 +14,7 @@ def get_arguments():
 	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
 	group.add_argument("-wb", "--wblast", action="store_true", help="message blast to a person")
 	group.add_argument("-wt", "--wtrack", action="store_true", help="track online status of person")
+	group.add_argument("-wsc", "--wsave", action="store_true", help="save the whole chat of a person")
 
 	args = parser.parse_args()
 	return args
@@ -26,6 +28,9 @@ def match_args(args):
 
 	elif args.wblast:
 		messageblast.blast(args.name)
+
+	elif args.wsave:
+		savechat.save(args.name)
 
 def main():
 	args = get_arguments()
