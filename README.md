@@ -1,5 +1,8 @@
 # whatsapp-play
-It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. 
+
+[![PyPi](https://img.shields.io/pypi/v/spotdl.svg)](https://pypi.org/project/wplay/)
+
+It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. This CLI software does not require any API key for the execution.
 
 ***wchat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line.
 
