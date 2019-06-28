@@ -34,16 +34,6 @@ def save(name):
 	f.close()
 	# to catch messages
 	while True:
-		#messages_class=driver.find_element_by_class_name('FTBzM')
-		#if driver.find_element_by_class_name('FTBzM'):
-		#	time=driver.find_element_by_class_name('copyable-text').text
-		#	messages=driver.find_element_by_class_name('selectable-text invisible-space copyable-text ').text
-		#	f=open('status.txt','a')
-		#	f.write(time+" : "+messages)
-		#	f.close()
-		#else:
-		#	break;
-
 		try:
 			time=driver.find_element_by_class_name('copyable-text').text
 			messages=driver.find_element_by_class_name('selectable-text invisible-space copyable-text ').text

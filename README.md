@@ -1,6 +1,7 @@
 # whatsapp-play
 
-[![PyPi](https://img.shields.io/pypi/v/spotdl.svg)](https://pypi.org/project/wplay/)
+[![PyPi](https://img.shields.io/badge/pypi-v1.0.6-blue.svg)](https://pypi.org/project/wplay/)
+[![twitter](https://img.shields.io/twitter/url/https/github.com/rpotter12/whatsapp-play.svg?style=social)](https://twitter.com/rpotter121998)
 
 It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. This CLI software does not require any API key for the execution.
 
@@ -55,4 +56,4 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
 
 ## License
-MIT license
+[![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
