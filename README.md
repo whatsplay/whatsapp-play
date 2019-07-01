@@ -38,19 +38,20 @@ optional arguments:
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 
 ## Things to do
-- [x] onlinetracker script - to track the online/offline status.
+- [x] onlinetracker script - to track the online/offline status.([issue #3](https://github.com/rpotter12/whatsapp-play/issues/3))
 - [x] wchat script - to chat with contact from command line.
 - [x] messageblast script - to send message repeatedly to a person.
-- [x] argument parser to connect all scripts to one script.
-- [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot. 
-- [x] improve onlinetracker script.
+- [x] argument parser to connect all scripts to one script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
+- [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot.([issue #4](https://github.com/rpotter12/whatsapp-play/issues/4))
+- [x] improve onlinetracker script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
 - [x] improve messageblast script.
-- [x] improve wchat script for chatting.
-- [ ] a sound notification in pc system when the person gets online.
-- [ ] script to save the whole chat of a person.
-- [ ] docker image for wchat.
-- [ ] keep a record of states of multiple users in csv, for further analysis
-- [ ] .travis.yml script for travis check<br>
+- [x] improve wchat script for chatting.([pull #10](https://github.com/rpotter12/whatsapp-play/pull/10))
+- [ ] a sound notification in pc system when the person gets online.([issue #22](https://github.com/rpotter12/whatsapp-play/issues/22))
+- [ ] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
+- [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
+- [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
+- [ ] proper option to exit the running program([issue #19(https://github.com/rpotter12/whatsapp-play/issues/19)])
+- [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))<br>
 (If you have any new idea for this software, please open issue for that :) )
 
 ## Disclaimer
