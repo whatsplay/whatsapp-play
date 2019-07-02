@@ -50,7 +50,8 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [ ] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
 - [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
 - [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
-- [ ] proper option to exit the running program([issue #19(https://github.com/rpotter12/whatsapp-play/issues/19)])
+- [ ] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
+- [ ] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
 - [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))<br>
 (If you have any new idea for this software, please open issue for that :) )
 
