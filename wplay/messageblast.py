@@ -3,14 +3,10 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
-from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
-import os
-import sys
 
 def blast(name):
-	script_path = sys.path[0]
 
 	# enter the number of the person by the user
 	target = str(name) #str(input("Enter the name of target: "))
@@ -18,7 +14,6 @@ def blast(name):
 	n = int(input("Enter the number of messages to blast: "))
 
 	# chrome driver
-	chrome_options = Options()
 	driver = webdriver.Chrome(ChromeDriverManager().install())
 	driver.get("https://web.whatsapp.com/")
 	wait = WebDriverWait(driver, 600)
@@ -35,5 +30,7 @@ def blast(name):
 	message_area = wait.until(EC.presence_of_element_located((By.XPATH, xpath)))
 
 	# sends message multiple times
-	for i in range(n):
+	i=0
+	while i<=n:
 		message_area.send_keys(message + Keys.ENTER)
+		i=i+1
