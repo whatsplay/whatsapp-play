@@ -7,17 +7,13 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 import datetime
-import os
-import sys
 
 def tracker(name):
-	script_path = sys.path[0]
 
 	# enter the name of the person by the user
 	target = str(name) #str(input("Enter the name of target: "))
 
 	# chrome driver
-	chrome_options = Options()
 	driver = webdriver.Chrome(ChromeDriverManager().install())
 	driver.get("https://web.whatsapp.com/")
 	wait = WebDriverWait(driver, 600)
