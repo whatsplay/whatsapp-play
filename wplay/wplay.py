@@ -37,7 +37,7 @@ def main():
 	try:
 		match_args(args)
 		sys.exit(0)
-	except KeyboardInterrupt as e:
+	except KeyboardInterrupt:
 		sys.exit(0)
 
 
