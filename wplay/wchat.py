@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
-from selenium.webdriver.chrome.options import Options
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
 
@@ -19,7 +18,7 @@ def chat(name):
 		print("1. Chat")
 		print("2. Quit")
 		option = int(input("Enter choice: "))
-		
+		# if option 1 is selected
 		if option==1:
 			# enter the name of the person by the user
 			receiver =  str(name) #str(input("Enter the name of receiver: "))
@@ -37,7 +36,7 @@ def chat(name):
 
 			# sends message
 			message_area.send_keys(message + Keys.ENTER)
-
+		# if option 2 is selected
 		if option==2:
 			condition=False
 			exit()
