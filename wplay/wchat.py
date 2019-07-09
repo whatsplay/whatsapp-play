@@ -11,7 +11,6 @@ def chat(name):
 	driver = webdriver.Chrome(ChromeDriverManager().install())
 	driver.get("https://web.whatsapp.com/")
 	wait = WebDriverWait(driver, 600)
-	assert "WhatsApp" in driver.title
 
 	condition=True
 	while condition:

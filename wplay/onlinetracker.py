@@ -16,7 +16,6 @@ def tracker(name):
 	driver = webdriver.Chrome(ChromeDriverManager().install())
 	driver.get("https://web.whatsapp.com/")
 	wait = WebDriverWait(driver, 600)
-	assert "WhatsApp" in driver.title
 
 	# finds the target and navigate to it
 	x_arg = '//span[contains(@title, '+ '"' +target + '"'+ ')]'
