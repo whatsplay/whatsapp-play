@@ -3,3 +3,4 @@ python-telegram-bot >= 11.1.0
 datetime >= 4.3
 argparse >= 1.4.0
 webdriver-manager >= 1.7
+playsound >= 1.2.2
