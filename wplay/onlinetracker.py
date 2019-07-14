@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException, StaleElementReferenceException
 from webdriver_manager.chrome import ChromeDriverManager
+from playsound import playsound
 import time
 import datetime
 
@@ -34,6 +35,8 @@ def tracker(name):
 		except (NoSuchElementException, StaleElementReferenceException):
 			status = 'offline'
 			i=0
+		if i==1:
+			playsound('plucky.mp3')
 		print(datetime.datetime.now())
 		print(status)
 		f=open('status.txt','a')

@@ -26,6 +26,7 @@ setup(
         "whatsapp-chat",
         "message-blast",
         "tracker"
+        "online tracking"
     ],
     classifiers=[
         "Programming Language :: Python",
