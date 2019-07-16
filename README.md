@@ -34,7 +34,6 @@ optional arguments:
   -wc, --wchat   chatting from command line
   -wb, --wblast  message blast to a person
   -wt, --wtrack  track online status of person
-  -wsc, --wsave  save the whole chat of a person
 ```
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 
@@ -53,6 +52,7 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
 - [ ] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
 - [ ] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
+- [ ] script to find the location of the person([issue #31](https://github.com/rpotter12/whatsapp-play/issues/31))
 - [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))<br>
 (If you have any new idea for this software, please open issue for that :) )
 
@@ -61,3 +61,5 @@ This software is for educational purpose only. Keeping eye on a innocent person 
 
 ## License
 [![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
+
+***If you like the project, support us by star***
