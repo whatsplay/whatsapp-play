@@ -14,7 +14,8 @@ def get_arguments():
 	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
 	group.add_argument("-wb", "--wblast", action="store_true", help="message blast to a person")
 	group.add_argument("-wt", "--wtrack", action="store_true", help="track online status of person")
-	group.add_argument("-wsc", "--wsave", action="store_true", help="save the whole chat of a person")
+	# group.add_argument("-ws", "--wsave", action="store_true", help="save the whole chat of a person")
+	# group.add_argument("-wl", "--wlocation", action="store_true", help="finds the location of the person")
 
 	args = parser.parse_args()
 	return args
@@ -29,8 +30,11 @@ def match_args(args):
 	elif args.wblast:
 		messageblast.blast(args.name)
 
-	elif args.wsave:
-		savechat.save(args.name)
+	# elif args.wsave:
+	# 	savechat.save(args.name)
+
+	# elif args.wlocation:
+	#	loactionfinder.finder(args.name)
 
 def main():
 	args = get_arguments()
