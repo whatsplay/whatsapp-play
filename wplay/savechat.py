@@ -8,7 +8,7 @@ from bs4 import BeatifulSoup
 import requests
 
 def save(name):
-
+	print("It is for testing purpose only. It is not tested yet. Report a bug if you found any error.")
 	# enter the name of the person by the user
 	target = str(name) #str(input("Enter the name of target: "))
 	#target_email = str(input("Enter the email of the target: "))
