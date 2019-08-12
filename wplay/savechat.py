@@ -4,6 +4,8 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeatifulSoup
+import requests
 
 def save(name):
 
@@ -23,14 +25,12 @@ def save(name):
 	person_title.click()
 
 	f=open('messages.txt','w')
-	f.close()
 	# to catch messages
-	while True:
-		try:
-			time=driver.find_element_by_class_name('copyable-text').text
-			messages=driver.find_element_by_class_name('selectable-text invisible-space copyable-text ').text
-			f=open('status.txt','a')
-			f.write(time+" : "+messages)
-			f.close()
-		except (NoSuchElementException):
-			break;
+
+	page = requests.get("https://web.whatsapp.com/")
+	soup = BeatifulSoup(page.content, 'html-parser')
+
+	messages = soup.find_all('div', class_='_1_q7u')
+	string_messages = str(messages)
+	f.write(messages)
+	f.close()
