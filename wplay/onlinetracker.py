@@ -9,6 +9,10 @@ import time
 import os
 import datetime
 
+def details(names):
+	for name in names:
+		tracker(name)
+
 def tracker(name):
 
 	# enter the name of the person by the user
@@ -47,19 +51,4 @@ def tracker(name):
 		f.write(str(datetime.datetime.now()))
 		f.write(status)
 		f.close()
-		while True:
-			if i == 1:
-				try:
-					re_status = driver.find_element_by_class_name('_315-i').text
-					continue
-				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
-					break
-			else:
-				try:
-					re_status = driver.find_element_by_class_name('_315-i').text
-					break
-				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
-					continue
-		time.sleep(1)
+		break
