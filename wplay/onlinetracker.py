@@ -6,6 +6,7 @@ from selenium.common.exceptions import NoSuchElementException, StaleElementRefer
 from webdriver_manager.chrome import ChromeDriverManager
 from playsound import playsound
 import time
+import os
 import datetime
 
 def tracker(name):
@@ -24,7 +25,10 @@ def tracker(name):
 	print(target)
 	person_title.click()
 
-	f=open('status.txt','w')
+	# finds if online_status directory is present
+	if 'online_status_data' not in os.listdir(os.getcwd()):
+		os.mkdir('online_status_data')
+	f=open(os.path.join('online_status_data' , 'status.txt'),'w')
 	f.close()
 	# check status
 	while True:
@@ -39,7 +43,7 @@ def tracker(name):
 			playsound('plucky.mp3')
 		print(datetime.datetime.now())
 		print(status)
-		f=open('status.txt','a')
+		f=open(os.path.join('online_status_data' , 'status.txt'),'a')
 		f.write(str(datetime.datetime.now()))
 		f.write(status)
 		f.close()
