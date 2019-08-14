@@ -8,7 +8,7 @@ import sys
 # parse positional and optional arguments
 def get_arguments():
 	parser = argparse.ArgumentParser(description='WhatApp-play')
-	parser.add_argument("name", metavar="NAME", type=str, help="contact name of the target")
+	parser.add_argument("name", metavar="NAME", type=str, help="contact name of the target", nargs='*')
 
 	group = parser.add_mutually_exclusive_group(required=True)
 	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
@@ -22,7 +22,7 @@ def get_arguments():
 
 def match_args(args):
 	if args.wtrack:
-		onlinetracker.tracker(args.name)
+		onlinetracker.details(args.name)
 
 	elif args.wchat:
 		wchat.chat(args.name)
