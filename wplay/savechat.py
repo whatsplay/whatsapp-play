@@ -4,7 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.common.exceptions import NoSuchElementException
 from webdriver_manager.chrome import ChromeDriverManager
-from bs4 import BeatifulSoup
+from bs4 import BeautifulSoup
 import requests
 
 def save(name):
@@ -28,7 +28,7 @@ def save(name):
 	# to catch messages
 
 	page = requests.get("https://web.whatsapp.com/")
-	soup = BeatifulSoup(page.content, 'html-parser')
+	soup = BeautifulSoup(page.content, 'html-parser')
 
 	messages = soup.find_all('div', class_='_1_q7u')
 	string_messages = str(messages)
