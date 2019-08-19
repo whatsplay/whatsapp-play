@@ -9,7 +9,9 @@ setup(
 	install_requires=["selenium >= 3.141.0",
                     "python-telegram-bot >= 11.1.0",
                     "datetime >= 4.3",
-                    "webdriver-manager >= 1.7"],
+                    "webdriver-manager >= 1.7",
+		     "playsound >=1.2.2"],
+		    
 	packages=find_packages(),
 	description="command line software to play with your WhatsApp",
     long_description=long_description,
