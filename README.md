@@ -2,7 +2,7 @@
 
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
-[![PyPi](https://img.shields.io/badge/pypi-v1.0.6-blue.svg)](https://pypi.org/project/wplay/)
+[![PyPi](https://img.shields.io/badge/pypi-v2.0.0-blue)](https://pypi.org/project/wplay/)
 [![codecov](https://codecov.io/gh/rpotter12/whatsapp-play/branch/master/graph/badge.svg)](https://codecov.io/gh/rpotter12/whatsapp-play)
 [![twitter](https://img.shields.io/twitter/url/https/github.com/rpotter12/whatsapp-play.svg?style=social)](https://twitter.com/rpotter121998)
 [![HitCount](http://hits.dwyl.io/rpotter12/whatsapp-play.svg)](http://hits.dwyl.io/rpotter12/whatsapp-play)
