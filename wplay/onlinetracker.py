@@ -30,36 +30,40 @@ def tracker(name):
 		os.mkdir('online_status_data')
 	f=open(os.path.join('online_status_data' , 'status.txt'),'w')
 	f.close()
-	# check status
+	# check status and delivers result after every one minute
+	start = time.time()
+	cnt = 0
+	timer_on = False
+
 	while True:
-		i=0
+		if timer_on :
+			cnt += time.time() - start
+		start = time.time()
 		try:
 			status = driver.find_element_by_class_name('_315-i').text
-			i=1
+			if len(status) > 1 and (cnt >= 60 or cnt == 0):
+				keep_track = input('The user seems to be offline now, do you wish to keep tracking?[Y/N]')
+				if keep_track == 'Y':
+					timer_on = True
+					continue
+				else:
+					break
+			else:
+				playsound('plucky.mp3')
+				print('The user is online now! Go, chat :D')
+				break
 		except (NoSuchElementException, StaleElementReferenceException):
 			status = 'offline'
-			i=0
-		if i==1:
-			playsound('plucky.mp3')
+			if  cnt >= 5 or cnt == 60:
+				keep_track = input('The user seems to be offline now, do you wish to keep tracking?[Y/N]')
+				if keep_track == 'Y':
+					timer_on = True
+					continue
+				else:
+					break
 		print(datetime.datetime.now())
 		print(status)
 		f=open(os.path.join('online_status_data' , 'status.txt'),'a')
 		f.write(str(datetime.datetime.now()))
 		f.write(status)
 		f.close()
-		while True:
-			if i == 1:
-				try:
-					re_status = driver.find_element_by_class_name('_315-i').text
-					continue
-				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
-					break
-			else:
-				try:
-					re_status = driver.find_element_by_class_name('_315-i').text
-					break
-				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
-					continue
-		time.sleep(1)
