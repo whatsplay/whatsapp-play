@@ -50,13 +50,15 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [x] improve messageblast script.
 - [x] improve wchat script for chatting.([pull #10](https://github.com/rpotter12/whatsapp-play/pull/10))
 - [x] a sound notification in pc system when the person gets online.([issue #22](https://github.com/rpotter12/whatsapp-play/issues/22))
+- [x] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
+- [x] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
 - [ ] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
 - [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
 - [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
-- [ ] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
-- [x] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
 - [ ] script to find the location of the person([issue #31](https://github.com/rpotter12/whatsapp-play/issues/31))
-- [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))<br>
+- [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))
+- [ ] add firefox functionality([issue #48](https://github.com/rpotter12/whatsapp-play/issues/48))
+- [ ] add codecov script([issue #51](https://github.com/rpotter12/whatsapp-play/issues/51))<br>
 (If you have any new idea for this software, please open issue for that :) )
 
 ## Disclaimer
