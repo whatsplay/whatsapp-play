@@ -45,7 +45,7 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [x] wchat script - to chat with contact from command line.
 - [x] messageblast script - to send message repeatedly to a person.
 - [x] argument parser to connect all scripts to one script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
-- [ ] telegram bot script for onlinetracker to send the status online/offline status to telegram bot.([issue #4](https://github.com/rpotter12/whatsapp-play/issues/4))
+- [x] telegram bot script for onlinetracker to send the status online/offline status to telegram bot.([issue #4](https://github.com/rpotter12/whatsapp-play/issues/4))
 - [x] improve onlinetracker script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
 - [x] improve messageblast script.
 - [x] improve wchat script for chatting.([pull #10](https://github.com/rpotter12/whatsapp-play/pull/10))
