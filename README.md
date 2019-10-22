@@ -15,7 +15,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***messageblast*** is a message bomb script. It sends messages to your WhatsApp contact continously. The number of messages is decided by you. You can blast infinite number of messages to your WhatsApp contact.
 
-***savechat*** is a script to save the chat of the person. It saves all the messages with that person in message.txt file.
+***savechat*** is a script to save all the chat which we backup on our google drive.
 
 ---
 
@@ -36,9 +36,9 @@ optional arguments:
   -wc, --wchat   chatting from command line
   -wb, --wblast  message blast to a person
   -wt, --wtrack  track online status of person
-  -ws, --wsave   save the whole chat of a person
+  -pull, --pull   save all chats
 ```
-Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
+Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
 ## Things to do
 - [x] onlinetracker script - to track the online/offline status.([issue #3](https://github.com/rpotter12/whatsapp-play/issues/3))
@@ -52,7 +52,7 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"`
 - [x] a sound notification in pc system when the person gets online.([issue #22](https://github.com/rpotter12/whatsapp-play/issues/22))
 - [x] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
 - [x] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
-- [ ] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
+- [x] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
 - [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
 - [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
 - [ ] script to find the location of the person([issue #31](https://github.com/rpotter12/whatsapp-play/issues/31))
