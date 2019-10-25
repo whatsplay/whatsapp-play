@@ -4,3 +4,4 @@ datetime >= 4.3
 argparse >= 1.4.0
 webdriver-manager >= 1.7
 playsound >= 1.2.2
+beautifulsoup4 >= 4.8.1
