@@ -1,0 +1,14 @@
+language: python
+python:
+  - "3.4"
+  - "3.5"
+  - "3.6"
+  - "3.7"
+cache: pip
+install:
+  - pip install -r requirements.txt
+script:
+  - py.test --cov-report term-missing --cov app -v
+after_success:
+  - pip install codecov
+  - codecov
