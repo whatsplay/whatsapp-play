@@ -3,6 +3,7 @@ from wplay import onlinetracker
 from wplay import messageblast
 from wplay import wchat
 from wplay import savechat
+from wplay import tgbot
 import sys
 
 # parse positional and optional arguments
@@ -14,6 +15,7 @@ def get_arguments():
 	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
 	group.add_argument("-wb", "--wblast", action="store_true", help="message blast to a person")
 	group.add_argument("-wt", "--wtrack", action="store_true", help="track online status of person")
+	group.add_argument("-wtb", "--wtgbot", action="store_true", help="sends tracking status to telegram bot")
 	group.add_argument("-pull", "--pull", action="store_true", help="save all chats")
 	# group.add_argument("-wl", "--wlocation", action="store_true", help="finds the location of the person")
 
@@ -24,6 +26,9 @@ def match_args(args):
 	if args.wtrack:
 		onlinetracker.tracker(args.name)
 
+	elif args.wtgbot:
+		tgbot.telegram_message(args.name)
+
 	elif args.wchat:
 		wchat.chat(args.name)
 
@@ -31,11 +36,11 @@ def match_args(args):
 		messageblast.blast(args.name)
 
 	elif args.pull:
-        try:
-            bID = int(sys.argv[3])
-        except (IndexError, ValueError):
-            bID = 0
-        savechat.runMain('pull', str(args.name), bID)
+		try:
+		    bID = int(sys.argv[3])
+		except (IndexError, ValueError):
+		    bID = 0
+		savechat.runMain('pull', str(args.name), bID)
 
 	# elif args.wlocation:
 	#	loactionfinder.finder(args.name)
