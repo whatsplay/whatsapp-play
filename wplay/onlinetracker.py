@@ -16,15 +16,7 @@ import time
 import os
 import datetime
 
-# for telegram bot
-from wplay import tgbot
-from telegram import Message, Update, Bot, User
-from telegram.ext import CommandHandler , Updater , MessageHandler , Filters , run_async
-
 def tracker(name):
-	
-	#Bot token goes here
-	TOKEN = input("enter telegram token: ")
 
 	# the name of the person by the user
 	target = str(name) #str(input("Enter the name of target: "))
@@ -58,7 +50,6 @@ def tracker(name):
 			playsound('plucky.mp3')
 		print(datetime.datetime.now())
 		print(status)
-		tgbot.tgmessage(TOKEN, 'online')
 		f=open(os.path.join('online_status_data' , 'status.txt'),'a')
 		f.write(str(datetime.datetime.now()))
 		f.write(status)
