@@ -14,6 +14,8 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***onlinetracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
+***tgbot*** sends the tracking status to our telegram bot.
+
 ***messageblast*** is a message bomb script. It sends messages to your WhatsApp contact continously. The number of messages is decided by you. You can blast infinite number of messages to your WhatsApp contact.
 
 ***savechat*** is a script to save all the chat which we backup on our google drive.
@@ -25,18 +27,19 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ## Usage
 ```
-usage: wplay [-h] (-wc | -wb | -wt| -ws) NAME
+usage: wplay [-h] (-wc | -wb | -wt | -wtb | -pull) NAME
 
 WhatApp-play
 
 positional arguments:
-  NAME           contact name of the target
+  NAME            contact name of the target
 
 optional arguments:
-  -h, --help     show this help message and exit
-  -wc, --wchat   chatting from command line
-  -wb, --wblast  message blast to a person
-  -wt, --wtrack  track online status of person
+  -h, --help      show this help message and exit
+  -wc, --wchat    chatting from command line
+  -wb, --wblast   message blast to a person
+  -wt, --wtrack   track online status of person
+  -wtb, --wtgbot  sends tracking status to telegram bot
   -pull, --pull   save all chats
 ```
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
