@@ -1,5 +1,4 @@
-import os
-from bs4 import BeatifulSoup
+# the code is not finalised.
 
 def locationfinder(name):
 

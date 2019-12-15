@@ -58,15 +58,15 @@ def tracker(name):
 			if i == 1:
 				try:
 					re_status = driver.find_element_by_class_name('_315-i').text
+					re_status = 'onilne'
 					continue
 				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
 					break
 			else:
 				try:
 					re_status = driver.find_element_by_class_name('_315-i').text
+					re_status = 'online'
 					break
 				except (NoSuchElementException, StaleElementReferenceException):
-					re_status = 'offline'
 					continue
 		time.sleep(1)

@@ -23,7 +23,7 @@ It is command line software through which you can play with your WhatsApp. It is
 ---
 
 ## Installation
-- `pip3 install wplay`
+whatsapp-play is available on PyPI. You can install whatsapp-play by pip command: `pip3 install wplay`
 
 ## Usage
 ```
