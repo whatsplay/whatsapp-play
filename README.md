@@ -26,22 +26,7 @@ It is command line software through which you can play with your WhatsApp. It is
 whatsapp-play is available on PyPI. You can install whatsapp-play by pip command: `pip3 install wplay`
 
 ## Usage
-```
-usage: wplay [-h] (-wc | -wb | -wt | -wtb | -pull) NAME
-
-WhatApp-play
-
-positional arguments:
-  NAME            contact name of the target
-
-optional arguments:
-  -h, --help      show this help message and exit
-  -wc, --wchat    chatting from command line
-  -wb, --wblast   message blast to a person
-  -wt, --wtrack   track online status of person
-  -wtb, --wtgbot  sends tracking status to telegram bot
-  -pull, --pull   save all chats
-```
+<img src="/images/usage.png"><br>
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
 ## Things to do

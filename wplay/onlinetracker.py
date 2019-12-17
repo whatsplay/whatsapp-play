@@ -46,19 +46,24 @@ def tracker(name):
 		except (NoSuchElementException, StaleElementReferenceException):
 			status = 'offline'
 			i=0
+		# to play sound when the person is online
 		if i==1:
 			playsound('plucky.mp3')
+		# prints date, time and status
 		print(datetime.datetime.now())
 		print(status)
+		# writes date, time and status in status.txt
 		f=open(os.path.join('online_status_data' , 'status.txt'),'a')
 		f.write(str(datetime.datetime.now()))
 		f.write(status)
 		f.close()
+		# Loop to check the online status until the offline status appear and vice-versa
+		# this loop will help to stop print status until the other status appears
 		while True:
 			if i == 1:
 				try:
 					re_status = driver.find_element_by_class_name('_315-i').text
-					re_status = 'onilne'
+					re_status = 'online'
 					continue
 				except (NoSuchElementException, StaleElementReferenceException):
 					break
