@@ -22,6 +22,7 @@ def get_arguments():
 	args = parser.parse_args()
 	return args
 
+# functions for different arguments
 def match_args(args):
 	if args.wtrack:
 		onlinetracker.tracker(args.name)

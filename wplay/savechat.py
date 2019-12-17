@@ -12,7 +12,6 @@ import json
 import os
 import re
 import requests
-import sys
 
 def getGoogleAccountTokenFromAuth():
     payload = {'Email':gmail, 'Passwd':passw, 'app':client_pkg, 'client_sig':client_sig, 'parentAndroidId':devid}

@@ -1,5 +1,5 @@
-from telegram import Message, Update, Bot, User
-from telegram.ext import CommandHandler , Updater , MessageHandler , Filters , run_async
+from telegram import Message, Update
+from telegram.ext import CommandHandler, Updater, Filters
 import os
 
 def startmessage(bot , update):
@@ -23,11 +23,10 @@ def send_status(bot, update):
 
 def telegram_status(name):
 	person = name
-
+	print(person)
 	#add bot token
 	global TOKEN
 	TOKEN = input("enter token: ")
-
 	# Added all the essential command handlers 
 	updater = Updater(TOKEN)
 	dp = updater.dispatcher
