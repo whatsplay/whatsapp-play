@@ -28,6 +28,7 @@ setup(
         "whatsapp-cli",
         "whatsapp-chat",
         "message-blast",
+        "message-timer",
         "tracker",
         "online tracking",
         "save-chat"
