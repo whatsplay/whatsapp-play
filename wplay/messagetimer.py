@@ -21,7 +21,7 @@ def msgTimer(name):
         messages.append(str(input("Enter your message: ")))
     n = int(input("Enter the number of messages to send: "))
 
-    # Enter the time interval of the messages, it will be sent using a random 
+    # Enter the time interval of the messages, it will be sent using a random
     # interval. For fixed interval, type the same number.
     minimumTimeInterval = int(
         input("Enter minimum interval number in seconds: "))
@@ -48,10 +48,15 @@ def msgTimer(name):
     # sends random messages multiple times
     random.seed()
     i = 0
-    while i <= n:
+    while i < n:
         if not messages:
-            continue
-        message_area.send_keys(
-            messages[random.randrange(0, nMessages)] + Keys.ENTER)
-        time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
+            break
+        else:
+            message_area.send_keys(
+                messages[random.randrange(0, nMessages)] + Keys.ENTER)
+            if minimumTimeInterval != maximumTimeInterval:
+                time.sleep(random.randrange(minimumTimeInterval,
+                                            maximumTimeInterval))
+            else:
+                time.sleep(minimumTimeInterval)
         i = i+1
