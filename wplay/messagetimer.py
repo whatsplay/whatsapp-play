@@ -12,17 +12,17 @@ def msgTimer(name):
 
     target = str(name)
 
-	# enter message type number
+    # enter message type number
     nMessages = int(input("How many types of messages will you send? "))
 
-	# type your messages
+    # type your messages
     messages = list()
     for i in range(0, nMessages):
         messages.append(str(input("Enter your message: ")))
     n = int(input("Enter the number of messages to send: "))
 
-	#Enter the time interval of the messages, it will be sent using a random 
-	#interval. For fixed interval, type the same number.
+    # Enter the time interval of the messages, it will be sent using a random 
+    # interval. For fixed interval, type the same number.
     minimumTimeInterval = int(
         input("Enter minimum interval number in seconds: "))
     maximumTimeInterval = int(
