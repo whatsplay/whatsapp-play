@@ -18,6 +18,8 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***messageblast*** is a message bomb script. It sends messages to your WhatsApp contact continously. The number of messages is decided by you. You can blast infinite number of messages to your WhatsApp contact.
 
+***messagetimer*** is a message timer script. It sends messages to your WhatsApp contact from time to time. The number of messages and type of messages is decided by you. It's possible to send messages at random interval and the message type is chosen randomly.
+
 ***savechat*** is a script to save all the chat which we backup on our google drive.
 
 ---

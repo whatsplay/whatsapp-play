@@ -1,6 +1,7 @@
 import argparse
 from wplay import onlinetracker
 from wplay import messageblast
+from wplay import messagetimer
 from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
@@ -14,6 +15,7 @@ def get_arguments():
 	group = parser.add_mutually_exclusive_group(required=True)
 	group.add_argument("-wc", "--wchat", action="store_true", help="chatting from command line")
 	group.add_argument("-wb", "--wblast", action="store_true", help="message blast to a person")
+	group.add_argument("-wti", "--wtimer", action="store_true", help="send messages from time to time")
 	group.add_argument("-wt", "--wtrack", action="store_true", help="track online status of person")
 	group.add_argument("-wtb", "--wtgbot", action="store_true", help="sends tracking status to telegram bot")
 	group.add_argument("-pull", "--pull", action="store_true", help="save all chats")
@@ -35,6 +37,9 @@ def match_args(args):
 
 	elif args.wblast:
 		messageblast.blast(args.name)
+
+	elif args.wtimer:
+		messagetimer.msgTimer(args.name)
 
 	elif args.pull:
 		try:
