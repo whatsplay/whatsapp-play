@@ -23,7 +23,7 @@ def msgTimer(name):
     maximumTimeInterval = int(
         input("Enter maximum interval number in seconds: "))
 
-    driver_wait, chosen_website = sel.initialize_chrome_driver(
+    _, driver_wait, chosen_website = sel.initialize_chrome_driver(
         sel.websites['whatsapp'])
 
     sel.find_and_navigate_to_target(driver_wait, chosen_website, target)

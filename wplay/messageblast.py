@@ -8,7 +8,7 @@ def blast(name):
     message = str(input("Enter your message: "))
     n = int(input("Enter the number of messages to blast: "))
 
-    driver_wait, chosen_website = sel.initialize_chrome_driver(
+    _, driver_wait, chosen_website = sel.initialize_chrome_driver(
         sel.websites['whatsapp'])
 
     sel.find_and_navigate_to_target(driver_wait, chosen_website, target)
