@@ -1,3 +1,4 @@
+import sys
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -20,24 +21,31 @@ def initialize_chrome_driver(website_url):
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(website_url)
     driver_wait = WebDriverWait(driver, 600)
-    return driver_wait
+    chosen_website = website_url
+    return driver_wait, chosen_website
 
 
-def find_and_navigate_to_target(driver_wait, target):
+def find_and_navigate_to_target(driver_wait, chosen_website, target):
     XPATH_list = get_XPATH_list(target)
     print(f'Looking for: {target}')
-    person_title = driver_wait.until(
-        EC.presence_of_element_located((
-            By.XPATH, XPATH_list['wpp_target_title'])))
-    person_title.click()
-    print(f'{target} finded!')
+    if chosen_website == websites['whatsapp']:
+        person_title = driver_wait.until(
+            EC.presence_of_element_located((
+                By.XPATH, XPATH_list['wpp_target_title'])))
+        person_title.click()
+        print(f'{target} finded!')
+    else:
+        sys.exit()
 
 
-def navigate_to_message_area(driver_wait):
+def navigate_to_message_area(driver_wait, chosen_website):
     XPATH_list = get_XPATH_list()
-    message_area = driver_wait.until(
-        EC.presence_of_element_located((
-            By.XPATH, XPATH_list['wpp_message_area'])))
+    if chosen_website == websites['whatsapp']:
+        message_area = driver_wait.until(
+            EC.presence_of_element_located((
+                By.XPATH, XPATH_list['wpp_message_area'])))
+    else:
+        sys.exit()
     return message_area
 
 
