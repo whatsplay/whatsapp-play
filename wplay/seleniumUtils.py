@@ -11,7 +11,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 
-def get_XPATH_list(target=' '):
+def __get_XPATH_list(target=' '):
     XPATH_list = {'wpp_target_title': f'//span[contains(@title, "{target}")]',
                   'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'}
     return XPATH_list
@@ -26,7 +26,7 @@ def initialize_chrome_driver(website_url):
 
 
 def find_and_navigate_to_target(driver_wait, chosen_website, target):
-    XPATH_list = get_XPATH_list(target)
+    XPATH_list = __get_XPATH_list(target)
     print(f'Looking for: {target}')
     if chosen_website == websites['whatsapp']:
         person_title = driver_wait.until(
@@ -39,7 +39,7 @@ def find_and_navigate_to_target(driver_wait, chosen_website, target):
 
 
 def navigate_to_message_area(driver_wait, chosen_website):
-    XPATH_list = get_XPATH_list()
+    XPATH_list = __get_XPATH_list()
     if chosen_website == websites['whatsapp']:
         message_area = driver_wait.until(
             EC.presence_of_element_located((
