@@ -19,22 +19,23 @@ def get_XPATH_list(target=' '):
 def initialize_chrome_driver(website_url):
     driver = webdriver.Chrome(ChromeDriverManager().install())
     driver.get(website_url)
-    wait = WebDriverWait(driver, 600)
+    driver_wait = WebDriverWait(driver, 600)
+    return driver_wait
 
 
-def find_and_navigate_to_target(target):
+def find_and_navigate_to_target(driver_wait, target):
     XPATH_list = get_XPATH_list(target)
     print(f'Looking for: {target}')
-    person_title = wait.until(
+    person_title = driver_wait.until(
         EC.presence_of_element_located((
             By.XPATH, XPATH_list['wpp_target_title'])))
     person_title.click()
     print(f'{target} finded!')
 
 
-def navigate_to_message_area():
+def navigate_to_message_area(driver_wait):
     XPATH_list = get_XPATH_list()
-    message_area = wait.until(
+    message_area = driver_wait.until(
         EC.presence_of_element_located((
             By.XPATH, XPATH_list['wpp_message_area'])))
     return message_area
