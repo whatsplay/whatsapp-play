@@ -22,7 +22,7 @@ def initialize_chrome_driver(website_url):
     driver.get(website_url)
     driver_wait = WebDriverWait(driver, 600)
     chosen_website = website_url
-    return driver_wait, chosen_website
+    return driver, driver_wait, chosen_website
 
 
 def find_and_navigate_to_target(driver_wait, chosen_website, target):
