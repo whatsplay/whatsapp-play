@@ -20,7 +20,7 @@ setup(
     author="Rohit Potter",
     author_email="rohitpotter12@gmail.com",
     license="MIT",
-    python_requires=">=3.4",
+    python_requires=">=3.6",
     url="https://github.com/rpotter12/whatsapp-play/",
     download_url="https://pypi.org/project/wplay/",
     keywords=[
@@ -36,8 +36,6 @@ setup(
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3 :: Only",
