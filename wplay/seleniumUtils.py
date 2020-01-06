@@ -51,3 +51,7 @@ def navigate_to_message_area(driver_wait, chosen_website):
 
 def send_message(message_area, message):
     message_area.send_keys(message + Keys.ENTER)
+
+
+def get_selenium_exceptions():
+    return NoSuchElementException, StaleElementReferenceException
