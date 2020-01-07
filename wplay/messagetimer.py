@@ -3,8 +3,8 @@ import random
 from wplay import seleniumUtils as sel
 
 
-def msgTimer(target):
-    #target = str(input("Enter the name of target: "))
+def msgTimer(name):
+    #name = str(input("Enter the name of target: "))
 
     message_type_numbers = int(
         input("How many types of messages will you send? "))
@@ -25,7 +25,7 @@ def msgTimer(target):
     _, driver_wait, chosen_website = sel.initialize_chrome_driver(
         sel.websites['whatsapp'])
 
-    sel.find_and_navigate_to_target(driver_wait, chosen_website, target)
+    sel.find_and_navigate_to_target(driver_wait, chosen_website, name)
 
     message_area = sel.navigate_to_message_area(driver_wait, chosen_website)
 
