@@ -83,7 +83,7 @@ def match_args(args):
     elif args.pull:
         try:
             bID = int(sys.argv[3])
-            except (IndexError, ValueError):
+        except (IndexError, ValueError):
             bID = 0
         savechat.runMain('pull', str(args.name), bID)
 
