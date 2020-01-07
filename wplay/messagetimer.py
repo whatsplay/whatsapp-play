@@ -1,25 +1,19 @@
 import time
 import random
-from selenium import webdriver
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.common.keys import Keys
+from wplay import seleniumUtils as sel
 
 
 def msgTimer(name):
+    #name = str(input("Enter the name of target: "))
 
-    target = str(name)
+    message_type_numbers = int(
+        input("How many types of messages will you send? "))
 
-    # enter message type number
-    nMessages = int(input("How many types of messages will you send? "))
-
-    # type your messages
     messages = list()
-    for i in range(0, nMessages):
+    for _ in range(message_type_numbers):
         messages.append(str(input("Enter your message: ")))
-    n = int(input("Enter the number of messages to send: "))
+
+    number_of_messages = int(input("Enter the number of messages to send: "))
 
     # Enter the time interval of the messages, it will be sent using a random
     # interval. For fixed interval, type the same number.
@@ -28,35 +22,22 @@ def msgTimer(name):
     maximumTimeInterval = int(
         input("Enter maximum interval number in seconds: "))
 
-    # chrome driver
-    driver = webdriver.Chrome(ChromeDriverManager().install())
-    driver.get("https://web.whatsapp.com/")
-    wait = WebDriverWait(driver, 600)
+    _, driver_wait, chosen_website = sel.initialize_chrome_driver(
+        sel.websites['whatsapp'])
 
-    # finds the target and navigate to it
-    x_arg = '//span[contains(@title, ' + '"' + target + '"' + ')]'
-    person_title = wait.until(
-        EC.presence_of_element_located((By.XPATH, x_arg)))
-    print(target)
-    person_title.click()
+    sel.find_and_navigate_to_target(driver_wait, chosen_website, name)
 
-    # navigate to text part
-    xpath = '//div[@class="_3u328 copyable-text selectable-text"]'
-    message_area = wait.until(
-        EC.presence_of_element_located((By.XPATH, xpath)))
+    message_area = sel.navigate_to_message_area(driver_wait, chosen_website)
 
-    # sends random messages multiple times
     random.seed()
-    i = 0
-    while i < n:
+    for _ in range(number_of_messages):
         if not messages:
             break
         else:
-            message_area.send_keys(
-                messages[random.randrange(0, nMessages)] + Keys.ENTER)
+            sel.send_message(
+                message_area, messages[random.randrange(0, message_type_numbers)])
             if minimumTimeInterval != maximumTimeInterval:
                 time.sleep(random.randrange(minimumTimeInterval,
                                             maximumTimeInterval))
             else:
                 time.sleep(minimumTimeInterval)
-        i = i+1

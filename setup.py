@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
 	name="wplay",
-	version="2.2.0",
+	version="3.0.0",
 	install_requires=["selenium >= 3.141.0",
                     "python-telegram-bot >= 11.1.0",
                     "datetime >= 4.3",
@@ -20,7 +20,7 @@ setup(
     author="Rohit Potter",
     author_email="rohitpotter12@gmail.com",
     license="MIT",
-    python_requires=">=3.4",
+    python_requires=">=3.6",
     url="https://github.com/rpotter12/whatsapp-play/",
     download_url="https://pypi.org/project/wplay/",
     keywords=[
@@ -36,8 +36,6 @@ setup(
     classifiers=[
         "Programming Language :: Python",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.4",
-        "Programming Language :: Python :: 3.5",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3 :: Only",

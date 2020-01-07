@@ -13,28 +13,43 @@ import os
 import re
 import requests
 
+
 def getGoogleAccountTokenFromAuth():
-    payload = {'Email':gmail, 'Passwd':passw, 'app':client_pkg, 'client_sig':client_sig, 'parentAndroidId':devid}
-    request = requests.post('https://android.clients.google.com/auth', data=payload)
+    payload = {'Email': gmail, 'Passwd': passw, 'app': client_pkg,
+               'client_sig': client_sig, 'parentAndroidId': devid}
+    request = requests.post(
+        'https://android.clients.google.com/auth', data=payload)
     token = re.search('Token=(.*?)\n', request.text)
     if token:
-       return token.group(1)
+        return token.group(1)
     else:
-       quit(request.text)
+        quit(request.text)
+
 
 def getGoogleDriveToken(token):
-    payload = {'Token':token, 'app':pkg, 'client_sig':sig, 'device':devid, 'google_play_services_version':client_ver, 'service':'oauth2:https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file', 'has_permission':'1'}
-    request = requests.post('https://android.clients.google.com/auth', data=payload)
+    payload = {
+        'Token': token,
+        'app': pkg,
+        'client_sig': sig,
+        'device': devid,
+        'google_play_services_version': client_ver,
+        'service': 'oauth2:https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file',
+        'has_permission': '1'
+    }
+    request = requests.post(
+        'https://android.clients.google.com/auth', data=payload)
     token = re.search('Auth=(.*?)\n', request.text)
     if token:
-       return token.group(1)
+        return token.group(1)
     else:
-       quit(request.text)
+        quit(request.text)
+
 
 def rawGoogleDriveRequest(bearer, url):
     headers = {'Authorization': 'Bearer '+bearer}
     request = requests.get(url, headers=headers)
     return request.text
+
 
 def downloadFileGoogleDrive(bearer, url, local):
     if not os.path.exists(os.path.dirname(local)):
@@ -50,20 +65,26 @@ def downloadFileGoogleDrive(bearer, url, local):
                 asset.write(chunk)
     print('Downloaded: "'+local+'".')
 
+
 def gDriveFileMap():
     global bearer
-    data = rawGoogleDriveRequest(bearer, 'https://www.googleapis.com/drive/v2/files')
+    data = rawGoogleDriveRequest(
+        bearer, 'https://www.googleapis.com/drive/v2/files')
     jres = json.loads(data)
     backups = []
     for result in jres['items']:
         try:
             if result['title'] == 'gdrive_file_map':
-                backups.append((result['description'], rawGoogleDriveRequest(bearer, result['downloadUrl'])))
+                backups.append((result['description'],
+                                rawGoogleDriveRequest(
+                                    bearer,
+                                    result['downloadUrl'])))
         except:
             pass
     if len(backups) == 0:
         quit('Unable to locate google drive file map for: '+pkg)
     return backups
+
 
 def getConfigs():
     global gmail, passw, devid, pkg, sig, client_pkg, client_sig, client_ver
@@ -81,8 +102,10 @@ def getConfigs():
     except(ConfigParser.NoSectionError, ConfigParser.NoOptionError):
         quit('The "settings.cfg" file is missing or corrupt!')
 
+
 def jsonPrint(data):
     print(json.dumps(json.loads(data), indent=4, sort_keys=True))
+
 
 def localFileLog(md5):
     logfile = 'logs'+os.path.sep+'files.log'
@@ -90,6 +113,7 @@ def localFileLog(md5):
         os.makedirs(os.path.dirname(logfile))
     with open(logfile, 'a') as log:
         log.write(md5+'\n')
+
 
 def localFileList():
     logfile = 'logs'+os.path.sep+'files.log'
@@ -100,9 +124,11 @@ def localFileList():
         open(logfile, 'w')
         return localFileList()
 
+
 def createSettingsFile():
     with open('settings.cfg', 'w') as cfg:
         cfg.write('[auth]\ngmail = alias@gmail.com\npassw = yourpassword\ndevid = 0000000000000000\n\n[app]\npkg = com.whatsapp\nsig = 38a0f7d505fe18fec64fbf343ecaaaf310dbd799\n\n[client]\npkg = com.google.android.gms\nsig = 38918a453d07199354f8b19af05ec6562ced5788\nver = 9877000')
+
 
 def getSingleFile(data, asset):
     data = json.loads(data)
@@ -110,17 +136,24 @@ def getSingleFile(data, asset):
         if entries['f'] == asset:
             return entries['f'], entries['m'], entries['r'], entries['s']
 
+
 def getMultipleFiles(data, folder):
     files = localFileList()
     data = json.loads(data)
     for entries in data:
-        if any(entries['m'] in lists for lists in files) == False or 'database' in entries['f'].lower():
+        if any(entries['m'] in lists for lists in files) == \
+                False or 'database' in entries['f'].lower():
             local = folder+os.path.sep+entries['f'].replace("/", os.path.sep)
             if os.path.isfile(local) and 'database' not in local.lower():
                 quit('Skipped: "'+local+'".')
             else:
-                downloadFileGoogleDrive(bearer, 'https://www.googleapis.com/drive/v2/files/'+entries['r']+'?alt=media', local)
+                downloadFileGoogleDrive(
+                    bearer,
+                    'https://www.googleapis.com/drive/v2/files/'
+                    + entries['r']+'?alt=media',
+                    local)
                 localFileLog(entries['m'])
+
 
 def runMain(mode, asset, bID):
     global bearer
@@ -156,7 +189,10 @@ def runMain(mode, asset, bID):
         if os.path.isfile(local) and 'database' not in local.lower():
             quit('Skipped: "'+local+'".')
         else:
-            downloadFileGoogleDrive(bearer, 'https://www.googleapis.com/drive/v2/files/'+r+'?alt=media', local)
+            downloadFileGoogleDrive(
+                bearer,
+                'https://www.googleapis.com/drive/v2/files/'+r+'?alt=media',
+                local)
             localFileLog(m)
     elif mode == 'sync':
         for i, drive in enumerate(drives):
@@ -165,6 +201,7 @@ def runMain(mode, asset, bID):
                 print('Backup: '+str(i))
                 folder = 'WhatsApp-' + str(i)
             getMultipleFiles(drive[1], folder)
+
 
 '''
 def main():
