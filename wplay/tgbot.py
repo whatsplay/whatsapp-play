@@ -22,8 +22,7 @@ def send_status(bot, update):
 
 
 def telegram_status(name):
-	person = name
-	print(person)
+	print(name)
 	#add bot token
 	global TOKEN
 	TOKEN = input("enter token: ")
