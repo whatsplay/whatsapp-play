@@ -44,6 +44,7 @@ Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Da
 - [x] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
 - [x] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
 - [x] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
+- [x] messagetimer script. ([pull #71](https://github.com/rpotter12/whatsapp-play/pull/71))
 - [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
 - [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
 - [ ] script to find the location of the person([issue #31](https://github.com/rpotter12/whatsapp-play/issues/31))
