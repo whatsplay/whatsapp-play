@@ -1,9 +1,9 @@
 from wplay import seleniumUtils as sel
 
 
-def blast(name):
+def blast(target):
+    #target = str(input("Enter the name of target: "))
 
-    target = str(name)  # str(input("Enter the name of target: "))
     message = str(input("Enter your message: "))
     number_of_messages = int(input("Enter the number of messages to blast: "))
 
