@@ -12,8 +12,10 @@ websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 
 def __get_XPATH_list(target=' '):
-    XPATH_list = {'wpp_target_title': f'//span[contains(@title, "{target}")]',
-                  'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'}
+    XPATH_list = {
+        'wpp_target_title': f'//span[contains(@title, "{target}")]',
+        'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
+    }
     return XPATH_list
 
 
