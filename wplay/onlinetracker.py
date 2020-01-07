@@ -19,12 +19,14 @@ def tracker(name):
 
     # create status.txt file and overwrite if exists
     status_file = open(
-        os.path.join('tracking_data', f'status_{name}.txt'), 'w')
+        os.path.join('tracking_data', f'status_{name}.txt'), 'w'
+    )
     status_file.close()
 
     # open status.txt in memory with append mode
     status_file = open(
-        os.path.join('tracking_data', f'status_{name}.txt'), 'a')
+        os.path.join('tracking_data', f'status_{name}.txt'), 'a'
+    )
 
     # check status
     is_sound_enabled = True
