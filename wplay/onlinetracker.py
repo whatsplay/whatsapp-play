@@ -1,6 +1,5 @@
 import time
 import os
-import subprocess
 from datetime import datetime
 from playsound import playsound
 from wplay import seleniumUtils as sel
