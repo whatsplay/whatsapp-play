@@ -3,18 +3,17 @@ import random
 from wplay import seleniumUtils as sel
 
 
-def msgTimer(name):
+def msgTimer(target):
+    #target = str(input("Enter the name of target: "))
 
-    target = str(name)
+    message_type_numbers = int(
+        input("How many types of messages will you send? "))
 
-    # enter message type number
-    nMessages = int(input("How many types of messages will you send? "))
-
-    # type your messages
     messages = list()
-    for i in range(0, nMessages):
+    for _ in range(message_type_numbers):
         messages.append(str(input("Enter your message: ")))
-    n = int(input("Enter the number of messages to send: "))
+
+    number_of_messages = int(input("Enter the number of messages to send: "))
 
     # Enter the time interval of the messages, it will be sent using a random
     # interval. For fixed interval, type the same number.
@@ -30,18 +29,15 @@ def msgTimer(name):
 
     message_area = sel.navigate_to_message_area(driver_wait, chosen_website)
 
-    # sends random messages multiple times
     random.seed()
-    i = 0
-    while i < n:
+    for _ in range(number_of_messages):
         if not messages:
             break
         else:
             sel.send_message(
-                message_area, messages[random.randrange(0, nMessages)])
+                message_area, messages[random.randrange(0, message_type_numbers)])
             if minimumTimeInterval != maximumTimeInterval:
                 time.sleep(random.randrange(minimumTimeInterval,
                                             maximumTimeInterval))
             else:
                 time.sleep(minimumTimeInterval)
-        i = i+1
