@@ -47,9 +47,9 @@ def tracker(name):
 
             if last_status != is_online:
                 # play sound when the person is online
-                if is_online == True:
+                if is_online:
                     try:
-                        if is_sound_enabled == True:
+                        if is_sound_enabled:
                             playsound('plucky.wav')
                     except:
                         print("Error: Couldn't play the sound.")
