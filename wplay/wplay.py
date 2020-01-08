@@ -69,7 +69,7 @@ def match_args(args):
         onlinetracker.tracker(args.name)
 
     elif args.wtgbot:
-        tgbot.telegram_message(args.name)
+        tgbot.telegram_status(args.name)
 
     elif args.wchat:
         wchat.chat(args.name)
