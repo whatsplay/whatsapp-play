@@ -120,7 +120,7 @@ async def __type_in_search_bar(page, target):
         visible=True
     )
     await page.type(whatsapp_selectors_dict['search_contact_input'], target)
-    await page.waitFor(4000)
+    await page.waitFor(3000)
 
 
 async def __contacts_filtered(page, target):
@@ -130,7 +130,7 @@ async def __contacts_filtered(page, target):
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_list_filtered'],
             visible=True,
-            timeout=5000
+            timeout=3000
         )
 
         contact_list = await page.querySelectorAll(
@@ -149,7 +149,7 @@ async def __search_groups_filtered(page, target):
         await page.waitForSelector(
             whatsapp_selectors_dict['group_list_filtered'],
             visible=True,
-            timeout=5000
+            timeout=3000
         )
 
         group_list = await page.querySelectorAll(
@@ -160,7 +160,7 @@ async def __search_groups_filtered(page, target):
     return group_list
 
 
-async def __get_target_list(contact_list, group_list):
+def __get_target_list(contact_list, group_list):
     return contact_list + group_list
 
 
@@ -202,9 +202,9 @@ async def __print_target_list(page, target, contact_list, group_list, target_lis
     try:
         for i in range(len(target_list)):
             if i < len(contact_list):
-                __verify_contact_list(page, target, contact_list, target_list, i)
+                await __verify_contact_list(page, target, contact_list, target_list, i)
             elif i >= len(contact_list):
-                __verify_group_list(page, target, contact_list, group_list, target_list, i)
+                await __verify_group_list(page, target, contact_list, group_list, target_list, i)
     except Exception as e:
         print(str(e))
 
@@ -221,7 +221,10 @@ async def __navigate_to_target(page, target_list, final_target_index):
 
 async def __wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
-    await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
+    try:
+        await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
+    except:
+        print("You don't belong this group anymore!")
 
 
 async def __send_message(page, message):
