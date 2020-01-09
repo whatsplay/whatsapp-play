@@ -18,8 +18,10 @@ async def main():
     await open_website(page_one, websites['whatsapp'])
     await open_new_chat(page_one)
     await type_in_search_bar(page_one, 'religare')
-    contact_list = await search_contacts(page_one, 'religare')
-    group_list = await search_groups(page_one, 'religare')
+    contact_list = await search_contacts_filtered(page_one, 'religare')
+    group_list = await search_groups_filtered(page_one, 'religare')
+    target_list = await get_target_list(contact_list, group_list)
+    await print_target_list(page_one, 'religare', contact_list, group_list, target_list)
     # await navigate_to_target(page_one, target_list)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
@@ -60,13 +62,14 @@ def __get_selectors_dict(target=None):
     return selectors_dict
 
 
-def __get_XPath_dict(target=None):
+'''def __get_XPath_dict(target=None):
     XPath_dict = {
-        # 'wpp_target_titles_chat_list': f'//span[contains(@title, "{target}")]',
-        # 'wpp_target_titles_contact_list': f'',
-        # 'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
+        'wpp_target_titles_chat_list': f'//span[contains(@title, "{target}")]',
+        'wpp_target_titles_contact_list': f'',
+        'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
     }
     return XPath_dict
+'''
 
 
 async def config_browser(is_headless, is_auto_close):
@@ -110,7 +113,7 @@ async def type_in_search_bar(page, target):
         await page.waitFor(3000)
 
 
-async def search_contacts(page, target):
+async def search_contacts_filtered(page, target):
     selectors_dict = __get_selectors_dict(target)
     contact_list = list()
 
@@ -124,25 +127,12 @@ async def search_contacts(page, target):
             contact_list = await page.querySelectorAll(
                 selectors_dict['contact_list_filtered']
             )
-
-            print("Contacts found:")
-            for i in range(len(contact_list)):
-                contact_title = await page.evaluate(
-                    f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
-                )
-                if (contact_title.lower().find(target.lower()) != -1):
-                    print(f'{i}: {contact_title}')
-                else:
-                    pass
-
-        except Exception as e:
-            #print(f'No contact named by "{target}"!')
-            print(str(e))
-    print('\n')
+        except:
+            print(f'No contact named by "{target}"!')
     return contact_list
 
 
-async def search_groups(page, target):
+async def search_groups_filtered(page, target):
     selectors_dict = __get_selectors_dict(target)
     group_list = list()
 
@@ -156,9 +146,30 @@ async def search_groups(page, target):
             group_list = await page.querySelectorAll(
                 selectors_dict['group_list_filtered']
             )
+        except:
+            print(f'No group named by "{target}"!')
+    return group_list
 
-            print("Groups found:")
-            for i in range(len(group_list)):
+
+async def get_target_list(contact_list, group_list):
+    return contact_list + group_list
+
+async def print_target_list(page, target, contact_list, group_list, target_list):
+    selectors_dict = __get_selectors_dict(target)
+    try:
+        print("Contacts found:")
+        for i in range(len(target_list)):
+            if i < len(contact_list):
+                contact_title = await page.evaluate(
+                    f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
+                )
+                if (contact_title.lower().find(target.lower()) != -1):
+                    print(f'{i}: {contact_title}')
+                else:
+                    pass
+            elif i >= len(contact_list):
+                if i == len(contact_list):
+                    print("Groups found:")
                 group_title = await page.evaluate(
                     f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i}].getAttribute("title")'
                 )
@@ -166,12 +177,11 @@ async def search_groups(page, target):
                     print(f'{i}: {group_title}')
                 else:
                     pass
+    except:
+        pass
 
-        except Exception as e:
-            #print(f'No group named by "{target}"!')
-            print(str(e))
-    return group_list
-
+async def choose_filtered_target(target_list):
+    final_target_index = input('Enter the number of the target you wish to choose: ')
 
 '''async def navigate_to_target(page, target_list):
     if page.url == websites['whatsapp']:
