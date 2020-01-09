@@ -1,4 +1,5 @@
 import sys
+import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -34,6 +35,7 @@ def find_and_navigate_to_target(driver_wait, chosen_website, target):
         person_title = driver_wait.until(
             EC.presence_of_element_located((
                 By.XPATH, XPATH_list['wpp_target_title'])))
+        time.sleep(3)
         person_title.click()
         print(f'{target} finded!')
     else:
