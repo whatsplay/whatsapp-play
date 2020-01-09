@@ -22,7 +22,8 @@ async def main():
     group_list = await search_groups_filtered(page_one, test_target)
     target_list = await get_target_list(contact_list, group_list)
     await print_target_list(page_one, test_target, contact_list, group_list, target_list)
-    # await navigate_to_target(page_one, target_list)
+    final_target_index = await choose_filtered_target(target_list)
+    await navigate_to_target(page_one, target_list, final_target_index)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
@@ -182,22 +183,16 @@ async def print_target_list(page, target, contact_list, group_list, target_list)
         print(str(e))
 
 async def choose_filtered_target(target_list):
-    final_target_index = input('Enter the number of the target you wish to choose: ')
+    final_target_index = int(input('Enter the number of the target you wish to choose: '))
+    return final_target_index
 
-'''async def navigate_to_target(page, target_list):
+async def navigate_to_target(page, target_list, final_target_index):
     if page.url == websites['whatsapp']:
-        # target_title = await page.xpath(XPath_dict['wpp_target_title'])
-        # target_title = await page.querySelectorAll(
-        #    selectors_dict['wpp_target_titles_contact_list']
-        # )
-        # await target_title[0].click()
+        await target_list[final_target_index].click()
         await target_list[0].click()
         print("CLICADO NO TARGET")
-    else:
-        print(f'You are in wrong page! {page.url}')
-        sys.exit()
 
-
+'''
 async def navigate_to_message_area(page):
     selectors_dict = __get_selectors_dict()
 
@@ -205,9 +200,6 @@ async def navigate_to_message_area(page):
         await page.waitForXPath(XPath_dict['wpp_message_area'], visible=True)
         message_area = await page.xpath(XPath_dict['wpp_message_area'])
         await message_area[0].click()
-    else:
-        print(f'You are in wrong page! {page.url}')
-        sys.exit()
     # return message_area
 
 
