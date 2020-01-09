@@ -1,13 +1,29 @@
 __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 
 '''
-HOW TO USE:
+NOTE, HOW TO USE:
 
-Go to the USER METHODS section and use the methods in sequence in your script!
+Go to the USER METHODS section and use the methods in your script!
+
+#EXAMPLE OF USAGE:
+from wplay import pyppeteerUtils as pyp
+async def my_script(target):
+    pages = pyp.await configure_browser_and_load_whatsapp(websites['whatsapp'])
+    await pyp.look_for_target_and_get_ready_for_conversation(pages[0], test_target)
+
+    message_parts = pyp.ask_user_for_message_breakline_mode()
+    await pyp.send_message_breakline_mode(pages[0], message_parts)
+
+    message = pyp.ask_user_for_message_normal_mode()
+    await pypsend_message_normal_mode(pages[0], message)
 
 '''
 
-import asyncio
+'''
+#TODO: Wait for the last message to be sent before closing the browser
+'''
+
+
 import sys
 from pyppeteer import launch
 
@@ -273,18 +289,4 @@ async def intercept(request, page_one, page_two):
     else:
         await request.continue_()
     page.on('request', lambda req: asyncio.ensure_future(intercept(req)))
-'''
-
-'''
-#FOR DEVS TO TEST THIS SCRIPT SOLO
-test_target = ''
-async def main():
-    pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])
-    await look_for_target_and_get_ready_for_conversation(pages[0], test_target)
-
-    message_parts = ask_user_for_message_breakline_mode()
-    await send_message_breakline_mode(pages[0], message_parts)
-    message = ask_user_for_message_normal_mode()
-    await send_message_normal_mode(pages[0], message)
-#asyncio.get_event_loop().run_until_complete(main())
 '''
