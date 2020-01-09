@@ -8,7 +8,7 @@ import sys
 from pyppeteer import launch
 
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
-test_target = 'family'
+test_target = 'alexandre'
 
 async def main():
     __patch_pyppeteer()
@@ -24,6 +24,7 @@ async def main():
     await print_target_list(page_one, test_target, contact_list, group_list, target_list)
     final_target_index = await choose_filtered_target(target_list)
     await navigate_to_target(page_one, target_list, final_target_index)
+    await send_message(page_one, 'oi, tudo bem?')
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
@@ -177,24 +178,28 @@ async def choose_filtered_target(target_list):
 async def navigate_to_target(page, target_list, final_target_index):
     if page.url == websites['whatsapp']:
         await target_list[final_target_index].click()
-        await target_list[0].click()
 
-'''
-async def navigate_to_message_area(page):
+
+async def wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
 
     if page.url == websites['whatsapp']:
-        await page.waitForXPath(XPath_dict['wpp_message_area'], visible=True)
-        message_area = await page.xpath(XPath_dict['wpp_message_area'])
-        await message_area[0].click()
-    # return message_area
+        await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
+        #message_area = await page.querySelector(whatsapp_selectors_dict['wpp_message_area'])
+        #await message_area.click()
 
 
 async def send_message(page, message):
-    await page.keyboard.type(str(message))
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
+    if page.url == websites['whatsapp']:
+        await page.type(
+            whatsapp_selectors_dict['message_area'],
+            message
+        )
+        await page.keyboard.press('Enter')
     #message_area.send_keys(message + Keys.ENTER)
 
-'''
+
 #loop = asyncio.get_event_loop()
 # asyncio.ensure_future(main())
 # loop.run_forever()
