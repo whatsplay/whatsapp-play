@@ -50,27 +50,15 @@ def __patch_pyppeteer():
     launcher.Connection = PatchedConnection
 
 
-def __get_selectors_dict(target=None):
-    selectors_dict = {
+def __get_whatsapp_selectors_dict(target=None):
+    whatsapp_selectors_dict = {
         'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
         'search_contact_input': '#app > div > div span > div > span > div div > label > input',
         'contact_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
         'group_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
-        # 'wpp_target_title_chat_list': f'#pane-side span[title="{target}"]',
-        # 'wpp_target_title_contact_list': f'#app > div > div span[title="{target}"]',
-        'wpp_message_area': '#main > footer div.selectable-text[contenteditable]'
+        'message_area': '#main > footer div.selectable-text[contenteditable]'
     }
-    return selectors_dict
-
-
-'''def __get_XPath_dict(target=None):
-    XPath_dict = {
-        'wpp_target_titles_chat_list': f'//span[contains(@title, "{target}")]',
-        'wpp_target_titles_contact_list': f'',
-        'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
-    }
-    return XPath_dict
-'''
+    return whatsapp_selectors_dict
 
 
 async def config_browser(is_headless, is_auto_close):
@@ -91,42 +79,42 @@ async def open_website(page, website):
 
 # Clicks in 'New Chat' to open your contact list
 async def open_new_chat(page):
-    selectors_dict = __get_selectors_dict()
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     if page.url == websites['whatsapp']:
         await page.waitForSelector(
-            selectors_dict['new_chat_button'],
+            whatsapp_selectors_dict['new_chat_button'],
             visible=True,
             timeout=0
         )
-        await page.click(selectors_dict['new_chat_button'])
+        await page.click(whatsapp_selectors_dict['new_chat_button'])
 
 
 async def type_in_search_bar(page, target):
-    selectors_dict = __get_selectors_dict(target)
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
 
     print(f'Looking for: {target}')
     if page.url == websites['whatsapp']:
         await page.waitForSelector(
-            selectors_dict['search_contact_input'],
+            whatsapp_selectors_dict['search_contact_input'],
             visible=True
         )
-        await page.type(selectors_dict['search_contact_input'], target)
+        await page.type(whatsapp_selectors_dict['search_contact_input'], target)
         await page.waitFor(3000)
 
 
 async def search_contacts_filtered(page, target):
-    selectors_dict = __get_selectors_dict(target)
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     contact_list = list()
 
     if page.url == websites['whatsapp']:
         try:
             await page.waitForSelector(
-                selectors_dict['contact_list_filtered'],
+                whatsapp_selectors_dict['contact_list_filtered'],
                 visible=True
             )
 
             contact_list = await page.querySelectorAll(
-                selectors_dict['contact_list_filtered']
+                whatsapp_selectors_dict['contact_list_filtered']
             )
         except:
             print(f'No contact named by "{target}"!')
@@ -134,18 +122,18 @@ async def search_contacts_filtered(page, target):
 
 
 async def search_groups_filtered(page, target):
-    selectors_dict = __get_selectors_dict(target)
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     group_list = list()
 
     if page.url == websites['whatsapp']:
         try:
             await page.waitForSelector(
-                selectors_dict['group_list_filtered'],
+                whatsapp_selectors_dict['group_list_filtered'],
                 visible=True
             )
 
             group_list = await page.querySelectorAll(
-                selectors_dict['group_list_filtered']
+                whatsapp_selectors_dict['group_list_filtered']
             )
         except:
             print(f'No group named by "{target}"!')
@@ -156,14 +144,14 @@ async def get_target_list(contact_list, group_list):
     return contact_list + group_list
 
 async def print_target_list(page, target, contact_list, group_list, target_list):
-    selectors_dict = __get_selectors_dict(target)
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     try:
         for i in range(len(target_list)):
             if i < len(contact_list):
                 if i == 0 and len(contact_list) > 0:
                     print("Contacts found:")
                 contact_title = await page.evaluate(
-                    f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
+                    f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
                 )
                 if (contact_title.lower().find(target.lower()) != -1):
                     print(f'{i}: {contact_title}')
@@ -173,7 +161,7 @@ async def print_target_list(page, target, contact_list, group_list, target_list)
                 if i == len(contact_list) and len(group_list) > 0:
                     print("Groups found:")
                 group_title = await page.evaluate(
-                    f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")'
+                    f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")'
                 )
                 if (group_title.lower().find(target.lower()) != -1):
                     print(f'{i- len(contact_list)}: {group_title}')
@@ -190,11 +178,10 @@ async def navigate_to_target(page, target_list, final_target_index):
     if page.url == websites['whatsapp']:
         await target_list[final_target_index].click()
         await target_list[0].click()
-        print("CLICADO NO TARGET")
 
 '''
 async def navigate_to_message_area(page):
-    selectors_dict = __get_selectors_dict()
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
 
     if page.url == websites['whatsapp']:
         await page.waitForXPath(XPath_dict['wpp_message_area'], visible=True)
