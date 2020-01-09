@@ -13,15 +13,7 @@ test_target = 'family'
 
 async def main():
     pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])
-    await open_new_chat(pages[0])
-    await type_in_search_bar(pages[0], test_target)
-    contact_list = await search_contacts_filtered(pages[0], test_target)
-    group_list = await search_groups_filtered(pages[0], test_target)
-    target_list = await get_target_list(contact_list, group_list)
-    await print_target_list(pages[0], test_target, contact_list, group_list, target_list)
-    final_target_index = await choose_filtered_target(target_list)
-    await navigate_to_target(pages[0], target_list, final_target_index)
-    await send_message(pages[0], 'oi, tudo bem?')
+    await look_for_target_and_get_ready_for_conversation(pages[0], test_target)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
@@ -34,15 +26,15 @@ async def configure_browser_and_load_whatsapp(website):
 
 
 async def look_for_target_and_get_ready_for_conversation(page, target):
-    __open_new_chat(page)
-    __type_in_search_bar(page, target)
-    contact_list = __contacts_filtered(page, target)
-    group_list = __search_groups_filtered(page, target)
+    await __open_new_chat(page)
+    await __type_in_search_bar(page, target)
+    contact_list = await __contacts_filtered(page, target)
+    group_list = await __search_groups_filtered(page, target)
     target_list = __get_target_list(contact_list, group_list)
-    __print_target_list(page, target, contact_list, group_list, target_list)
+    await __print_target_list(page, target, contact_list, group_list, target_list)
     final_target_index = __choose_filtered_target(target_list)
-    __navigate_to_target(page, target_list, final_target_index)
-    __wait_for_message_area(page)
+    await __navigate_to_target(page, target_list, final_target_index)
+    await __wait_for_message_area(page)
 
 
 #async def send_message_to_selected_target(page, message)
@@ -217,7 +209,7 @@ async def __print_target_list(page, target, contact_list, group_list, target_lis
         print(str(e))
 
 
-async def __choose_filtered_target(target_list):
+def __choose_filtered_target(target_list):
     final_target_index = int(
         input('Enter the number of the target you wish to choose: '))
     return final_target_index
