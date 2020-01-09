@@ -10,8 +10,8 @@ from pyppeteer import launch
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 
-
 async def main():
+    __patch_pyppeteer()
     browser = await config_browser(is_headless=False, is_auto_close=False)
     page_one, _ = await config_pages(browser)
     await page_one.bringToFront()
@@ -22,6 +22,29 @@ async def main():
     group_list = await search_groups(page_one, 'religare')
     # await navigate_to_target(page_one, target_list)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
+
+
+# https://github.com/miyakogi/pyppeteer/pull/160
+# We need this until this update is accepted.
+# BUG: The communication with Chromium are disconnected after 20 seconds.
+def __patch_pyppeteer():
+    from typing import Any
+    from pyppeteer import connection, launcher
+    import websockets.client
+
+    class PatchedConnection(connection.Connection):  # type: ignore
+        def __init__(self, *args: Any, **kwargs: Any) -> None:
+            super().__init__(*args, **kwargs)
+            self._ws = websockets.client.connect(
+                self._url,
+                loop=self._loop,
+                max_size=None,  # type: ignore
+                ping_interval=None,  # type: ignore
+                ping_timeout=None,  # type: ignore
+            )
+
+    connection.Connection = PatchedConnection
+    launcher.Connection = PatchedConnection
 
 
 def __get_selectors_dict(target=None):
@@ -86,7 +109,7 @@ async def type_in_search_bar(page, target):
         await page.type(selectors_dict['search_contact_input'], target)
         await page.waitFor(3000)
 
-        
+
 async def search_contacts(page, target):
     selectors_dict = __get_selectors_dict(target)
     contact_list = list()
@@ -107,9 +130,9 @@ async def search_contacts(page, target):
                 contact_title = await page.evaluate(
                     f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
                 )
-                if (contact_title.lower().find(target.lower()) != -1): 
+                if (contact_title.lower().find(target.lower()) != -1):
                     print(f'{i}: {contact_title}')
-                else: 
+                else:
                     pass
 
         except Exception as e:
@@ -117,7 +140,8 @@ async def search_contacts(page, target):
             print(str(e))
     print('\n')
     return contact_list
-    
+
+
 async def search_groups(page, target):
     selectors_dict = __get_selectors_dict(target)
     group_list = list()
@@ -138,10 +162,10 @@ async def search_groups(page, target):
                 group_title = await page.evaluate(
                     f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i}].getAttribute("title")'
                 )
-                if (group_title.lower().find(target.lower()) != -1): 
+                if (group_title.lower().find(target.lower()) != -1):
                     print(f'{i}: {group_title}')
-                else: 
-                    pass 
+                else:
+                    pass
 
         except Exception as e:
             #print(f'No group named by "{target}"!')
