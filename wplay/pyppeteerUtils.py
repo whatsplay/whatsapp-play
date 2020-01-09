@@ -1,8 +1,14 @@
+'''
+HOW TO USE
+
+'''
+
 import asyncio
 import sys
 from pyppeteer import launch
 
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
+
 
 
 async def main():
@@ -11,22 +17,31 @@ async def main():
     await page_one.bringToFront()
     await open_website(page_one, websites['whatsapp'])
     await open_new_chat(page_one)
-    await find_target(page_one, 'Amor')
-    await navigate_to_target(page_one, 'Amor')
+    await type_in_search_bar(page_one, 'religare')
+    contact_list = await search_contacts(page_one, 'religare')
+    group_list = await search_groups(page_one, 'religare')
+    # await navigate_to_target(page_one, target_list)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
-def __get_selectors_dict():
+def __get_selectors_dict(target=None):
     selectors_dict = {
-        'new_chat_button': '#side > header div[role="button"][title="New chat"]'
+        'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
+        'search_contact_input': '#app > div > div span > div > span > div div > label > input',
+        'contact_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
+        'group_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
+        # 'wpp_target_title_chat_list': f'#pane-side span[title="{target}"]',
+        # 'wpp_target_title_contact_list': f'#app > div > div span[title="{target}"]',
+        'wpp_message_area': '#main > footer div.selectable-text[contenteditable]'
     }
     return selectors_dict
 
 
-def __get_XPath_dict(target=' '):
+def __get_XPath_dict(target=None):
     XPath_dict = {
-        'wpp_target_title': f'//span[contains(@title, "{target}")]',
-        'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
+        # 'wpp_target_titles_chat_list': f'//span[contains(@title, "{target}")]',
+        # 'wpp_target_titles_contact_list': f'',
+        # 'wpp_message_area': '//div[@class="_3u328 copyable-text selectable-text"]'
     }
     return XPath_dict
 
@@ -44,7 +59,7 @@ async def config_pages(browser):
 
 
 async def open_website(page, website):
-    await page.goto(website, waitUntil='load')
+    await page.goto(website, waitUntil='networkidle2', timeout=0)
 
 
 # Clicks in 'New Chat' to open your contact list
@@ -59,36 +74,98 @@ async def open_new_chat(page):
         await page.click(selectors_dict['new_chat_button'])
 
 
-# Search for target in contact list
-async def find_target(page, target):
-    XPath_dict = __get_XPath_dict(target)
-    target_list = []
+async def type_in_search_bar(page, target):
+    selectors_dict = __get_selectors_dict(target)
+
     print(f'Looking for: {target}')
     if page.url == websites['whatsapp']:
-        target_list = await page.waitForXPath(
-            XPath_dict['wpp_target_title'],
-            visible=True,
-            timeout=0
+        await page.waitForSelector(
+            selectors_dict['search_contact_input'],
+            visible=True
         )
-        #print(f'{target_list} finded!')
-    else:
-        print(f'You are in wrong page! {page.url}')
-        sys.exit()
-    return target_list
+        await page.type(selectors_dict['search_contact_input'], target)
+        await page.waitFor(3000)
+
+        
+async def search_contacts(page, target):
+    selectors_dict = __get_selectors_dict(target)
+    contact_list = list()
+
+    if page.url == websites['whatsapp']:
+        try:
+            await page.waitForSelector(
+                selectors_dict['contact_list_filtered'],
+                visible=True
+            )
+
+            contact_list = await page.querySelectorAll(
+                selectors_dict['contact_list_filtered']
+            )
+
+            print("Contacts found:")
+            for i in range(len(contact_list)):
+                contact_title = await page.evaluate(
+                    f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
+                )
+                if (contact_title.lower().find(target.lower()) != -1): 
+                    print(f'{i}: {contact_title}')
+                else: 
+                    pass
+
+        except Exception as e:
+            #print(f'No contact named by "{target}"!')
+            print(str(e))
+    print('\n')
+    return contact_list
+    
+async def search_groups(page, target):
+    selectors_dict = __get_selectors_dict(target)
+    group_list = list()
+
+    if page.url == websites['whatsapp']:
+        try:
+            await page.waitForSelector(
+                selectors_dict['group_list_filtered'],
+                visible=True
+            )
+
+            group_list = await page.querySelectorAll(
+                selectors_dict['group_list_filtered']
+            )
+
+            print("Groups found:")
+            for i in range(len(group_list)):
+                group_title = await page.evaluate(
+                    f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i}].getAttribute("title")'
+                )
+                if (group_title.lower().find(target.lower()) != -1): 
+                    print(f'{i}: {group_title}')
+                else: 
+                    pass 
+
+        except Exception as e:
+            #print(f'No group named by "{target}"!')
+            print(str(e))
+    return group_list
 
 
-async def navigate_to_target(page, target):
+'''async def navigate_to_target(page, target_list):
     if page.url == websites['whatsapp']:
         # target_title = await page.xpath(XPath_dict['wpp_target_title'])
-        target_title = await page.querySelector('#pane-side span[title="Danilo Help"]')
-        await target_title[0].click()
+        # target_title = await page.querySelectorAll(
+        #    selectors_dict['wpp_target_titles_contact_list']
+        # )
+        # await target_title[0].click()
+        await target_list[0].click()
+        print("CLICADO NO TARGET")
     else:
         print(f'You are in wrong page! {page.url}')
         sys.exit()
 
 
 async def navigate_to_message_area(page):
-    XPath_dict = __get_XPath_dict()
+    selectors_dict = __get_selectors_dict()
+
     if page.url == websites['whatsapp']:
         await page.waitForXPath(XPath_dict['wpp_message_area'], visible=True)
         message_area = await page.xpath(XPath_dict['wpp_message_area'])
@@ -103,7 +180,7 @@ async def send_message(page, message):
     await page.keyboard.type(str(message))
     #message_area.send_keys(message + Keys.ENTER)
 
-
+'''
 #loop = asyncio.get_event_loop()
 # asyncio.ensure_future(main())
 # loop.run_forever()
