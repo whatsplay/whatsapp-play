@@ -12,20 +12,16 @@ test_target = 'family'
 
 
 async def main():
-    __patch_pyppeteer()
-    browser = await config_browser(is_headless=False, is_auto_close=False)
-    page_one, _ = await config_pages(browser)
-    await page_one.bringToFront()
-    await open_website(page_one, websites['whatsapp'])
-    await open_new_chat(page_one)
-    await type_in_search_bar(page_one, test_target)
-    contact_list = await search_contacts_filtered(page_one, test_target)
-    group_list = await search_groups_filtered(page_one, test_target)
+    pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])
+    await open_new_chat(pages[0])
+    await type_in_search_bar(pages[0], test_target)
+    contact_list = await search_contacts_filtered(pages[0], test_target)
+    group_list = await search_groups_filtered(pages[0], test_target)
     target_list = await get_target_list(contact_list, group_list)
-    await print_target_list(page_one, test_target, contact_list, group_list, target_list)
+    await print_target_list(pages[0], test_target, contact_list, group_list, target_list)
     final_target_index = await choose_filtered_target(target_list)
-    await navigate_to_target(page_one, target_list, final_target_index)
-    await send_message(page_one, 'oi, tudo bem?')
+    await navigate_to_target(pages[0], target_list, final_target_index)
+    await send_message(pages[0], 'oi, tudo bem?')
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
@@ -70,21 +66,31 @@ def __exit_if_wrong_url(page, url_to_check):
         return
 
 
-async def config_browser(is_headless, is_auto_close):
-    return await launch(headless=is_headless, autoClose=is_auto_close)
+async def __config_browser():
+    return await launch(headless=False, autoClose=False)
 
 
-async def config_pages(browser):
+async def __open_new_page(browser):
     await browser.newPage()
+
+
+async def __get_pages(browser):
     pages = await browser.pages()
-    page_one = pages[0]
-    page_two = pages[1]
-    return page_one, page_two
+    return pages
 
 
-async def open_website(page, website):
+async def __open_website(page, website):
+    await page.bringToFront()
     await page.goto(website, waitUntil='networkidle2', timeout=0)
     __exit_if_wrong_url(page, websites['whatsapp'])
+
+
+async def configure_browser_and_load_whatsapp(website):
+    __patch_pyppeteer()
+    browser = await __config_browser()
+    pages = await __get_pages(browser)
+    await __open_website(pages[0], website)
+    return pages
 
 
 # Clicks in 'New Chat' to open your contact list
