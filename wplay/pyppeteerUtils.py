@@ -25,6 +25,30 @@ async def main():
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
 
+async def configure_browser_and_load_whatsapp(website):
+    __patch_pyppeteer()
+    browser = await __config_browser()
+    pages = await __get_pages(browser)
+    await __open_website(pages[0], website)
+    return pages
+
+
+async def look_for_target_and_get_ready_for_conversation(page, target):
+    __open_new_chat(page)
+    __type_in_search_bar(page, target)
+    contact_list = __contacts_filtered(page, target)
+    group_list = __search_groups_filtered(page, target)
+    target_list = __get_target_list(contact_list, group_list)
+    __print_target_list(page, target, contact_list, group_list, target_list)
+    final_target_index = __choose_filtered_target(target_list)
+    __navigate_to_target(page, target_list, final_target_index)
+    __wait_for_message_area(page)
+
+
+#async def send_message_to_selected_target(page, message)
+#    __send_message(page, message)
+
+
 # https://github.com/miyakogi/pyppeteer/pull/160
 # HACK: We need this until this update is accepted.
 # BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
@@ -85,16 +109,8 @@ async def __open_website(page, website):
     __exit_if_wrong_url(page, websites['whatsapp'])
 
 
-async def configure_browser_and_load_whatsapp(website):
-    __patch_pyppeteer()
-    browser = await __config_browser()
-    pages = await __get_pages(browser)
-    await __open_website(pages[0], website)
-    return pages
-
-
 # Clicks in 'New Chat' to open your contact list
-async def open_new_chat(page):
+async def __open_new_chat(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
@@ -104,7 +120,7 @@ async def open_new_chat(page):
     await page.click(whatsapp_selectors_dict['new_chat_button'])
 
 
-async def type_in_search_bar(page, target):
+async def __type_in_search_bar(page, target):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     print(f'Looking for: {target}')
     await page.waitForSelector(
@@ -115,7 +131,7 @@ async def type_in_search_bar(page, target):
     await page.waitFor(4000)
 
 
-async def search_contacts_filtered(page, target):
+async def __contacts_filtered(page, target):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     contact_list = list()
     try:
@@ -133,7 +149,7 @@ async def search_contacts_filtered(page, target):
     return contact_list
 
 
-async def search_groups_filtered(page, target):
+async def __search_groups_filtered(page, target):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     group_list = list()
 
@@ -152,12 +168,12 @@ async def search_groups_filtered(page, target):
     return group_list
 
 
-async def get_target_list(contact_list, group_list):
+async def __get_target_list(contact_list, group_list):
     return contact_list + group_list
 
 
 # FIXME: Need Refactoration
-async def verify_contact_list(page, target, contact_list, target_list, i):
+async def __verify_contact_list(page, target, contact_list, target_list, i):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
 
     if i == 0 and len(contact_list) > 0:
@@ -173,7 +189,7 @@ async def verify_contact_list(page, target, contact_list, target_list, i):
 
 
 # FIXME: Need Refactoration
-async def verify_group_list(page, target, contact_list, group_list, target_list, i):
+async def __verify_group_list(page, target, contact_list, group_list, target_list, i):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
 
     if i == len(contact_list) and len(group_list) > 0:
@@ -189,34 +205,34 @@ async def verify_group_list(page, target, contact_list, group_list, target_list,
 
 
 # FIXME: Need Refactoration
-async def print_target_list(page, target, contact_list, group_list, target_list):
+async def __print_target_list(page, target, contact_list, group_list, target_list):
 
     try:
         for i in range(len(target_list)):
             if i < len(contact_list):
-                verify_contact_list(page, target, contact_list, target_list, i)
+                __verify_contact_list(page, target, contact_list, target_list, i)
             elif i >= len(contact_list):
-                verify_group_list(page, target, contact_list, group_list, target_list, i)
+                __verify_group_list(page, target, contact_list, group_list, target_list, i)
     except Exception as e:
         print(str(e))
 
 
-async def choose_filtered_target(target_list):
+async def __choose_filtered_target(target_list):
     final_target_index = int(
         input('Enter the number of the target you wish to choose: '))
     return final_target_index
 
 
-async def navigate_to_target(page, target_list, final_target_index):
+async def __navigate_to_target(page, target_list, final_target_index):
     await target_list[final_target_index].click()
 
 
-async def wait_for_message_area(page):
+async def __wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
 
 
-async def send_message(page, message):
+async def __send_message(page, message):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.type(
         whatsapp_selectors_dict['message_area'],
