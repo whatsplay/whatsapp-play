@@ -14,9 +14,14 @@ test_target = 'family'
 async def main():
     pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])
     await look_for_target_and_get_ready_for_conversation(pages[0], test_target)
-    # await navigate_to_message_area(page_one, websites['whatsapp'])
+
+    message_parts = ask_user_for_message_breakline_mode()
+    await send_message_breakline_mode(pages[0], message_parts)
+    message = ask_user_for_message_normal_mode()
+    await send_message_normal_mode(pages[0], message)
 
 
+'''############################# USER METHODS ##############################'''
 async def configure_browser_and_load_whatsapp(website):
     __patch_pyppeteer()
     browser = await __config_browser()
@@ -37,8 +42,45 @@ async def look_for_target_and_get_ready_for_conversation(page, target):
     await __wait_for_message_area(page)
 
 
-#async def send_message_to_selected_target(page, message)
-#    __send_message(page, message)
+def ask_user_for_message_normal_mode():
+    return str(input("Write your message: "))
+
+
+async def send_message_normal_mode(page, message):
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
+    await page.type(
+        whatsapp_selectors_dict['message_area'],
+        message
+    )
+    await page.keyboard.press('Enter')
+
+
+def ask_user_for_message_breakline_mode():
+    message_parts = []
+    i = 0
+    print("Write your message ('Enter' mean breakline)(Write '#ok' to finish):")
+    while True:
+        message_parts.append(str(input()))
+        if message_parts[i] == '#ok':
+            message_parts.pop(i)
+            break
+        i += 1
+    return message_parts
+
+
+async def send_message_breakline_mode(page, message_parts):
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
+
+    for i in range(len(message_parts)):
+        await page.type(
+            whatsapp_selectors_dict['message_area'],
+            message_parts[i]
+        )
+        await page.keyboard.down('Shift')
+        await page.keyboard.press('Enter')
+        await page.keyboard.up('Shift')
+    await page.keyboard.press('Enter')
+'''#########################################################################'''
 
 
 # https://github.com/miyakogi/pyppeteer/pull/160
@@ -172,9 +214,9 @@ async def __verify_contact_list(page, target, contact_list, target_list, i):
         print("Contacts found:")
 
     contact_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")')
-    
+
     if (contact_title.lower().find(target.lower()) != -1
-        and len(contact_list) > 0):
+            and len(contact_list) > 0):
         print(f'{i}: {contact_title}')
     else:
         target_list.pop(i)
@@ -186,11 +228,11 @@ async def __verify_group_list(page, target, contact_list, group_list, target_lis
 
     if i == len(contact_list) and len(group_list) > 0:
         print("Groups found:")
-    
+
     group_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")')
-    
+
     if (group_title.lower().find(target.lower()) != -1
-        and len(group_list) > 0):
+            and len(group_list) > 0):
         print(f'{i- len(contact_list)}: {group_title}')
     else:
         target_list.pop(i)
@@ -222,18 +264,10 @@ async def __navigate_to_target(page, target_list, final_target_index):
 async def __wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     try:
-        await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
-    except:
+        await page.waitForSelector(whatsapp_selectors_dict['message_area'])
+    except Exception as e:
         print("You don't belong this group anymore!")
-
-
-async def __send_message(page, message):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
-    await page.type(
-        whatsapp_selectors_dict['message_area'],
-        message
-    )
-    await page.keyboard.press('Enter')
+        print(str(e))
 
 
 asyncio.get_event_loop().run_until_complete(main())
