@@ -8,7 +8,7 @@ import sys
 from pyppeteer import launch
 
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
-test_target = 'alexandre'
+test_target = 'family'
 
 
 async def main():
@@ -63,6 +63,13 @@ def __get_whatsapp_selectors_dict(target=None):
     return whatsapp_selectors_dict
 
 
+def __exit_if_wrong_url(page, url_to_check):
+    if not page.url == url_to_check:
+        print("Wrong URL!")
+        sys.exit()
+        return
+
+
 async def config_browser(is_headless, is_auto_close):
     return await launch(headless=is_headless, autoClose=is_auto_close)
 
@@ -77,17 +84,11 @@ async def config_pages(browser):
 
 async def open_website(page, website):
     await page.goto(website, waitUntil='networkidle2', timeout=0)
-
-
-def return_if_wrong_url(page,url_to_check):
-    if not page.url == url_to_check: 
-        print("Wrong URL!")
-        return
+    __exit_if_wrong_url(page, websites['whatsapp'])
 
 
 # Clicks in 'New Chat' to open your contact list
-async def open_new_chat(page):  
-    return_if_wrong_url(page, websites['whatsapp'])
+async def open_new_chat(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
@@ -98,7 +99,6 @@ async def open_new_chat(page):
 
 
 async def type_in_search_bar(page, target):
-    return_if_wrong_url(page, websites['whatsapp'])
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     print(f'Looking for: {target}')
     await page.waitForSelector(
@@ -106,17 +106,17 @@ async def type_in_search_bar(page, target):
         visible=True
     )
     await page.type(whatsapp_selectors_dict['search_contact_input'], target)
-    await page.waitFor(3000)
+    await page.waitFor(4000)
 
 
 async def search_contacts_filtered(page, target):
-    return_if_wrong_url(page, websites['whatsapp'])
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     contact_list = list()
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_list_filtered'],
-            visible=True
+            visible=True,
+            timeout=5000
         )
 
         contact_list = await page.querySelectorAll(
@@ -128,14 +128,14 @@ async def search_contacts_filtered(page, target):
 
 
 async def search_groups_filtered(page, target):
-    return_if_wrong_url(page, websites['whatsapp'])
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     group_list = list()
 
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['group_list_filtered'],
-            visible=True
+            visible=True,
+            timeout=5000
         )
 
         group_list = await page.querySelectorAll(
@@ -150,34 +150,47 @@ async def get_target_list(contact_list, group_list):
     return contact_list + group_list
 
 
-async def print_target_list(page, target, contact_list, group_list, target_list):
-    return_if_wrong_url(page, websites['whatsapp'])
+# FIXME: Need Refactoration
+async def verify_contact_list(page, target, contact_list, target_list, i):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
+
+    if i == 0 and len(contact_list) > 0:
+        print("Contacts found:")
+
+    contact_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")')
+    
+    if (contact_title.lower().find(target.lower()) != -1
+        and len(contact_list) > 0):
+        print(f'{i}: {contact_title}')
+    else:
+        target_list.pop(i)
+
+
+# FIXME: Need Refactoration
+async def verify_group_list(page, target, contact_list, group_list, target_list, i):
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
+
+    if i == len(contact_list) and len(group_list) > 0:
+        print("Groups found:")
+    
+    group_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")')
+    
+    if (group_title.lower().find(target.lower()) != -1
+        and len(group_list) > 0):
+        print(f'{i- len(contact_list)}: {group_title}')
+    else:
+        target_list.pop(i)
+
+
+# FIXME: Need Refactoration
+async def print_target_list(page, target, contact_list, group_list, target_list):
+
     try:
         for i in range(len(target_list)):
             if i < len(contact_list):
-                if i == 0 and len(contact_list) > 0:
-                    print("Contacts found:")
-                contact_title = await page.evaluate(
-                    f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
-                )
-                if (
-                    contact_title.lower().find(target.lower()) != -1
-                    and len(contact_list) > 0
-                ):
-                    print(f'{i}: {contact_title}')
-                else:
-                    target_list.pop(i)
+                verify_contact_list(page, target, contact_list, target_list, i)
             elif i >= len(contact_list):
-                if i == len(contact_list) and len(group_list) > 0:
-                    print("Groups found:")
-                group_title = await page.evaluate(
-                    f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")'
-                )
-                if (group_title.lower().find(target.lower()) != -1):
-                    print(f'{i- len(contact_list)}: {group_title}')
-                else:
-                    target_list.pop(i)
+                verify_group_list(page, target, contact_list, group_list, target_list, i)
     except Exception as e:
         print(str(e))
 
@@ -189,18 +202,15 @@ async def choose_filtered_target(target_list):
 
 
 async def navigate_to_target(page, target_list, final_target_index):
-    return_if_wrong_url(page, websites['whatsapp'])
     await target_list[final_target_index].click()
 
 
 async def wait_for_message_area(page):
-    return_if_wrong_url(page, websites['whatsapp'])
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.waitForSelector(whatsapp_selectors_dict['wpp_message_area'])
 
 
 async def send_message(page, message):
-    return_if_wrong_url(page, websites['whatsapp'])
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.type(
         whatsapp_selectors_dict['message_area'],
