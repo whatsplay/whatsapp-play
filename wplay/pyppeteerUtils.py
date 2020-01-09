@@ -8,7 +8,7 @@ import sys
 from pyppeteer import launch
 
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
-
+test_target = 'family'
 
 async def main():
     __patch_pyppeteer()
@@ -17,11 +17,11 @@ async def main():
     await page_one.bringToFront()
     await open_website(page_one, websites['whatsapp'])
     await open_new_chat(page_one)
-    await type_in_search_bar(page_one, 'religare')
-    contact_list = await search_contacts_filtered(page_one, 'religare')
-    group_list = await search_groups_filtered(page_one, 'religare')
+    await type_in_search_bar(page_one, test_target)
+    contact_list = await search_contacts_filtered(page_one, test_target)
+    group_list = await search_groups_filtered(page_one, test_target)
     target_list = await get_target_list(contact_list, group_list)
-    await print_target_list(page_one, 'religare', contact_list, group_list, target_list)
+    await print_target_list(page_one, test_target, contact_list, group_list, target_list)
     # await navigate_to_target(page_one, target_list)
     # await navigate_to_message_area(page_one, websites['whatsapp'])
 
@@ -157,28 +157,29 @@ async def get_target_list(contact_list, group_list):
 async def print_target_list(page, target, contact_list, group_list, target_list):
     selectors_dict = __get_selectors_dict(target)
     try:
-        print("Contacts found:")
         for i in range(len(target_list)):
             if i < len(contact_list):
+                if i == 0 and len(contact_list) > 0:
+                    print("Contacts found:")
                 contact_title = await page.evaluate(
                     f'document.querySelectorAll("{selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")'
                 )
                 if (contact_title.lower().find(target.lower()) != -1):
                     print(f'{i}: {contact_title}')
                 else:
-                    pass
+                    target_list.pop(i)
             elif i >= len(contact_list):
-                if i == len(contact_list):
+                if i == len(contact_list) and len(group_list) > 0:
                     print("Groups found:")
                 group_title = await page.evaluate(
-                    f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i}].getAttribute("title")'
+                    f'document.querySelectorAll("{selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")'
                 )
                 if (group_title.lower().find(target.lower()) != -1):
-                    print(f'{i}: {group_title}')
+                    print(f'{i- len(contact_list)}: {group_title}')
                 else:
-                    pass
-    except:
-        pass
+                    target_list.pop(i)
+    except Exception as e:
+        print(str(e))
 
 async def choose_filtered_target(target_list):
     final_target_index = input('Enter the number of the target you wish to choose: ')
