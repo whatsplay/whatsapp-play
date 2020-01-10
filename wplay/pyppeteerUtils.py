@@ -182,8 +182,8 @@ async def __contacts_filtered(page, target):
         contact_list = await page.querySelectorAll(
             whatsapp_selectors_dict['contact_list_filtered']
         )
-    except:
-        print(f'No contact named by "{target}"!')
+    except Exception as e:
+        print(f'No contact named by "{target}"! Error: {str(e)}')
     return contact_list
 
 
@@ -201,8 +201,8 @@ async def __search_groups_filtered(page, target):
         group_list = await page.querySelectorAll(
             whatsapp_selectors_dict['group_list_filtered']
         )
-    except:
-        print(f'No group named by "{target}"!')
+    except Exception as e:
+        print(f'No group named by "{target}"! Error: {str(e)}')
     return group_list
 
 
@@ -210,49 +210,60 @@ def __get_target_list(contact_list, group_list):
     return contact_list + group_list
 
 
-# FIXME: Need Refactoration
-async def __verify_contact_list(page, target, contact_list, target_list, i):
+# FIXME: Needs refactoring
+async def __verify_contact_list(page, target, contact_list, target_list, last_contact_index, i):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
 
     if i == 0 and len(contact_list) > 0:
         print("Contacts found:")
+        last_contact_index = 0
 
     contact_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_filtered"]}")[{i}].getAttribute("title")')
 
     if (contact_title.lower().find(target.lower()) != -1
             and len(contact_list) > 0):
         print(f'{i}: {contact_title}')
+        last_contact_index += 1
     else:
         target_list.pop(i)
 
+    return last_contact_index
 
-# FIXME: Need Refactoration
-async def __verify_group_list(page, target, contact_list, group_list, target_list, i):
+
+# FIXME: Needs refactoring
+async def __verify_group_list(page, target, contact_list, group_list, target_list, last_contact_index, i):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
 
     if i == len(contact_list) and len(group_list) > 0:
-        print("Groups found:")
+        if (i - len(contact_list)) > last_contact_index:
+            print("Groups found:")
 
     group_title = await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_filtered"]}")[{i - len(contact_list)}].getAttribute("title")')
 
     if (group_title.lower().find(target.lower()) != -1
             and len(group_list) > 0):
-        print(f'{i- len(contact_list)}: {group_title}')
+        if (i - len(contact_list)) > last_contact_index:
+            print(f'{i- len(contact_list)}: {group_title}')
     else:
         target_list.pop(i)
 
 
-# FIXME: Need Refactoration
+# FIXME: Needs refactoring
+# OBS: The last_contact_index is a trick to hide a false-positive group
+# False positive group -> Groups name use the same div as contact status, so we need
+#   to verify if target name is in title, not in status. But, sometimes the status contain
+#   the target name and shows up as false-positive group. 
 async def __print_target_list(page, target, contact_list, group_list, target_list):
 
     try:
+        last_contact_index = 0
         for i in range(len(target_list)):
             if i < len(contact_list):
-                await __verify_contact_list(page, target, contact_list, target_list, i)
+                last_contact_index = await __verify_contact_list(page, target, contact_list, target_list, last_contact_index, i)
             elif i >= len(contact_list):
-                await __verify_group_list(page, target, contact_list, group_list, target_list, i)
+                await __verify_group_list(page, target, contact_list, group_list, target_list, last_contact_index, i)
     except Exception as e:
-        print(str(e))
+        print(f'Error: {str(e)}')
 
 
 def __choose_filtered_target(target_list):
@@ -281,6 +292,7 @@ async def __verify_target_title(page, target):
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
         sys.exit()
+
 
 async def __wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
