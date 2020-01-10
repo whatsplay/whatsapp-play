@@ -21,6 +21,8 @@ async def my_script(target):
 
 '''
 #TODO: Wait for the last message to be sent before closing the browser
+#TODO: Change __config_browser autoClose to True
+#TODO: Verify if target is included in title
 '''
 
 
@@ -51,43 +53,34 @@ async def look_for_target_and_get_ready_for_conversation(page, target):
     await __wait_for_message_area(page)
 
 
-def ask_user_for_message_normal_mode():
+def ask_user_for_message():
     return str(input("Write your message: "))
 
-
-async def send_message_normal_mode(page, message):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
-    await page.type(
-        whatsapp_selectors_dict['message_area'],
-        message
-    )
-    await page.keyboard.press('Enter')
-
-
 def ask_user_for_message_breakline_mode():
-    message_parts = []
+    message = []
     i = 0
     print("Write your message ('Enter' mean breakline)(Write '#ok' to finish):")
     while True:
-        message_parts.append(str(input()))
-        if message_parts[i] == '#ok':
-            message_parts.pop(i)
+        message.append(str(input()))
+        if message[i] == '#ok':
+            message.pop(i)
             break
         i += 1
-    return message_parts
+    return message
 
 
-async def send_message_breakline_mode(page, message_parts):
+async def send_message(page, message):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
 
-    for i in range(len(message_parts)):
+    for i in range(len(message)):
         await page.type(
             whatsapp_selectors_dict['message_area'],
-            message_parts[i]
+            message[i]
         )
-        await page.keyboard.down('Shift')
-        await page.keyboard.press('Enter')
-        await page.keyboard.up('Shift')
+        if isinstance(message, list):
+            await page.keyboard.down('Shift')
+            await page.keyboard.press('Enter')
+            await page.keyboard.up('Shift')
     await page.keyboard.press('Enter')
 '''#########################################################################'''
 
