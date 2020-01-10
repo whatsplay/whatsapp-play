@@ -44,13 +44,15 @@ async def configure_browser_and_load_whatsapp(website):
 async def look_for_target_and_get_ready_for_conversation(page, target):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
-    contact_list = await __contacts_filtered(page, target)
+    contact_list = await __search_contacts_filtered(page, target)
     group_list = await __search_groups_filtered(page, target)
     target_list = __get_target_list(contact_list, group_list)
     await __print_target_list(page, target, contact_list, group_list, target_list)
     final_target_index = __choose_filtered_target(target_list)
     await __navigate_to_target(page, target_list, final_target_index)
-    await __verify_target_title(page, target)
+    target_focused_title = await __get_focused_target_title(page, target)
+    __print_selected_target_title(target_focused_title)
+    await __verify_target_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
 
 
@@ -169,7 +171,7 @@ async def __type_in_search_bar(page, target):
     await page.waitFor(3000)
 
 
-async def __contacts_filtered(page, target):
+async def __search_contacts_filtered(page, target):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     contact_list = list()
     try:
@@ -276,22 +278,30 @@ async def __navigate_to_target(page, target_list, final_target_index):
     await target_list[final_target_index].click()
 
 
-async def __verify_target_title(page, target):
+async def __get_focused_target_title(page, target):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     try:
         await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'])
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
-        if target_focused_title.lower().find(target.lower()) == -1:
-            print(f"You're focused in the wrong target, {target_focused_title}")
-            must_continue = str(input("Do you want to continue (yes/no)? "))
-            accepted_yes = {'yes', 'y'}
-            if must_continue.lower() in accepted_yes:
-                pass
-            else:
-                sys.exit()
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
         sys.exit()
+    return target_focused_title
+
+
+def __print_selected_target_title(target_focused_title):
+    print(f"You've selected the target named by: {target_focused_title}")
+
+
+async def __verify_target_title(page, target, target_focused_title):
+    if target_focused_title.lower().find(target.lower()) == -1:
+        print(f"You're focused in the wrong target, {target_focused_title}")
+        must_continue = str(input("Do you want to continue (yes/no)? "))
+        accepted_yes = {'yes', 'y'}
+        if must_continue.lower() in accepted_yes:
+            pass
+        else:
+            sys.exit()
 
 
 async def __wait_for_message_area(page):
