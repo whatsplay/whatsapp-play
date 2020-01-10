@@ -50,11 +50,13 @@ async def look_for_target_and_get_ready_for_conversation(page, target):
     await __print_target_list(page, target, contact_list, group_list, target_list)
     final_target_index = __choose_filtered_target(target_list)
     await __navigate_to_target(page, target_list, final_target_index)
+    await __verify_target_title(page, target)
     await __wait_for_message_area(page)
 
 
 def ask_user_for_message():
     return str(input("Write your message: "))
+
 
 def ask_user_for_message_breakline_mode():
     message = []
@@ -114,6 +116,7 @@ def __get_whatsapp_selectors_dict(target=None):
         'search_contact_input': '#app > div > div span > div > span > div div > label > input',
         'contact_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
         'group_list_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
+        'target_focused_title' : '#main > header div > div > span[title]',
         'message_area': '#main > footer div.selectable-text[contenteditable]'
     }
     return whatsapp_selectors_dict
@@ -262,13 +265,29 @@ async def __navigate_to_target(page, target_list, final_target_index):
     await target_list[final_target_index].click()
 
 
+async def __verify_target_title(page, target):
+    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
+    try:
+        await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'])
+        target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
+        if target_focused_title.lower().find(target.lower()) == -1:
+            print(f"You're focused in the wrong target, {target_focused_title}")
+            must_continue = str(input("Do you want to continue (yes/no)? "))
+            accepted_yes = {'yes', 'y'}
+            if must_continue.lower() in accepted_yes:
+                pass
+            else:
+                sys.exit()
+    except Exception as e:
+        print(f'No target selected! Error: {str(e)}')
+        sys.exit()
+
 async def __wait_for_message_area(page):
     whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     try:
         await page.waitForSelector(whatsapp_selectors_dict['message_area'])
     except Exception as e:
-        print("You don't belong this group anymore!")
-        print(str(e))
+        print(f"You don't belong this group anymore! Error: {str(e)}")
 
 
 '''
