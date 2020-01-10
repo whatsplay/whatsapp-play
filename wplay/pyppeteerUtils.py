@@ -11,11 +11,11 @@ async def my_script(target):
     pages = pyp.await configure_browser_and_load_whatsapp(websites['whatsapp'])
     await pyp.look_for_target_and_get_ready_for_conversation(pages[0], test_target)
 
-    message_parts = pyp.ask_user_for_message_breakline_mode()
-    await pyp.send_message_breakline_mode(pages[0], message_parts)
+    message = pyp.ask_user_for_message_breakline_mode()
+    await pyp.send_message(pages[0], message)
 
-    message = pyp.ask_user_for_message_normal_mode()
-    await pypsend_message_normal_mode(pages[0], message)
+    message2 = pyp.ask_user_for_message()
+    await pyp.send_message(pages[0], message2)
 
 '''
 
