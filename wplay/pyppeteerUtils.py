@@ -36,7 +36,6 @@ async def my_script(target):
 
 
 # region IMPORTS
-import asyncio
 import sys
 from pyppeteer import launch
 # endregion
@@ -406,6 +405,7 @@ async def intercept(request, page_one, page_two):
 
 # region DEV TEST
 '''
+import asyncio
 async def main():
     test_target = 'family'
     pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])

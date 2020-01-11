@@ -62,9 +62,8 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
+
 # functions for different arguments
-
-
 async def match_args(args):
     if args.wtrack:
         onlinetracker.tracker(args.name)
@@ -79,7 +78,7 @@ async def match_args(args):
         await messageblast.blast(args.name)
 
     elif args.wtimer:
-        messagetimer.msgTimer(args.name)
+        await messagetimer.msgTimer(args.name)
 
     elif args.pull:
         try:
