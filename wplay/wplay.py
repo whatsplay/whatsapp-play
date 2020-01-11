@@ -82,7 +82,7 @@ async def match_args(args):
         tgbot.telegram_status(args.name)
 
     elif args.wchat:
-        wchat.chat(args.name)
+        await wchat.chat(args.name)
 
     elif args.wblast:
         await messageblast.blast(args.name)
