@@ -20,7 +20,6 @@ def print_logo(text_logo):
 
 # parse positional and optional arguments
 def get_arguments():
-
     parser = argparse.ArgumentParser(description = 'WhatApp-play')
     parser.add_argument(
         "name",
