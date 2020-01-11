@@ -78,9 +78,14 @@ async def search_for_target_and_get_ready_for_conversation(page, target, hide_gr
 
     return choosed_target
 
+
 async def get_status_from_focused_target(page):
-    
-    pass
+    #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
+    try:
+        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")'))
+        return status
+    except:
+        return '#status not found'
 
 
 def ask_user_for_message():
