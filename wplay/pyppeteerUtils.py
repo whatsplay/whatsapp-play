@@ -95,8 +95,6 @@ def ask_user_for_message_breakline_mode():
 
 
 async def send_message(page, message):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
-
     for i in range(len(message)):
         await page.type(
             whatsapp_selectors_dict['message_area'],
@@ -136,17 +134,14 @@ def __patch_pyppeteer():
 
 
 # region UTILS
-# FIXME
-def __get_whatsapp_selectors_dict(target=None):
-    whatsapp_selectors_dict = {
-        'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
-        'search_contact_input': '#app > div > div span > div > span > div div > label > input',
-        'contact_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
-        'group_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
-        'target_focused_title': '#main > header div > div > span[title]',
-        'message_area': '#main > footer div.selectable-text[contenteditable]'
-    }
-    return whatsapp_selectors_dict
+whatsapp_selectors_dict = {
+    'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
+    'search_contact_input': '#app > div > div span > div > span > div div > label > input',
+    'contact_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
+    'group_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
+    'target_focused_title': '#main > header div > div > span[title]',
+    'message_area': '#main > footer div.selectable-text[contenteditable]'
+}
 
 
 def __exit_if_wrong_url(page, url_to_check):
@@ -180,7 +175,6 @@ async def __open_website(page, website):
 
 # region SELECT TARGET
 async def __open_new_chat(page):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
         visible=True,
@@ -191,7 +185,6 @@ async def __open_new_chat(page):
 
 
 async def __type_in_search_bar(page, target):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     print(f'Looking for: {target}')
     await page.waitForSelector(
         whatsapp_selectors_dict['search_contact_input'],
@@ -202,7 +195,6 @@ async def __type_in_search_bar(page, target):
 
 
 async def __get_contacts_elements_filtered(page, target):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     contact_list_elements_unchecked = list()
     try:
         await page.waitForSelector(
@@ -220,7 +212,6 @@ async def __get_contacts_elements_filtered(page, target):
 
 
 async def __get_groups_elements_filtered(page, target):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict(target)
     group_list_elements_unchecked = list()
 
     try:
@@ -239,7 +230,6 @@ async def __get_groups_elements_filtered(page, target):
 
 
 async def __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     contact_titles_unchecked = []
     for i in range(len(contact_list_elements_unchecked)):
         contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered"]}")[{i}].getAttribute("title")'))
@@ -247,7 +237,6 @@ async def __get_contacts_titles_from_elements_unchecked(page, contact_list_eleme
 
 
 async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     group_titles_unchecked = []
     for i in range(len(group_list_elements_unchecked)):
         group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered"]}")[{i}].getAttribute("title")'))
@@ -367,7 +356,6 @@ async def __navigate_to_target(page, target_tuple, target_index_choosed):
 
 
 async def __get_focused_target_title(page, target):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     try:
         await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'])
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
@@ -393,7 +381,6 @@ def __check_target_focused_title(page, target, target_focused_title):
 
 
 async def __wait_for_message_area(page):
-    whatsapp_selectors_dict = __get_whatsapp_selectors_dict()
     try:
         await page.waitForSelector(whatsapp_selectors_dict['message_area'])
     except Exception as e:
