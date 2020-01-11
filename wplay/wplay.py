@@ -1,6 +1,7 @@
 import argparse
 import asyncio
 import sys
+from pyfiglet import Figlet
 from wplay import onlinetracker
 from wplay import messageblast
 from wplay import messagetimer
@@ -12,8 +13,14 @@ from wplay import tgbot
 #TODO: Change 'name' to 'target'
 
 
+def print_logo(text_logo):
+    figlet = Figlet(font='slant')
+    print(figlet.renderText(text_logo))
+
+
 # parse positional and optional arguments
 def get_arguments():
+
     parser = argparse.ArgumentParser(description = 'WhatApp-play')
     parser.add_argument(
         "name",
@@ -96,6 +103,7 @@ async def match_args(args):
 
 
 async def main():
+    print_logo("wplay")
     args = get_arguments()
     try:
         await match_args(args)
