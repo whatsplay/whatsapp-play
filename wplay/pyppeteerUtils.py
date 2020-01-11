@@ -31,6 +31,7 @@ async def my_script(target):
         sometimes the status contain the target name and shows up as 
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
+#FIXME: ugly output when nobody is found
 '''
 # endregion
 
@@ -52,7 +53,7 @@ async def configure_browser_and_load_whatsapp(website):
     await __open_website(pages[0], website)
     return pages
 
-
+#FIXME: add hide_groups support to use in onlinetracker script
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
