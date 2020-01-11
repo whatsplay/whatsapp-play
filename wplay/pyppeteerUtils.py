@@ -32,6 +32,7 @@ async def my_script(target):
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
 #FIXME: ugly output when nobody is found
+#FIXME: ugly output when 'ctrl'+'c' is pressed
 '''
 # endregion
 
