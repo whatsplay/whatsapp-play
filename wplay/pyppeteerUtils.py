@@ -31,12 +31,12 @@ async def my_script(target):
         sometimes the status contain the target name and shows up as 
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
+#FIXME: ugly output when nobody is found
 '''
 # endregion
 
 
 # region IMPORTS
-import asyncio
 import sys
 from pyppeteer import launch
 # endregion
@@ -53,8 +53,8 @@ async def configure_browser_and_load_whatsapp(website):
     await __open_website(pages[0], website)
     return pages
 
-
-async def search_for_target_and_get_ready_for_conversation(page, target):
+#FIXME: add hide_groups support to use in onlinetracker script
+async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
@@ -70,11 +70,23 @@ async def search_for_target_and_get_ready_for_conversation(page, target):
     target_tuple = __get_target_tuple(contact_tuple, group_tuple)
     __print_target_tuple(target_tuple)
     target_index_choosed = __ask_user_to_choose_the_filtered_target(target_tuple)
-    await __navigate_to_target(page, target_tuple, target_index_choosed)
+    choosed_target = __get_choosed_target(target_tuple, target_index_choosed)
+    await __navigate_to_target(page, choosed_target)
     target_focused_title = await __get_focused_target_title(page, target)
     __print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
+
+    return choosed_target
+
+
+async def get_status_from_focused_target(page):
+    #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
+    try:
+        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")')
+        return status
+    except:
+        return '#status not found'
 
 
 def ask_user_for_message():
@@ -140,7 +152,8 @@ whatsapp_selectors_dict = {
     'contact_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
     'group_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
     'target_focused_title': '#main > header div > div > span[title]',
-    'message_area': '#main > footer div.selectable-text[contenteditable]'
+    'message_area': '#main > footer div.selectable-text[contenteditable]',
+    'status':'#main > header > div > div > span[title]'
 }
 
 
@@ -336,20 +349,28 @@ def __ask_user_to_choose_the_filtered_target(target_tuple):
     return target_index_choosed
 
 
-async def __navigate_to_target(page, target_tuple, target_index_choosed):
+def __get_choosed_target(target_tuple, target_index_choosed):
     lenght_of_contacts_tuple = len(target_tuple[0])
-    
     if target_index_choosed is None:
         sys.exit()
 
     try:
         if target_index_choosed < lenght_of_contacts_tuple:
-            await target_tuple[0][target_index_choosed][1].click()
+            choosed_target = target_tuple[0][target_index_choosed]
         elif target_index_choosed >= lenght_of_contacts_tuple:
-            await target_tuple[1][target_index_choosed-lenght_of_contacts_tuple][1].click()
+            choosed_target = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
             sys.exit()
+    except Exception as e:
+        print(f"This target doesn't exist! Error: {str(e)}")
+        sys.exit()
+    return choosed_target
+
+
+async def __navigate_to_target(page, choosed_target):
+    try:
+        await choosed_target[1].click()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
         sys.exit()
@@ -406,6 +427,7 @@ async def intercept(request, page_one, page_two):
 
 # region DEV TEST
 '''
+import asyncio
 async def main():
     test_target = 'family'
     pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])

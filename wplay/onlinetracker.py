@@ -2,16 +2,14 @@ import time
 import os
 from datetime import datetime
 from playsound import playsound
-from wplay import seleniumUtils as sel
+from wplay import pyppeteerUtils as pyp
 
 
-def tracker(name):
-    #name = str(input("Enter the name of target: "))
+async def tracker(target):
+    #target = str(input("Enter the name of target: "))
 
-    driver, driver_wait, chosen_website = sel.initialize_chrome_driver(
-        sel.websites['whatsapp'])
-
-    sel.find_and_navigate_to_target(driver_wait, chosen_website, name)
+    pages = await pyp.configure_browser_and_load_whatsapp(pyp.websites['whatsapp'])
+    await pyp.search_for_target_and_get_ready_for_conversation(pages[0], target)
 
     # finds if online_status directory is present
     if 'tracking_data' not in os.listdir(os.getcwd()):
@@ -19,13 +17,13 @@ def tracker(name):
 
     # create status.txt file and overwrite if exists
     status_file = open(
-        os.path.join('tracking_data', f'status_{name}.txt'), 'w'
+        os.path.join('tracking_data', f'status_{target}.txt'), 'w'
     )
     status_file.close()
 
     # open status.txt in memory with append mode
     status_file = open(
-        os.path.join('tracking_data', f'status_{name}.txt'), 'a'
+        os.path.join('tracking_data', f'status_{target}.txt'), 'a'
     )
 
     # check status
@@ -33,18 +31,14 @@ def tracker(name):
     last_status = 'offline'
     try:
         while True:
-            try:
-                status = driver.find_element_by_class_name('_315-i').text
-                if status == 'online':
-                    is_online = True
-                else:
-                    # status is last seen
-                    is_online = False
-                    status = 'offline'
-            except:
-                status = 'offline'
+            status = await pyp.get_status_from_focused_target(pages[0])
+            if status == 'online':
+                is_online = True
+            else:
+                # status is last seen
                 is_online = False
-
+                status = 'offline'
+            
             if last_status != is_online:
                 # play sound when the person is online
                 if is_online:

@@ -8,6 +8,10 @@ from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
 
+
+#TODO: Change 'name' to 'target'
+
+
 # parse positional and optional arguments
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'WhatApp-play')
@@ -62,12 +66,11 @@ def get_arguments():
     args = parser.parse_args()
     return args
 
+
 # functions for different arguments
-
-
 async def match_args(args):
     if args.wtrack:
-        onlinetracker.tracker(args.name)
+        await onlinetracker.tracker(args.name)
 
     elif args.wtgbot:
         tgbot.telegram_status(args.name)
@@ -79,7 +82,7 @@ async def match_args(args):
         await messageblast.blast(args.name)
 
     elif args.wtimer:
-        messagetimer.msgTimer(args.name)
+        await messagetimer.msgTimer(args.name)
 
     elif args.pull:
         try:
