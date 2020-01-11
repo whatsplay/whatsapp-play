@@ -96,10 +96,10 @@ def ask_user_for_message():
 def ask_user_for_message_breakline_mode():
     message = []
     i = 0
-    print("Write your message ('Enter' mean breakline)(Write '#ok' to finish):")
+    print("Write your message ('Enter' to breakline)('.' alone to finish):")
     while True:
         message.append(str(input()))
-        if message[i] == '#ok':
+        if message[i] == '.':
             message.pop(i)
             break
         i += 1
