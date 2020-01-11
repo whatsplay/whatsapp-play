@@ -82,7 +82,7 @@ async def search_for_target_and_get_ready_for_conversation(page, target, hide_gr
 async def get_status_from_focused_target(page):
     #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
     try:
-        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")'))
+        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")')
         return status
     except:
         return '#status not found'
@@ -355,9 +355,9 @@ def __get_choosed_target(target_tuple, target_index_choosed):
 
     try:
         if target_index_choosed < lenght_of_contacts_tuple:
-            choosed_target_tuple = target_tuple[0][target_index_choosed]
+            choosed_target = target_tuple[0][target_index_choosed]
         elif target_index_choosed >= lenght_of_contacts_tuple:
-            choosed_target_tuple = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
+            choosed_target = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
             sys.exit()
