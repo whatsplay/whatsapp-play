@@ -1,8 +1,8 @@
-selenium >= 3.141.0
 python-telegram-bot >= 11.1.0
 datetime >= 4.3
 argparse >= 1.4.0
-webdriver-manager >= 1.7
 playsound >= 1.2.2
 beautifulsoup4 >= 4.8.1
 pyppeteer >= 0.0.25
+whaaaaat>=0.5.2
+prompt_toolkit==1.0.14

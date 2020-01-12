@@ -4,18 +4,18 @@ with open("README.md", "r") as f:
     long_description = f.read()
 
 setup(
-	name="wplay",
-	version="4.3.0",
-	install_requires=["selenium >= 3.141.0",
-                    "python-telegram-bot >= 11.1.0",
-                    "datetime >= 4.3",
-                    "webdriver-manager >= 1.7",
-		            "playsound >= 1.2.2",
-                    "argparse >= 1.4.0",
-                    "beautifulsoup4 >= 4.8.1",
-                    "pyppeteer >= 0.0.25"],
-	packages=find_packages(),
-	description="command line software to play with your WhatsApp",
+    name="wplay",
+    version="5.0.0",
+    install_requires=["python-telegram-bot >= 11.1.0",
+                      "datetime >= 4.3",
+                      "playsound >= 1.2.2",
+                      "argparse >= 1.4.0",
+                      "beautifulsoup4 >= 4.8.1",
+                      "pyppeteer >= 0.0.25",
+                      "whaaaaat>=0.5.2"
+                      "prompt_toolkit==1.0.14"],
+    packages=find_packages(),
+    description="command line software to play with your WhatsApp",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Rohit Potter",
@@ -44,4 +44,4 @@ setup(
         "Operating System :: OS Independent",
     ],
     entry_points={"console_scripts": ["wplay = wplay.wplay:main"]},
-	)
+)

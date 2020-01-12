@@ -15,7 +15,7 @@ pypConfig.configure_browser_and_load_whatsapp(websites['whatsapp'])
 
 # region IMPORTS
 from whaaaaat import Validator, ValidationError, Separator
-from whaaaaat import style_from_dict, Token, prompt, print_json
+from whaaaaat import style_from_dict, Token, prompt
 from pyppeteer import launch
 from pathlib import Path
 import shutil
@@ -117,7 +117,7 @@ data_folder_path = Path('./wplay/pyppeteerUtils/.userData/')
 
 
 user_options = {'restore': 'Restore a session',
-                'save': 'Save a new session',
+                'save': 'Create a new session',
                 'continue': 'Continue without saving',
                 'delete': 'Delete a session'}
 
@@ -143,7 +143,7 @@ def __delete_session_data(path):
 def __verify_if_session_exists(data_filenames, username, question_overwrite):
     if username in data_filenames:
         answer_overwrite = prompt(question_overwrite, style=style)
-        if answer_overwrite['overwrite_data'] == 'true':
+        if answer_overwrite['overwrite_data']:
             __delete_session_data(data_folder_path/username)
         else:
             __session_mananger()
@@ -200,7 +200,7 @@ def __prepare_questions(data_filenames):
 
 
 def __verify_answers(answers, data_filenames, question_overwrite):
-    username = ''
+    username = ''; save_session = None
     if answers['user_options'] == user_options['restore']:
         if answers['restore'] == '<---Go-back---':
             __session_mananger()
