@@ -123,7 +123,7 @@ style = style_from_dict({
 })
 
 
-data_folder_path = Path('./wplay/pyppeteerUtils/.userData/')
+data_folder_path = Path(os.getcwd())/Path('wplay/pyppeteerUtils/.userData/')
 
 
 user_options = {'restore': 'Restore a session',
@@ -133,7 +133,7 @@ user_options = {'restore': 'Restore a session',
 
 
 def __session_mananger():
-    # create_data_folder()
+    __create_data_folder()
     data_filenames = __get_data_filenames()
     questions_menu, question_overwrite = __prepare_questions(data_filenames)
     try:
@@ -142,6 +142,14 @@ def __session_mananger():
         __session_mananger()
     username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
     return username, save_session
+
+
+def __create_data_folder():
+    try:
+        if data_folder_path not in os.listdir(os.getcwd()):
+            os.mkdir(data_folder_path)
+    except:
+        pass
 
 
 def __get_data_filenames():
