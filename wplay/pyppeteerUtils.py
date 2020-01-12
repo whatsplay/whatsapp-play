@@ -32,6 +32,7 @@ async def my_script(target):
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
 #FIXME: ugly output when nobody is found
+#FIXME: ugly output when 'ctrl'+'c' is pressed
 '''
 # endregion
 
@@ -53,12 +54,12 @@ async def configure_browser_and_load_whatsapp(website):
     await __open_website(pages[0], website)
     return pages
 
-#FIXME: add hide_groups support to use in onlinetracker script
+
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
-    group_list_elements_unchecked = await __get_groups_elements_filtered(page, target)
+    group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
     contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
     group_titles_unchecked = await __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked)
     contact_list_unchecked = __zip_contact_titles_and_elements_unchecked(
@@ -96,10 +97,10 @@ def ask_user_for_message():
 def ask_user_for_message_breakline_mode():
     message = []
     i = 0
-    print("Write your message ('Enter' mean breakline)(Write '#ok' to finish):")
+    print("Write your message ('Enter' to breakline)('.' alone to finish):")
     while True:
         message.append(str(input()))
-        if message[i] == '#ok':
+        if message[i] == '.':
             message.pop(i)
             break
         i += 1
@@ -224,8 +225,11 @@ async def __get_contacts_elements_filtered(page, target):
     return contact_list_elements_unchecked
 
 
-async def __get_groups_elements_filtered(page, target):
+async def __get_groups_elements_filtered(page, target, hide_groups=False):
     group_list_elements_unchecked = list()
+
+    if hide_groups:
+        return group_list_elements_unchecked
 
     try:
         await page.waitForSelector(
