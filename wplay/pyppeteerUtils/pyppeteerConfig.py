@@ -6,8 +6,18 @@ __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 Go to region 'FOR SCRIPTING' and use the methods in your script!
 
 EXAMPLE OF USAGE:
-from wplay import pyppeteerConfig as pypConfig
-pypConfig.configure_browser_and_load_whatsapp(websites['whatsapp'])
+from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
+from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+
+async def my_script(target):
+    pages, browser = wait pyp.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
+    await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
+
+    message = pypSearch.ask_user_for_message_breakline_mode()
+    await pypSearch.send_message(pages[0], message)
+
+    message2 = pypSearch.ask_user_for_message()
+    await pypSearch.send_message(pages[0], message2)
 
 '''
 # endregion
@@ -126,7 +136,10 @@ def __session_mananger():
     # create_data_folder()
     data_filenames = __get_data_filenames()
     questions_menu, question_overwrite = __prepare_questions(data_filenames)
-    answers_menu = prompt(questions_menu, style=style)
+    try:
+        answers_menu = prompt(questions_menu, style=style)
+    except:
+        __session_mananger()
     username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
     return username, save_session
 
@@ -140,7 +153,7 @@ def __delete_session_data(path):
     shutil.rmtree(path)
 
 
-def __verify_if_session_exists(data_filenames, username, question_overwrite):
+def __verify_if_session_file_exists(data_filenames, username, question_overwrite):
     if username in data_filenames:
         answer_overwrite = prompt(question_overwrite, style=style)
         if answer_overwrite['overwrite_data']:
@@ -199,23 +212,23 @@ def __prepare_questions(data_filenames):
     return questions_menu, question_overwrite
 
 
-def __verify_answers(answers, data_filenames, question_overwrite):
+def __verify_answers(answers_menu, data_filenames, question_overwrite):
     username = ''; save_session = None
-    if answers['user_options'] == user_options['restore']:
-        if answers['restore'] == '<---Go-back---':
+    if answers_menu['user_options'] == user_options['restore']:
+        if answers_menu['restore'] == '<---Go-back---':
             __session_mananger()
         else:
-            username = answers['restore']
+            username = answers_menu['restore']
             save_session = True
-    elif answers['user_options'] == user_options['save']:
-        username = answers['save']  # verificar se ja existe
+    elif answers_menu['user_options'] == user_options['save']:
+        username = answers_menu['save']  # verificar se ja existe
         save_session = True
-        __verify_if_session_exists(data_filenames, username, question_overwrite)
-    elif answers['user_options'] == user_options['continue']:
+        __verify_if_session_file_exists(data_filenames, username, question_overwrite)
+    elif answers_menu['user_options'] == user_options['continue']:
         save_session = False
-    elif answers['user_options'] == user_options['delete']:
-        if len(answers['delete']) > 0:
-            for el in answers['delete']:
+    elif answers_menu['user_options'] == user_options['delete']:
+        if len(answers_menu['delete']) > 0:
+            for el in answers_menu['delete']:
                 __delete_session_data(data_folder_path/el)
         __session_mananger()
     else:
@@ -241,10 +254,12 @@ async def intercept(request, page_one, page_two):
 
 
 # region DEV TEST
+'''
 import asyncio
 async def main():
     pages, browser = await configure_browser_and_load_whatsapp(websites['whatsapp'])
     await pages[0].waitFor(3000)
     await browser.close()
 asyncio.get_event_loop().run_until_complete(main())
+'''
 # endregion

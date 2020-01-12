@@ -6,16 +6,18 @@ __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 Go to region 'FOR SCRIPTING' and use the methods in your script!
 
 EXAMPLE OF USAGE:
-from wplay import pyppeteerSearch as pypSearch
+from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
+from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+
 async def my_script(target):
-    pages = wait pyp.configure_browser_and_load_whatsapp(pyp.websites['whatsapp'])
-    await pyp.search_for_target_and_get_ready_for_conversation(pages[0], target)
+    pages, browser = wait pyp.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
+    await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
 
-    message = pyp.ask_user_for_message_breakline_mode()
-    await pyp.send_message(pages[0], message)
+    message = pypSearch.ask_user_for_message_breakline_mode()
+    await pypSearch.send_message(pages[0], message)
 
-    message2 = pyp.ask_user_for_message()
-    await pyp.send_message(pages[0], message2)
+    message2 = pypSearch.ask_user_for_message()
+    await pypSearch.send_message(pages[0], message2)
 '''
 # endregion
 
@@ -45,15 +47,6 @@ from pyppeteer import launch
 
 # region FOR SCRIPTING
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
-
-
-async def configure_browser_and_load_whatsapp(website):
-    __patch_pyppeteer()
-    browser = await __config_browser()
-    pages = await __get_pages(browser)
-    await __open_website(pages[0], website)
-    return pages
-
 
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
