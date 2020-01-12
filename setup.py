@@ -12,7 +12,7 @@ setup(
                       "argparse >= 1.4.0",
                       "beautifulsoup4 >= 4.8.1",
                       "pyppeteer >= 0.0.25",
-                      "whaaaaat>=0.5.2"
+                      "whaaaaat>=0.5.2",
                       "prompt_toolkit==1.0.14"],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
