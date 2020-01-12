@@ -4,3 +4,4 @@ __pycache__/
 tests
 .vscode
 tracking_data
+.userData
