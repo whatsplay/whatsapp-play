@@ -20,29 +20,37 @@ from wplay import pyppeteerConfig as pypConfig
 
 
 # region IMPORTS
-import sys, os
-import json
-from pathlib import Path
-from pyppeteer import launch
 # endregion
 
 
 # region FOR SCRIPTING
+import asyncio
+from whaaaaat import Validator, ValidationError, Separator
+from whaaaaat import style_from_dict, Token, prompt, print_json
+from pyppeteer import launch
+from pathlib import Path
+import shutil
+import json
+import sys
+import os
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 
 def session_mananger():
+    #create_data_folder()
     data_filenames = get_data_filenames()
-    print(data_filenames)
-    pass
+    questions = prepare_questions(data_filenames)
+    answers = prompt(questions, style=style)
+    print_json(answers)
+
 
 
 async def configure_browser_and_load_whatsapp(website):
+    session_mananger()
     __patch_pyppeteer()
-    browser = await __config_browser('teste')
+    browser = await __config_browser('alexandre', save_session=True)
     pages = await __get_pages(browser)
     await __open_website(pages[0], website)
-    session_mananger()
     return pages, browser
 # endregion
 
@@ -73,8 +81,6 @@ def __patch_pyppeteer():
 
 
 # region UTILS
-data_folder_path = Path('./wplay/pyppeteerUtils/.userData/')
-
 def __exit_if_wrong_url(page, url_to_check):
     if not page.url == url_to_check:
         print("Wrong URL!")
@@ -84,12 +90,15 @@ def __exit_if_wrong_url(page, url_to_check):
 
 
 # region PYPPETEER CONFIGURATION
-async def __config_browser(username):
-    return await launch(
-        headless=False, 
-        autoClose=False, 
-        userDataDir= str(f'{data_folder_path}/{username}')
-    )
+async def __config_browser(username='', save_session=True):
+    if username != '' and save_session:
+        return await launch(
+            headless=False,
+            autoClose=False,
+            userDataDir=f'{data_folder_path}/{username}'
+        )
+    else:
+        return await launch(headless=False, autoClose=False)
 
 
 async def __open_new_page(browser):
@@ -108,7 +117,17 @@ async def __open_website(page, website):
 # endregion
 
 
-# region DATA MANAGEMENT
+# region SESSION MANAGEMENT
+style = style_from_dict({
+    Token.Separator: '#6C6C6C',
+    Token.QuestionMark: '#FF9D00 bold',
+    Token.Selected: '#5F819D',
+    Token.Pointer: '#FF9D00 bold',
+    Token.Instruction: '',  # default
+    Token.Answer: '#5F819D bold',
+    Token.Question: '',
+})
+
 '''
 0) :create_data_folder
 1) Print -> 'Session Mananger' :get_data_filenames
@@ -118,11 +137,52 @@ async def __open_website(page, website):
 2.3) Save a new session
 2.4) Delete sessions
 '''
+data_folder_path = Path('./wplay/pyppeteerUtils/.userData/')
 
+user_options = {'restore':'Restore a session',
+                'save':'Save a new session',
+                'continue':'Continue without saving',
+                'delete':'Delete a session'}
 
-def create_data_folder():
-    if data_folder_path not in os.listdir(os.getcwd()):
-        os.mkdir(data_folder_path)
+def prepare_questions(data_filenames):
+    questions = [
+        {
+            'type': 'rawlist',
+            'name': 'user_options',
+            'message': 'Session Mananger:',
+            'choices': [
+                Separator(),
+                user_options['restore'],
+                user_options['save'],
+                user_options['continue'],
+                Separator(),
+                user_options['delete'],
+                Separator()
+            ]
+        },
+        {
+            'type': 'rawlist',
+            'name': 'restore',
+            'message': 'Select a session to try to restore:',
+            'choices': [*(str(session) for session in data_filenames),'<---Go-back---'],
+            'when': lambda answers: answers['user_options'] == user_options['restore']
+        },
+        {
+            'type': 'input',
+            'name': 'save',
+            'message': 'Write your first name or username to save:',
+            'when': lambda answers: answers['user_options'] == user_options['save']
+        },
+        {
+            'type': 'checkbox',
+            'name': 'delete',
+            'message': 'Mark the sessions you want to delete:',
+            'choices': list(map(lambda e: {'name':e}, data_filenames)),
+            'when': lambda answers: answers['user_options'] == user_options['delete']
+        }
+        
+    ]
+    return questions
 
 
 def get_data_filenames():
@@ -130,17 +190,38 @@ def get_data_filenames():
     return data_filenames
 
 
-async def ask_username():
-    username = input("Write your first name or username: ")
-    return username
+def verify_answers(answers):
+    username=''
+    if answers['user_options'] == user_options['restore']:
+        if answers['restore'] == '<---Go-back---':
+            session_mananger()
+        else:
+            username = answers['restore'] 
+            save_session = True  
+    elif answers['user_options'] == user_options['save']:
+        username = answers['save'] #verificar se ja existe
+        save_session = True
+    elif answers['user_options'] == user_options['continue']:
+        save_session = False
+    elif answers['user_options'] == user_options['delete']:
+        if len(answers['delete']) > 0:
+            delete_session_data()
+    else:
+        sys.exit()
+    return username, save_session
 
 
-def delete_all_session_data():
-    pass
+def delete_session_data(path):
+    shutil.rmtree(path)
 
 
-def delete_one_session_data():
-    pass
+#def create_data_folder():
+#    try:
+#        if data_folder_path not in os.listdir(os.getcwd()):
+#            os.mkdir(data_folder_path)
+#    except:
+#        pass
+
 # endregion
 
 
@@ -162,7 +243,7 @@ async def intercept(request, page_one, page_two):
 
 # region DEV TEST
 
-import asyncio
+
 async def main():
     pages, browser = await configure_browser_and_load_whatsapp(websites['whatsapp'])
     await pages[0].waitFor(3000)
