@@ -7,24 +7,13 @@ Go to region 'FOR SCRIPTING' and use the methods in your script!
 
 EXAMPLE OF USAGE:
 from wplay import pyppeteerConfig as pypConfig
-
-'''
-# endregion
-
-
-# region TODO and FIXME
-'''
+pypConfig.configure_browser_and_load_whatsapp(websites['whatsapp'])
 
 '''
 # endregion
 
 
 # region IMPORTS
-# endregion
-
-
-# region FOR SCRIPTING
-import asyncio
 from whaaaaat import Validator, ValidationError, Separator
 from whaaaaat import style_from_dict, Token, prompt, print_json
 from pyppeteer import launch
@@ -33,22 +22,17 @@ import shutil
 import json
 import sys
 import os
+# endregion
+
+
+# region FOR SCRIPTING
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 
-def session_mananger():
-    #create_data_folder()
-    data_filenames = get_data_filenames()
-    questions = prepare_questions(data_filenames)
-    answers = prompt(questions, style=style)
-    print_json(answers)
-
-
-
 async def configure_browser_and_load_whatsapp(website):
-    session_mananger()
     __patch_pyppeteer()
-    browser = await __config_browser('alexandre', save_session=True)
+    username, save_session = __session_mananger()
+    browser = await __config_browser(username, save_session)
     pages = await __get_pages(browser)
     await __open_website(pages[0], website)
     return pages, browser
@@ -128,28 +112,49 @@ style = style_from_dict({
     Token.Question: '',
 })
 
-'''
-0) :create_data_folder
-1) Print -> 'Session Mananger' :get_data_filenames
-2) Print -> Options
-2.1) Restore Session :print_data_filenames
-2.2) Go without save a new session
-2.3) Save a new session
-2.4) Delete sessions
-'''
+
 data_folder_path = Path('./wplay/pyppeteerUtils/.userData/')
 
-user_options = {'restore':'Restore a session',
-                'save':'Save a new session',
-                'continue':'Continue without saving',
-                'delete':'Delete a session'}
 
-def prepare_questions(data_filenames):
-    questions = [
+user_options = {'restore': 'Restore a session',
+                'save': 'Save a new session',
+                'continue': 'Continue without saving',
+                'delete': 'Delete a session'}
+
+
+def __session_mananger():
+    # create_data_folder()
+    data_filenames = __get_data_filenames()
+    questions_menu, question_overwrite = __prepare_questions(data_filenames)
+    answers_menu = prompt(questions_menu, style=style)
+    username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
+    return username, save_session
+
+
+def __get_data_filenames():
+    data_filenames = os.listdir(data_folder_path)
+    return data_filenames
+
+
+def __delete_session_data(path):
+    shutil.rmtree(path)
+
+
+def __verify_if_session_exists(data_filenames, username, question_overwrite):
+    if username in data_filenames:
+        answer_overwrite = prompt(question_overwrite, style=style)
+        if answer_overwrite['overwrite_data'] == 'true':
+            __delete_session_data(data_folder_path/username)
+        else:
+            __session_mananger()
+
+
+def __prepare_questions(data_filenames):
+    questions_menu = [
         {
             'type': 'rawlist',
             'name': 'user_options',
-            'message': 'Session Mananger:',
+            'message': '***Session Mananger***:',
             'choices': [
                 Separator(),
                 user_options['restore'],
@@ -164,7 +169,7 @@ def prepare_questions(data_filenames):
             'type': 'rawlist',
             'name': 'restore',
             'message': 'Select a session to try to restore:',
-            'choices': [*(str(session) for session in data_filenames),'<---Go-back---'],
+            'choices': [*(str(session) for session in data_filenames), '<---Go-back---'],
             'when': lambda answers: answers['user_options'] == user_options['restore']
         },
         {
@@ -177,51 +182,45 @@ def prepare_questions(data_filenames):
             'type': 'checkbox',
             'name': 'delete',
             'message': 'Mark the sessions you want to delete:',
-            'choices': list(map(lambda e: {'name':e}, data_filenames)),
+            'choices': list(map(lambda e: {'name': e}, data_filenames)),
             'when': lambda answers: answers['user_options'] == user_options['delete']
         }
-        
     ]
-    return questions
+
+    question_overwrite = [
+        {
+            'type': 'confirm',
+            'name': 'overwrite_data',
+            'message': 'There is already a session with that name, overwrite it?',
+            'default': True
+        }
+    ]
+
+    return questions_menu, question_overwrite
 
 
-def get_data_filenames():
-    data_filenames = os.listdir(data_folder_path)
-    return data_filenames
-
-
-def verify_answers(answers):
-    username=''
+def __verify_answers(answers, data_filenames, question_overwrite):
+    username = ''
     if answers['user_options'] == user_options['restore']:
         if answers['restore'] == '<---Go-back---':
-            session_mananger()
+            __session_mananger()
         else:
-            username = answers['restore'] 
-            save_session = True  
+            username = answers['restore']
+            save_session = True
     elif answers['user_options'] == user_options['save']:
-        username = answers['save'] #verificar se ja existe
+        username = answers['save']  # verificar se ja existe
         save_session = True
+        __verify_if_session_exists(data_filenames, username, question_overwrite)
     elif answers['user_options'] == user_options['continue']:
         save_session = False
     elif answers['user_options'] == user_options['delete']:
         if len(answers['delete']) > 0:
-            delete_session_data()
+            for el in answers['delete']:
+                __delete_session_data(data_folder_path/el)
+        __session_mananger()
     else:
-        sys.exit()
+        __session_mananger()
     return username, save_session
-
-
-def delete_session_data(path):
-    shutil.rmtree(path)
-
-
-#def create_data_folder():
-#    try:
-#        if data_folder_path not in os.listdir(os.getcwd()):
-#            os.mkdir(data_folder_path)
-#    except:
-#        pass
-
 # endregion
 
 
@@ -242,12 +241,10 @@ async def intercept(request, page_one, page_two):
 
 
 # region DEV TEST
-
-
+import asyncio
 async def main():
     pages, browser = await configure_browser_and_load_whatsapp(websites['whatsapp'])
     await pages[0].waitFor(3000)
     await browser.close()
 asyncio.get_event_loop().run_until_complete(main())
-
 # endregion
