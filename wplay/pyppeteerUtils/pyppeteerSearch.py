@@ -6,16 +6,18 @@ __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 Go to region 'FOR SCRIPTING' and use the methods in your script!
 
 EXAMPLE OF USAGE:
-from wplay import pyppeteerUtils as pyp
+from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
+from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+
 async def my_script(target):
-    pages = wait pyp.configure_browser_and_load_whatsapp(pyp.websites['whatsapp'])
-    await pyp.search_for_target_and_get_ready_for_conversation(pages[0], target)
+    pages, browser = wait pyp.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
+    await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
 
-    message = pyp.ask_user_for_message_breakline_mode()
-    await pyp.send_message(pages[0], message)
+    message = pypSearch.ask_user_for_message_breakline_mode()
+    await pypSearch.send_message(pages[0], message)
 
-    message2 = pyp.ask_user_for_message()
-    await pyp.send_message(pages[0], message2)
+    message2 = pypSearch.ask_user_for_message()
+    await pypSearch.send_message(pages[0], message2)
 '''
 # endregion
 
@@ -46,15 +48,6 @@ from pyppeteer import launch
 # region FOR SCRIPTING
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
-
-async def configure_browser_and_load_whatsapp(website):
-    __patch_pyppeteer()
-    browser = await __config_browser()
-    pages = await __get_pages(browser)
-    await __open_website(pages[0], website)
-    return pages
-
-
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
@@ -78,7 +71,7 @@ async def search_for_target_and_get_ready_for_conversation(page, target, hide_gr
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
 
-    return choosed_target
+    return target_focused_title
 
 
 async def get_status_from_focused_target(page):
@@ -121,31 +114,6 @@ async def send_message(page, message):
 # endregion
 
 
-# region PYPPETEER PATCH
-# https://github.com/miyakogi/pyppeteer/pull/160
-# HACK: We need this until this update is accepted.
-# BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
-def __patch_pyppeteer():
-    from typing import Any
-    from pyppeteer import connection, launcher
-    import websockets.client
-
-    class PatchedConnection(connection.Connection):  # type: ignore
-        def __init__(self, *args: Any, **kwargs: Any) -> None:
-            super().__init__(*args, **kwargs)
-            self._ws = websockets.client.connect(
-                self._url,
-                loop=self._loop,
-                max_size=None,  # type: ignore
-                ping_interval=None,  # type: ignore
-                ping_timeout=None,  # type: ignore
-            )
-
-    connection.Connection = PatchedConnection
-    launcher.Connection = PatchedConnection
-# endregion
-
-
 # region UTILS
 whatsapp_selectors_dict = {
     'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
@@ -156,34 +124,6 @@ whatsapp_selectors_dict = {
     'message_area': '#main > footer div.selectable-text[contenteditable]',
     'status':'#main > header > div > div > span[title]'
 }
-
-
-def __exit_if_wrong_url(page, url_to_check):
-    if not page.url == url_to_check:
-        print("Wrong URL!")
-        sys.exit()
-        return
-# endregion
-
-
-# region PYPPETEER CONFIGURATION
-async def __config_browser():
-    return await launch(headless=False, autoClose=False)
-
-
-async def __open_new_page(browser):
-    await browser.newPage()
-
-
-async def __get_pages(browser):
-    pages = await browser.pages()
-    return pages
-
-
-async def __open_website(page, website):
-    await page.bringToFront()
-    await page.goto(website, waitUntil='networkidle2', timeout=0)
-    __exit_if_wrong_url(page, websites['whatsapp'])
 # endregion
 
 
@@ -410,22 +350,6 @@ async def __wait_for_message_area(page):
         await page.waitForSelector(whatsapp_selectors_dict['message_area'])
     except Exception as e:
         print(f"You don't belong this group anymore! Error: {str(e)}")
-# endregion
-
-
-# region CODE THAT MIGHT BE USEFUL SOMEDAY
-'''
-# FIX: 
-# To load websites faster
-async def intercept(request, page_one, page_two):
-    await page_one.setRequestInterception(True)
-    await page_two.setRequestInterception(True)
-    if any(request.resourceType == _ for _ in ('stylesheet', 'image', 'font', 'media')):
-        await request.abort()
-    else:
-        await request.continue_()
-    page.on('request', lambda req: asyncio.ensure_future(intercept(req)))
-'''
 # endregion
 
 
