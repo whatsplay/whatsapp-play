@@ -3,7 +3,7 @@ import random
 from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
 
-#BUG
+
 async def msgTimer(target):
     #target = str(input("Enter the name of target: "))
 
@@ -18,8 +18,8 @@ async def msgTimer(target):
 
         messages = list()
         for _ in range(message_type_numbers):
-            #messages.append(pyp.ask_user_for_message())
-            messages.append(pyp.ask_user_for_message_breakline_mode())
+            #messages.append(pypSearch.ask_user_for_message())
+            messages.append(pypSearch.ask_user_for_message_breakline_mode())
 
         number_of_messages = int(input("Enter the number of messages to send: "))
 

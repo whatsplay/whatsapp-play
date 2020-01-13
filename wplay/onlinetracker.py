@@ -6,7 +6,7 @@ from pathlib import Path
 from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
 
-#BUG
+
 async def tracker(target):
     #target = str(input("Enter the name of target: "))
 
@@ -33,7 +33,7 @@ async def tracker(target):
         last_status = 'offline'
         try:
             while True:
-                status = await pyp.get_status_from_focused_target(pages[0])
+                status = await pypSearch.get_status_from_focused_target(pages[0])
                 if status == 'online':
                     is_online = True
                 else:

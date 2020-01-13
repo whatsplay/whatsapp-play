@@ -19,7 +19,7 @@ def ask_where_are_the_status_file():
     status_file_path = filedialog.askopenfile(
         initialdir = data_folder_path/'tracking_data/',
         title='Choose a status text file.',
-        filetypes=['TXT files', ('.txt', '.TXT')]
+        filetypes=(("text files","*.txt"),("all files","*.*"))
     )
     if status_file_path == ():
         print("Error! Choose a status.")
