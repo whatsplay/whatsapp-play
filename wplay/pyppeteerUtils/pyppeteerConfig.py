@@ -37,7 +37,8 @@ import os
 
 # region FOR SCRIPTING
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
-
+data_folder_path = Path.home()/'wplay'
+user_data_folder_path = Path.home()/'wplay'/'.userData'
 
 async def configure_browser_and_load_whatsapp(website):
     __patch_pyppeteer()
@@ -89,7 +90,7 @@ async def __config_browser(username='', save_session=True):
         return await launch(
             headless=False,
             autoClose=False,
-            userDataDir=f'{data_folder_path}/{username}'
+            userDataDir=user_data_folder_path/username
         )
     else:
         return await launch(headless=False, autoClose=False)
@@ -123,9 +124,6 @@ style = style_from_dict({
 })
 
 
-data_folder_path = Path(os.getcwd())/Path('wplay/pyppeteerUtils/.userData/')
-
-
 user_options = {'restore': 'Restore a session',
                 'save': 'Create a new session',
                 'continue': 'Continue without saving',
@@ -134,26 +132,29 @@ user_options = {'restore': 'Restore a session',
 
 def __session_mananger():
     __create_data_folder()
-    data_filenames = __get_data_filenames()
-    questions_menu, question_overwrite = __prepare_questions(data_filenames)
+    __create_user_data_folder()
+    data_filenames = __get_user_data_filenames()
     try:
+        questions_menu, question_overwrite = __prepare_questions(data_filenames)
         answers_menu = prompt(questions_menu, style=style)
+        username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
     except:
         __session_mananger()
-    username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
     return username, save_session
 
 
 def __create_data_folder():
-    try:
-        if data_folder_path not in os.listdir(os.getcwd()):
-            os.mkdir(data_folder_path)
-    except:
-        pass
+    if not os.path.isdir(data_folder_path):
+        os.mkdir(data_folder_path)
 
 
-def __get_data_filenames():
-    data_filenames = os.listdir(data_folder_path)
+def __create_user_data_folder():
+    if not os.path.isdir(user_data_folder_path):
+        os.mkdir(user_data_folder_path)
+
+
+def __get_user_data_filenames():
+    data_filenames = os.listdir(user_data_folder_path)
     return data_filenames
 
 

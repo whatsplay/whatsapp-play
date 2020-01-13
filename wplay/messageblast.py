@@ -17,4 +17,4 @@ async def blast(target):
         for _ in range(number_of_messages):
             await pypSearch.send_message(pages[0], message)
     except:
-        browser.close()
+        await browser.close()

@@ -71,7 +71,7 @@ async def search_for_target_and_get_ready_for_conversation(page, target, hide_gr
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
 
-    return choosed_target
+    return target_focused_title
 
 
 async def get_status_from_focused_target(page):

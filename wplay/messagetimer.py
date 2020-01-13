@@ -3,7 +3,7 @@ import random
 from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
 
-
+#BUG
 async def msgTimer(target):
     #target = str(input("Enter the name of target: "))
 
@@ -41,4 +41,4 @@ async def msgTimer(target):
             else:
                 time.sleep(minimumTimeInterval)
     except:
-        browser.close()
+        await browser.close()

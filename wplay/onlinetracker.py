@@ -2,32 +2,31 @@ import time
 import os
 from datetime import datetime
 from playsound import playsound
+from pathlib import Path
 from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
 
-
+#BUG
 async def tracker(target):
     #target = str(input("Enter the name of target: "))
 
     pages, browser = await pypConfig.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
 
     try:
-        await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target, hide_groups=True)
+        target_name = await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target, hide_groups=True)
 
         # finds if online_status directory is present
-        if 'tracking_data' not in os.listdir(os.getcwd()):
-            os.mkdir('tracking_data')
+        if not os.path.isdir(pypConfig.data_folder_path/'tracking_data'):
+            os.mkdir(pypConfig.data_folder_path/'tracking_data')
 
         # create status.txt file and overwrite if exists
-        status_file = open(
-            os.path.join('tracking_data', f'status_{target}.txt'), 'w'
-        )
+        status_file = open(pypConfig.data_folder_path/
+                           'tracking_data'/f'status_{target_name}.txt', 'w')
         status_file.close()
 
         # open status.txt in memory with append mode
-        status_file = open(
-            os.path.join('tracking_data', f'status_{target}.txt'), 'a'
-        )
+        status_file = open(pypConfig.data_folder_path/
+                           'tracking_data'/f'status_{target_name}.txt', 'a')
 
         # check status
         is_sound_enabled = True
@@ -41,7 +40,7 @@ async def tracker(target):
                     # status is last seen
                     is_online = False
                     status = 'offline'
-                
+
                 if last_status != is_online:
                     # play sound when the person is online
                     if is_online:
@@ -68,6 +67,6 @@ async def tracker(target):
         finally:
             status_file.close()
             print(f'\nStatus file saved in: ' +
-                f'{os.path.join(os.getcwd(),"tracking_data")}')
+                  str(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt'))
     except:
-        browser.close()
+        await browser.close()

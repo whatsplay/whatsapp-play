@@ -13,4 +13,4 @@ async def chat(target):
             message = pypSearch.ask_user_for_message_breakline_mode()
             await pypSearch.send_message(pages[0], message)
     except:
-        browser.close()
+        await browser.close()
