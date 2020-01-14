@@ -1,6 +1,7 @@
 wplay.egg-info/
 __pycache__/
 *.pyc
-tests
+data
 .vscode
 tracking_data
+.userData
