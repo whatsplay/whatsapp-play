@@ -31,28 +31,6 @@ whatsapp-play is available on PyPI. You can install whatsapp-play by pip command
 <img src="/images/usage.png"><br>
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
-## Things to do
-- [x] onlinetracker script - to track the online/offline status.([issue #3](https://github.com/rpotter12/whatsapp-play/issues/3))
-- [x] wchat script - to chat with contact from command line.
-- [x] messageblast script - to send message repeatedly to a person.
-- [x] argument parser to connect all scripts to one script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
-- [x] telegram bot script for onlinetracker to send the status online/offline status to telegram bot.([issue #4](https://github.com/rpotter12/whatsapp-play/issues/4))
-- [x] improve onlinetracker script.([pull #9](https://github.com/rpotter12/whatsapp-play/pull/9))
-- [x] improve messageblast script.
-- [x] improve wchat script for chatting.([pull #10](https://github.com/rpotter12/whatsapp-play/pull/10))
-- [x] a sound notification in pc system when the person gets online.([issue #22](https://github.com/rpotter12/whatsapp-play/issues/22))
-- [x] proper option to exit the running program([issue #19](https://github.com/rpotter12/whatsapp-play/issues/19))
-- [x] save the status.txt file of onlinetracking in separate wplay folder([issue #24](https://github.com/rpotter12/whatsapp-play/issues/24))
-- [x] script to save the whole chat of a person.([issue #12](https://github.com/rpotter12/whatsapp-play/issues/12))
-- [x] messagetimer script. ([pull #71](https://github.com/rpotter12/whatsapp-play/pull/71))
-- [ ] docker image for whatsapp-play.([issue #21](https://github.com/rpotter12/whatsapp-play/issues/21))
-- [ ] keep a record of states of multiple users in csv, for further analysis([issue #15](https://github.com/rpotter12/whatsapp-play/issues/15))
-- [ ] script to find the location of the person([issue #31](https://github.com/rpotter12/whatsapp-play/issues/31))
-- [ ] .travis.yml script for travis check([issue #20](https://github.com/rpotter12/whatsapp-play/issues/20))
-- [ ] add firefox functionality([issue #48](https://github.com/rpotter12/whatsapp-play/issues/48))
-- [ ] add codecov script([issue #51](https://github.com/rpotter12/whatsapp-play/issues/51))<br>
-(If you have any new idea for this software, please open issue for that :) )
-
 ## Disclaimer
 This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
 
