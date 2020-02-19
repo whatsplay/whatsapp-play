@@ -13,7 +13,10 @@ setup(
                       "beautifulsoup4 >= 4.8.1",
                       "pyppeteer >= 0.0.25",
                       "whaaaaat>=0.5.2",
-                      "prompt_toolkit==1.0.14"],
+                      "prompt_toolkit==1.0.14",
+                      "pyfiglet>=0.8.post1",
+                      "requests>=2.22.0"
+                      ],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
     long_description=long_description,
@@ -39,9 +42,10 @@ setup(
         "Programming Language :: Python :: 3",
         "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3 :: Only",
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    entry_points={"console_scripts": ["wplay = wplay.wplay:main"]},
+    entry_points={"console_scripts": ["wplay = wplay.__main__:main"]},
 )
