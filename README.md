@@ -25,7 +25,20 @@ It is command line software through which you can play with your WhatsApp. It is
 ---
 
 ## Installation
-whatsapp-play is available on PyPI. You can install whatsapp-play by pip command: `pip3 install wplay`
+
+First, it is recommended to create a virtual environment but it is not mandatory. To create follow the steps below: <br />
+`cd 'whatsapp-play'` <br />
+`python3 -m venv .venv` <br />
+*Windows*: `./.venv/Scripts/activate` <br />
+*Unix*: `source .venv/bin/activate` <br />
+
+whatsapp-play is available on PyPI. You can install whatsapp-play by pip command: `pip3 install wplay`. <br />
+To install from source you build the script and then install the wheel with python: <br />
+`cd 'whatsapp-play'` <br />
+*Windows* `./build.bat` <br />
+*Unix:* `sh build.sh` <br />
+`cd dist` <br />
+`pip install <name_of_file>.whl` <br />
 
 ## Usage
 <img src="/images/usage.png"><br>
