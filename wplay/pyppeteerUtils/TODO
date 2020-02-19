@@ -4,6 +4,7 @@
 #FIXME all code: ugly output when 'ctrl'+'c' is pressed
 
 
+#TODO pyppeteerSearch: Add a complete mode and a simple mode to search targets
 #TODO pyppeteerSearch: Add a whaaaaaat menu
 #TODO pyppeteerSearch: use map and filter in __check_contact_list and __check_group_list
 #FIXME pyppeteerSearch: False positive group -> Groups name use the same div as contact status,
