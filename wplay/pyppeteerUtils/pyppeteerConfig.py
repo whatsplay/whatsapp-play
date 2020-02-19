@@ -52,7 +52,7 @@ async def configure_browser_and_load_whatsapp(website):
 
 # region PYPPETEER PATCH
 # https://github.com/miyakogi/pyppeteer/pull/160
-# HACK: We need this until this update is accepted.
+# HACK: We need this until this PR is accepted. Solves the bug bellow.
 # BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
 def __patch_pyppeteer():
     from typing import Any
