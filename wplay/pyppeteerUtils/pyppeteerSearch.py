@@ -19,24 +19,6 @@ async def my_script(target):
     message2 = pypSearch.ask_user_for_message()
     await pypSearch.send_message(pages[0], message2)
 '''
-# endregion
-
-
-# region TODO and FIXME
-'''
-#TODO: Wait for the last message to be sent before closing the browser
-#TODO: Change __config_browser autoClose to True
-#TODO: return browser.close and use it instead use sys.exit
-#TODO: use map and filter in __check_contact_list and __check_group_list
-#FIXME: False positive group -> Groups name use the same div as contact status,
-        so we need to verify if target name is in title, not in status. But, 
-        sometimes the status contain the target name and shows up as 
-        false-positive group. 
-        WHERE WE CAN FIX? __checking_group_list
-#FIXME: ugly output when nobody is found
-#FIXME: ugly output when 'ctrl'+'c' is pressed
-'''
-# endregion
 
 
 # region IMPORTS
