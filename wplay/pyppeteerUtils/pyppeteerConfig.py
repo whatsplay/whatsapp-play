@@ -32,14 +32,13 @@ import shutil
 import json
 import sys
 import os
+
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
+from wplay.utils.helpers import user_data_folder_path, data_folder_path
 # endregion
 
 
 # region FOR SCRIPTING
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
-data_folder_path = Path.home()/'wplay'
-user_data_folder_path = Path.home()/'wplay'/'.userData'
-
 async def configure_browser_and_load_whatsapp(website):
     __patch_pyppeteer()
     username, save_session = __session_manager()

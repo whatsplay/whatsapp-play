@@ -24,12 +24,12 @@ async def my_script(target):
 # region IMPORTS
 import sys
 from pyppeteer import launch
+
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
 # endregion
 
 
 # region FOR SCRIPTING
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
-
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
@@ -93,19 +93,6 @@ async def send_message(page, message):
             await page.keyboard.press('Enter')
             await page.keyboard.up('Shift')
     await page.keyboard.press('Enter')
-# endregion
-
-
-# region UTILS
-whatsapp_selectors_dict = {
-    'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
-    'search_contact_input': '#app > div > div span > div > span > div div > label > input',
-    'contact_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
-    'group_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
-    'target_focused_title': '#main > header div > div > span[title]',
-    'message_area': '#main > footer div.selectable-text[contenteditable]',
-    'status':'#main > header > div > div > span[title]'
-}
 # endregion
 
 
