@@ -4,5 +4,6 @@ argparse >= 1.4.0
 playsound >= 1.2.2
 beautifulsoup4 >= 4.8.1
 pyppeteer >= 0.0.25
-whaaaaat>=0.5.2
-prompt_toolkit==1.0.14
+whaaaaat >= 0.5.2
+pyfiglet >= 0.8.post1
+prompt_toolkit == 1.0.14
