@@ -5,6 +5,7 @@ from playsound import playsound
 # from pathlib import Path
 from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+from wplay.pyppeteerUtils import pyppeteerIO as pypIO
 
 
 async def tracker(target):

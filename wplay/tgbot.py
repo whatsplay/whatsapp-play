@@ -3,7 +3,7 @@ from tkinter import filedialog
 # from pathlib import Path
 from telegram import Message # , Update
 from telegram.ext import CommandHandler, Updater #, Filters
-from wplay.pyppeteerUtils.pyppeteerConfig import data_folder_path
+from wplay.pyppeteerUtils.helpers import data_folder_path
 
 status_file_path = None
 

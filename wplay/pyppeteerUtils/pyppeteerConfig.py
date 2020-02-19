@@ -33,8 +33,8 @@ import json
 import sys
 import os
 
-from wplay.utils.helpers import whatsapp_selectors_dict, websites
-from wplay.utils.helpers import user_data_folder_path, data_folder_path
+from wplay.pyppeteerUtils.helpers import whatsapp_selectors_dict, websites
+from wplay.pyppeteerUtils.helpers import user_data_folder_path, data_folder_path
 # endregion
 
 
