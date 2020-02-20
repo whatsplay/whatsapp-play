@@ -26,7 +26,7 @@ async def my_script(target):
 import sys
 from pyppeteer import launch
 
-from wplay.pyppeteerUtils.helpers import whatsapp_selectors_dict, websites
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
 # endregion
 
 

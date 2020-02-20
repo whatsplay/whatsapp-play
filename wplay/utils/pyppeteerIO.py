@@ -1,7 +1,7 @@
 __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 
 #region IMPORTS
-from wplay.pyppeteerUtils.helpers import whatsapp_selectors_dict, websites
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
 #endregion
 
 

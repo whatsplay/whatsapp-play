@@ -1,5 +1,5 @@
-from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
-from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+from wplay.utils import pyppeteerConfig as pypConfig
+from wplay.utils import pyppeteerSearch as pypSearch
 
 
 async def chat(target):
