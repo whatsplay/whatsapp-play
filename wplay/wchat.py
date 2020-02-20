@@ -1,6 +1,6 @@
-from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
-from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
-
+from wplay.utils import pyppeteerConfig as pypConfig
+from wplay.utils import pyppeteerSearch as pypSearch
+from wplay.utils import pyppeteerIO as pypIO
 
 async def chat(target):
     #target = str(input("Enter the name of target: "))
@@ -9,8 +9,8 @@ async def chat(target):
     
     try:
         while True:
-            #message = pyp.ask_user_for_message()
-            message = pypSearch.ask_user_for_message_breakline_mode()
-            await pypSearch.send_message(pages[0], message)
+            #message = pypIO.ask_user_for_message()
+            message = pypIO.ask_user_for_message_breakline_mode()
+            await pypIO.send_message(pages[0], message)
     except:
         await browser.close()

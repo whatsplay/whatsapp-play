@@ -2,9 +2,8 @@ import time
 import os
 from datetime import datetime
 from playsound import playsound
-# from pathlib import Path
-from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
-from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
+from wplay.utils import pyppeteerConfig as pypConfig
+from wplay.utils import pyppeteerSearch as pypSearch
 
 
 async def tracker(target):
@@ -20,18 +19,17 @@ async def tracker(target):
             os.mkdir(pypConfig.data_folder_path/'tracking_data')
 
         # create status.txt file and overwrite if exists
-        status_file = open(pypConfig.data_folder_path/
-                           'tracking_data'/f'status_{target_name}.txt', 'w')
-        status_file.close()
+        status_file = open(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'w').close()
 
         # open status.txt in memory with append mode
-        status_file = open(pypConfig.data_folder_path/
-                           'tracking_data'/f'status_{target_name}.txt', 'a')
+        status_file = open(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'a')
 
         # check status
         is_sound_enabled = True
         last_status = 'offline'
         try:
+            print(f'Tracking: {target_name}')
+            status_file.write(f'Tracking: {target_name}\n')
             while True:
                 status = await pypSearch.get_status_from_focused_target(pages[0])
                 if status == 'online':

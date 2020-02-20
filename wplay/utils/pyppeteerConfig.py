@@ -32,17 +32,16 @@ import shutil
 import json
 import sys
 import os
+
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
+from wplay.utils.helpers import user_data_folder_path, data_folder_path
 # endregion
 
 
 # region FOR SCRIPTING
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
-data_folder_path = Path.home()/'wplay'
-user_data_folder_path = Path.home()/'wplay'/'.userData'
-
 async def configure_browser_and_load_whatsapp(website):
     __patch_pyppeteer()
-    username, save_session = __session_mananger()
+    username, save_session = __session_manager()
     browser = await __config_browser(username, save_session)
     pages = await __get_pages(browser)
     await __open_website(pages[0], website)
@@ -52,7 +51,7 @@ async def configure_browser_and_load_whatsapp(website):
 
 # region PYPPETEER PATCH
 # https://github.com/miyakogi/pyppeteer/pull/160
-# HACK: We need this until this update is accepted.
+# HACK: We need this until this PR is accepted. Solves the bug bellow.
 # BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
 def __patch_pyppeteer():
     from typing import Any
@@ -130,7 +129,7 @@ user_options = {'restore': 'Restore a session',
                 'delete': 'Delete a session'}
 
 
-def __session_mananger():
+def __session_manager():
     __create_data_folder()
     __create_user_data_folder()
     data_filenames = __get_user_data_filenames()
@@ -139,7 +138,7 @@ def __session_mananger():
         answers_menu = prompt(questions_menu, style=style)
         username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
     except:
-        __session_mananger()
+        __session_manager()
     return username, save_session
 
 
@@ -168,7 +167,7 @@ def __verify_if_session_file_exists(data_filenames, username, question_overwrite
         if answer_overwrite['overwrite_data']:
             __delete_session_data(data_folder_path/username)
         else:
-            __session_mananger()
+            __session_manager()
 
 
 def __prepare_questions(data_filenames):
@@ -176,7 +175,7 @@ def __prepare_questions(data_filenames):
         {
             'type': 'rawlist',
             'name': 'user_options',
-            'message': '***Session Mananger***:',
+            'message': '***Session Manager***:',
             'choices': [
                 Separator(),
                 user_options['restore'],
@@ -225,7 +224,7 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
     username = ''; save_session = None
     if answers_menu['user_options'] == user_options['restore']:
         if answers_menu['restore'] == '<---Go-back---':
-            __session_mananger()
+            __session_manager()
         else:
             username = answers_menu['restore']
             save_session = True
@@ -239,9 +238,9 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
         if len(answers_menu['delete']) > 0:
             for el in answers_menu['delete']:
                 __delete_session_data(data_folder_path/el)
-        __session_mananger()
+        __session_manager()
     else:
-        __session_mananger()
+        __session_manager()
     return username, save_session
 # endregion
 

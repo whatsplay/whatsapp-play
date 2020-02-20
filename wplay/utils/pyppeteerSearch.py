@@ -22,32 +22,15 @@ async def my_script(target):
 # endregion
 
 
-# region TODO and FIXME
-'''
-#TODO: Wait for the last message to be sent before closing the browser
-#TODO: Change __config_browser autoClose to True
-#TODO: return browser.close and use it instead use sys.exit
-#TODO: use map and filter in __check_contact_list and __check_group_list
-#FIXME: False positive group -> Groups name use the same div as contact status,
-        so we need to verify if target name is in title, not in status. But, 
-        sometimes the status contain the target name and shows up as 
-        false-positive group. 
-        WHERE WE CAN FIX? __checking_group_list
-#FIXME: ugly output when nobody is found
-#FIXME: ugly output when 'ctrl'+'c' is pressed
-'''
-# endregion
-
-
 # region IMPORTS
 import sys
 from pyppeteer import launch
+
+from wplay.utils.helpers import whatsapp_selectors_dict, websites
 # endregion
 
 
 # region FOR SCRIPTING
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
-
 async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
@@ -81,49 +64,6 @@ async def get_status_from_focused_target(page):
         return status
     except:
         return '#status not found'
-
-
-def ask_user_for_message():
-    return str(input("Write your message: "))
-
-
-def ask_user_for_message_breakline_mode():
-    message = []
-    i = 0
-    print("Write your message ('Enter' to breakline)('.' alone to finish):")
-    while True:
-        message.append(str(input()))
-        if message[i] == '.':
-            message.pop(i)
-            break
-        i += 1
-    return message
-
-
-async def send_message(page, message):
-    for i in range(len(message)):
-        await page.type(
-            whatsapp_selectors_dict['message_area'],
-            message[i]
-        )
-        if isinstance(message, list):
-            await page.keyboard.down('Shift')
-            await page.keyboard.press('Enter')
-            await page.keyboard.up('Shift')
-    await page.keyboard.press('Enter')
-# endregion
-
-
-# region UTILS
-whatsapp_selectors_dict = {
-    'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
-    'search_contact_input': '#app > div > div span > div > span > div div > label > input',
-    'contact_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
-    'group_list_elements_filtered': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
-    'target_focused_title': '#main > header div > div > span[title]',
-    'message_area': '#main > footer div.selectable-text[contenteditable]',
-    'status':'#main > header > div > div > span[title]'
-}
 # endregion
 
 
@@ -204,8 +144,7 @@ async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_
 # contact elements, unchecked.
 def __zip_contact_titles_and_elements_unchecked(
     contact_titles_unchecked,
-    contact_list_elements_unchecked
-):
+    contact_list_elements_unchecked):
     contact_list_unchecked = list(zip(
         contact_titles_unchecked, contact_list_elements_unchecked))
     return contact_list_unchecked
@@ -213,8 +152,7 @@ def __zip_contact_titles_and_elements_unchecked(
 
 def __zip_group_titles_and_elements_unchecked(
     group_titles_unchecked,
-    group_list_elements_unchecked
-):
+    group_list_elements_unchecked):
     group_list_unchecked = list(
         zip(group_titles_unchecked, group_list_elements_unchecked))
     return group_list_unchecked
