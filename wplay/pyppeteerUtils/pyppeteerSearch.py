@@ -143,8 +143,7 @@ async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_
 # contact elements, unchecked.
 def __zip_contact_titles_and_elements_unchecked(
     contact_titles_unchecked,
-    contact_list_elements_unchecked
-):
+    contact_list_elements_unchecked):
     contact_list_unchecked = list(zip(
         contact_titles_unchecked, contact_list_elements_unchecked))
     return contact_list_unchecked
@@ -152,8 +151,7 @@ def __zip_contact_titles_and_elements_unchecked(
 
 def __zip_group_titles_and_elements_unchecked(
     group_titles_unchecked,
-    group_list_elements_unchecked
-):
+    group_list_elements_unchecked):
     group_list_unchecked = list(
         zip(group_titles_unchecked, group_list_elements_unchecked))
     return group_list_unchecked
