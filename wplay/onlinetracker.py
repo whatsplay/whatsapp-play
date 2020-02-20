@@ -4,7 +4,6 @@ from datetime import datetime
 from playsound import playsound
 from wplay.utils import pyppeteerConfig as pypConfig
 from wplay.utils import pyppeteerSearch as pypSearch
-from wplay.utils import pyppeteerIO as pypIO
 
 
 async def tracker(target):

@@ -19,8 +19,8 @@ async def msgTimer(target):
 
         messages = list()
         for _ in range(message_type_numbers):
-            #messages.append(pypSearch.ask_user_for_message())
-            messages.append(pypSearch.ask_user_for_message_breakline_mode())
+            #messages.append(pypIO.ask_user_for_message())
+            messages.append(pypIO.ask_user_for_message_breakline_mode())
 
         number_of_messages = int(input("Enter the number of messages to send: "))
 
@@ -36,7 +36,7 @@ async def msgTimer(target):
         for _ in range(number_of_messages):
             if not messages:
                 break
-            await pypSearch.send_message(pages[0], messages[random.randrange(0, message_type_numbers)])
+            await pypIO.send_message(pages[0], messages[random.randrange(0, message_type_numbers)])
             if minimumTimeInterval != maximumTimeInterval:
                 time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
             else:
