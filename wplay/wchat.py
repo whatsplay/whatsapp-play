@@ -9,7 +9,7 @@ async def chat(target):
     
     try:
         while True:
-            #message = pyp.ask_user_for_message()
+            #message = pypIO.ask_user_for_message()
             message = pypIO.ask_user_for_message_breakline_mode()
             await pypIO.send_message(pages[0], message)
     except:
