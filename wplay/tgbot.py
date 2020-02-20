@@ -1,6 +1,5 @@
 import tkinter
 from tkinter import filedialog
-# from pathlib import Path
 from telegram import Message # , Update
 from telegram.ext import CommandHandler, Updater #, Filters
 from wplay.pyppeteerUtils.helpers import data_folder_path
