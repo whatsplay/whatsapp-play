@@ -25,11 +25,42 @@ It is command line software through which you can play with your WhatsApp. It is
 ---
 
 ## Installation
-whatsapp-play is available on PyPI. You can install whatsapp-play by pip command: `pip3 install wplay`
+
+First, it is recommended to create a virtual environment but it is not mandatory. To create follow the steps below: <br />
+`cd 'whatsapp-play'` <br />
+`python3 -m venv .venv` <br />
+*Windows*: `./.venv/Scripts/activate` <br />
+*Unix*: `source .venv/bin/activate` <br />
+
+Secondly: <br /> 
+Install whatsapp-play from PyPI: <br />
+*With Virtual Environment*: `pip install wplay`. <br />
+*Without Virtual Environment*: `python3 -m pip install wplay`. <br />
+
+Or
+
+Install whatsapp-play from source code: <br />
+`cd 'whatsapp-play'` <br />
+*Windows*: `./build.bat` <br />
+*Unix*: `sh build.sh` <br />
+`cd dist` <br />
+`ls` -> get the name of the file ending with 'whl' <br />
+*With Virtual Environment*: `pip install <name_of_file>.whl`. <br />
+*Without Virtual Environment*: `python3 -m pip install <name_of_file>.whl`. <br />
 
 ## Usage
 <img src="/images/usage.png"><br>
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
+
+## Contribute
+To contribute you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
+
+To create a launcher with arguments follow the steps bellow: <br />
+1. Click in 'Debug' tab
+1. Click in 'Add Configuration'
+1. Select 'Module'
+1. Type 'wplay' and press Enter
+1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
 
 ## Disclaimer
 This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
