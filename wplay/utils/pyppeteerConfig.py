@@ -29,9 +29,10 @@ import sys
 import json
 import shutil
 
-from pyppeteer import launch
 from pathlib import Path
+from pyppeteer import launch
 
+from wplay.utils import sessionManagment
 from wplay.utils.helpers import whatsapp_selectors_dict, websites
 from wplay.utils.helpers import user_data_folder_path, data_folder_path
 # endregion
@@ -40,7 +41,7 @@ from wplay.utils.helpers import user_data_folder_path, data_folder_path
 # region FOR SCRIPTING
 async def configure_browser_and_load_whatsapp(website):
     __patch_pyppeteer()
-    username, save_session = __session_manager()
+    username, save_session = sessionManagment.session_manager()
     browser = await __config_browser(username, save_session)
     pages = await __get_pages(browser)
     await __open_website(pages[0], website)

@@ -1,5 +1,5 @@
 from pathlib import Path
-
+from whaaaaat import style_from_dict, Token
 
 whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
@@ -18,3 +18,13 @@ websites = {'whatsapp': 'https://web.whatsapp.com/'}
 
 data_folder_path = Path.home()/'wplay'
 user_data_folder_path = Path.home()/'wplay'/'.userData'
+
+menu_style = style_from_dict({
+    Token.Separator: '#6C6C6C',
+    Token.QuestionMark: '#FF9D00 bold',
+    Token.Selected: '#5F819D',
+    Token.Pointer: '#FF9D00 bold',
+    Token.Instruction: '',  # default
+    Token.Answer: '#5F819D bold',
+    Token.Question: '',
+})
