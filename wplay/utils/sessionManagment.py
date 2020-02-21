@@ -94,7 +94,7 @@ def __prepare_questions(data_filenames):
 def __verify_answers(answers_menu, data_filenames, question_overwrite):
     username = None; save_session = False
 
-    #Handle when person choose 'Restore a session'
+    # Handle when person choose 'Restore a session'
     if answers_menu['user_options'] == user_options['restore']:
         if answers_menu['restore'] == '<---Go-back---':
             session_manager()
@@ -102,23 +102,23 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
             username = answers_menu['restore']
             save_session = True
 
-    #Handle when person choose 'Create a new session'
+    # Handle when person choose 'Create a new session'
     elif answers_menu['user_options'] == user_options['save']:
         username = answers_menu['save']
         save_session = True
         __verify_if_session_file_exists(data_filenames, username, question_overwrite)
 
-    #Handle when person choose 'Continue without saving'
+    # Handle when person choose 'Continue without saving'
     elif answers_menu['user_options'] == user_options['continue']:
         username = None; save_session = False
 
-    #Handle when person choose 'Delete a session'
+    # Handle when person choose 'Delete a session'
     elif answers_menu['user_options'] == user_options['delete']:
         if len(answers_menu['delete']) > 0:
             [__delete_session_data(user_data_folder_path/username) for username in answers_menu['delete']]
         session_manager()
     
-    #Handle when person choose 'Exit'
+    # Handle when person choose 'Exit'
     elif answers_menu['user_options'] == user_options['exit']:
         exit()
     
