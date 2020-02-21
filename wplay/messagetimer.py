@@ -8,10 +8,10 @@ from wplay.utils import pyppeteerIO as pypIO
 async def msgTimer(target):
     #target = str(input("Enter the name of target: "))
 
-    pages, browser = await pypConfig.configure_browser_and_load_whatsapp()
+    page, browser = await pypConfig.configure_browser_and_load_whatsapp()
 
     try:
-        await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
+        await pypSearch.search_for_target_and_get_ready_for_conversation(page, target)
 
         #region INPUTS
         message_type_numbers = int(
@@ -36,7 +36,7 @@ async def msgTimer(target):
         for _ in range(number_of_messages):
             if not messages:
                 break
-            await pypIO.send_message(pages[0], messages[random.randrange(0, message_type_numbers)])
+            await pypIO.send_message(page, messages[random.randrange(0, message_type_numbers)])
             if minimumTimeInterval != maximumTimeInterval:
                 time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
             else:

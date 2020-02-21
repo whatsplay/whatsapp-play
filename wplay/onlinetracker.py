@@ -9,10 +9,10 @@ from wplay.utils import pyppeteerSearch as pypSearch
 async def tracker(target):
     #target = str(input("Enter the name of target: "))
 
-    pages, browser = await pypConfig.configure_browser_and_load_whatsapp()
+    page, browser = await pypConfig.configure_browser_and_load_whatsapp()
 
     try:
-        target_name = await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target, hide_groups=True)
+        target_name = await pypSearch.search_for_target_and_get_ready_for_conversation(page, target, hide_groups=True)
 
         # finds if online_status directory is present
         if not os.path.isdir(pypConfig.data_folder_path/'tracking_data'):
@@ -31,7 +31,7 @@ async def tracker(target):
             print(f'Tracking: {target_name}')
             status_file.write(f'Tracking: {target_name}\n')
             while True:
-                status = await pypSearch.get_status_from_focused_target(pages[0])
+                status = await pypSearch.get_status_from_focused_target(page)
                 if status == 'online':
                     is_online = True
                 else:

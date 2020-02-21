@@ -46,7 +46,7 @@ async def configure_browser_and_load_whatsapp():
     browser = await __config_browser(username, save_session)
     pages = await __get_pages(browser)
     await __open_website(pages[0], website)
-    return pages, browser
+    return pages[0], browser
 # endregion
 
 

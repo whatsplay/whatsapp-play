@@ -5,10 +5,10 @@ from wplay.utils import pyppeteerIO as pypIO
 async def blast(target):
     #target = str(input("Enter the name of target: "))
     
-    pages, browser = await pypConfig.configure_browser_and_load_whatsapp()
+    page, browser = await pypConfig.configure_browser_and_load_whatsapp()
     
     try:
-        await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
+        await pypSearch.search_for_target_and_get_ready_for_conversation(page, target)
 
         #message = pypIO.ask_user_for_message()
         message = pypIO.ask_user_for_message_breakline_mode()
