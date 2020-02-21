@@ -113,6 +113,9 @@ async def main():
 try:
     asyncio.get_event_loop().run_until_complete(main())
 except AssertionError:
-    for task in asyncio.all_tasks():
-        task.cancel()
-    #exit()
+    try:
+        for task in asyncio.all_tasks():
+            task.cancel()
+    except RuntimeError:
+        exit()
+    exit()
