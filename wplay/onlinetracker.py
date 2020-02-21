@@ -9,7 +9,7 @@ from wplay.utils import pyppeteerSearch as pypSearch
 async def tracker(target):
     #target = str(input("Enter the name of target: "))
 
-    page, browser = await pypConfig.configure_browser_and_load_whatsapp()
+    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
 
     #target_name = await pypSearch.search_for_target_simple(page, target, hide_groups=True)
     target_name = await pypSearch.search_for_target_complete(page, target, hide_groups=True)

@@ -8,7 +8,7 @@ from wplay.utils import pyppeteerIO as pypIO
 async def msgTimer(target):
     #target = str(input("Enter the name of target: "))
 
-    page, browser = await pypConfig.configure_browser_and_load_whatsapp()
+    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
 
     #await pypSearch.search_for_target_simple(page, target)
     await pypSearch.search_for_target_complete(page, target)
