@@ -8,11 +8,8 @@ async def chat(target):
 
     #await pypSearch.search_for_target_simple(page, target)
     await pypSearch.search_for_target_complete(page, target)
-    
-    try:
-        while True:
-            #message = pypIO.ask_user_for_message()
-            message = pypIO.ask_user_for_message_breakline_mode()
-            await pypIO.send_message(page, message)
-    except:
-        await browser.close()
+
+    while True:
+        #message = pypIO.ask_user_for_message()
+        message = pypIO.ask_user_for_message_breakline_mode()
+        await pypIO.send_message(page, message)

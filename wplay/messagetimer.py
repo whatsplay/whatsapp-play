@@ -10,37 +10,34 @@ async def msgTimer(target):
 
     page, browser = await pypConfig.configure_browser_and_load_whatsapp()
 
-    try:
-        #await pypSearch.search_for_target_simple(page, target)
-        await pypSearch.search_for_target_complete(page, target)
+    #await pypSearch.search_for_target_simple(page, target)
+    await pypSearch.search_for_target_complete(page, target)
 
-        #region INPUTS
-        message_type_numbers = int(
-            input("How many types of messages will you send? "))
+    #region INPUTS
+    message_type_numbers = int(
+        input("How many types of messages will you send? "))
 
-        messages = list()
-        for _ in range(message_type_numbers):
-            #messages.append(pypIO.ask_user_for_message())
-            messages.append(pypIO.ask_user_for_message_breakline_mode())
+    messages = list()
+    for _ in range(message_type_numbers):
+        #messages.append(pypIO.ask_user_for_message())
+        messages.append(pypIO.ask_user_for_message_breakline_mode())
 
-        number_of_messages = int(input("Enter the number of messages to send: "))
+    number_of_messages = int(input("Enter the number of messages to send: "))
 
-        # Enter the time interval of the messages, it will be sent using a random
-        # interval. For fixed interval, type the same number.
-        minimumTimeInterval = int(
-            input("Enter minimum interval number in seconds: "))
-        maximumTimeInterval = int(
-            input("Enter maximum interval number in seconds: "))
-        #endregion
-        
-        random.seed()
-        for _ in range(number_of_messages):
-            if not messages:
-                break
-            await pypIO.send_message(page, messages[random.randrange(0, message_type_numbers)])
-            if minimumTimeInterval != maximumTimeInterval:
-                time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
-            else:
-                time.sleep(minimumTimeInterval)
-    except:
-        await browser.close()
+    # Enter the time interval of the messages, it will be sent using a random
+    # interval. For fixed interval, type the same number.
+    minimumTimeInterval = int(
+        input("Enter minimum interval number in seconds: "))
+    maximumTimeInterval = int(
+        input("Enter maximum interval number in seconds: "))
+    #endregion
+    
+    random.seed()
+    for _ in range(number_of_messages):
+        if not messages:
+            break
+        await pypIO.send_message(page, messages[random.randrange(0, message_type_numbers)])
+        if minimumTimeInterval != maximumTimeInterval:
+            time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
+        else:
+            time.sleep(minimumTimeInterval)
