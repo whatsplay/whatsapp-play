@@ -25,9 +25,7 @@ async def my_script(target):
 
 # region IMPORTS
 import os
-import sys
 import json
-import shutil
 from pathlib import Path
 
 from pyppeteer import launch

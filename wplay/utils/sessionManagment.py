@@ -6,10 +6,9 @@ import stat
 import shutil
 from pathlib import Path
 
-from whaaaaat import Validator, ValidationError, Separator, prompt
+from whaaaaat import Separator, prompt
 
-from wplay.utils.helpers import whatsapp_selectors_dict, websites
-from wplay.utils.helpers import user_data_folder_path, data_folder_path
+from wplay.utils.helpers import user_data_folder_path
 from wplay.utils.helpers import menu_style
 # endregion
 
