@@ -4,7 +4,7 @@ from wplay.utils import pyppeteerIO as pypIO
 
 async def chat(target):
     #target = str(input("Enter the name of target: "))
-    pages, browser = await pypConfig.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
+    pages, browser = await pypConfig.configure_browser_and_load_whatsapp()
     await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
     
     try:

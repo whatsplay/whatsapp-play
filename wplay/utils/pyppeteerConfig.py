@@ -28,8 +28,8 @@ import os
 import sys
 import json
 import shutil
-
 from pathlib import Path
+
 from pyppeteer import launch
 
 from wplay.utils import sessionManagment
@@ -39,7 +39,8 @@ from wplay.utils.helpers import user_data_folder_path, data_folder_path
 
 
 # region FOR SCRIPTING
-async def configure_browser_and_load_whatsapp(website):
+async def configure_browser_and_load_whatsapp():
+    website = websites['whatsapp']
     __patch_pyppeteer()
     username, save_session = sessionManagment.session_manager()
     browser = await __config_browser(username, save_session)
@@ -100,8 +101,7 @@ async def __open_new_page(browser):
 
 
 async def __get_pages(browser):
-    pages = await browser.pages()
-    return pages
+    return await browser.pages()
 
 
 async def __open_website(page, website):
