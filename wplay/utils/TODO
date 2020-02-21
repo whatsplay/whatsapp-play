@@ -1,7 +1,5 @@
 #TODO all code: logging
-#TODO all code: fix code ruler to 40c
 #TODO all code: add type annotations
-#FIXME all code: ugly output when 'ctrl'+'c' is pressed
 
 
 #TODO pyppeteerSearch: Add a complete mode and a simple mode to search targets
@@ -12,7 +10,6 @@
         sometimes the status contain the target name and shows up as 
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
-#pyppeteerSearch FIXME: ugly output when nobody is found
 
 
 #TODO pyppeteer: Wait for the last message to be sent before closing the browser

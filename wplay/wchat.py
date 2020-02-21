@@ -4,13 +4,12 @@ from wplay.utils import pyppeteerIO as pypIO
 
 async def chat(target):
     #target = str(input("Enter the name of target: "))
-    pages, browser = await pypConfig.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
-    await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
-    
-    try:
-        while True:
-            #message = pypIO.ask_user_for_message()
-            message = pypIO.ask_user_for_message_breakline_mode()
-            await pypIO.send_message(pages[0], message)
-    except:
-        await browser.close()
+    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
+
+    #await pypSearch.search_for_target_simple(page, target)
+    await pypSearch.search_for_target_complete(page, target)
+
+    while True:
+        #message = pypIO.ask_user_for_message()
+        message = pypIO.ask_user_for_message_breakline_mode()
+        await pypIO.send_message(page, message)

@@ -31,7 +31,7 @@ from wplay.utils.helpers import whatsapp_selectors_dict, websites
 
 
 # region FOR SCRIPTING
-async def search_for_target_and_get_ready_for_conversation(page, target, hide_groups=False):
+async def search_for_target_complete(page, target, hide_groups=False):
     await __open_new_chat(page)
     await __type_in_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
@@ -57,6 +57,10 @@ async def search_for_target_and_get_ready_for_conversation(page, target, hide_gr
     return target_focused_title
 
 
+async def search_for_target_simple(page, target, hide_groups=False):
+    pass
+
+
 async def get_status_from_focused_target(page):
     #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
     try:
@@ -67,7 +71,7 @@ async def get_status_from_focused_target(page):
 # endregion
 
 
-# region SELECT TARGET
+# region SELECT TARGET COMPLETE MODE
 async def __open_new_chat(page):
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
@@ -288,20 +292,4 @@ async def __wait_for_message_area(page):
         await page.waitForSelector(whatsapp_selectors_dict['message_area'])
     except Exception as e:
         print(f"You don't belong this group anymore! Error: {str(e)}")
-# endregion
-
-
-# region DEV TEST
-'''
-import asyncio
-async def main():
-    test_target = 'family'
-    pages = await configure_browser_and_load_whatsapp(websites['whatsapp'])
-    await search_for_target_and_get_ready_for_conversation(pages[0], test_target)
-
-    message = ask_user_for_message_breakline_mode()
-    await send_message(pages[0], message)
-
-asyncio.get_event_loop().run_until_complete(main())
-'''
 # endregion
