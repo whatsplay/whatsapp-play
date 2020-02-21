@@ -90,6 +90,8 @@ def __prepare_questions(data_filenames):
       
 
 def __verify_answers(answers_menu, data_filenames, question_overwrite):
+    username = None; save_session = False
+
     #Handle when person choose 'Restore a session'
     if answers_menu['user_options'] == user_options['restore']:
         if answers_menu['restore'] == '<---Go-back---':
@@ -106,8 +108,7 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
 
     #Handle when person choose 'Continue without saving'
     elif answers_menu['user_options'] == user_options['continue']:
-        username = None
-        save_session = False
+        username = None; save_session = False
 
     #Handle when person choose 'Delete a session'
     elif answers_menu['user_options'] == user_options['delete']:

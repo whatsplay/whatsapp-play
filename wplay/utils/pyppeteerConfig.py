@@ -78,14 +78,14 @@ def __patch_pyppeteer():
 def __exit_if_wrong_url(page, url_to_check):
     if not page.url == url_to_check:
         print("Wrong URL!")
-        sys.exit()
+        exit()
         return
 # endregion
 
 
 # region PYPPETEER CONFIGURATION
-async def __config_browser(username='', save_session=True):
-    if username != '' and save_session:
+async def __config_browser(username=None, save_session=True):
+    if username is not None and username != '' and save_session:
         return await launch(
             headless=False,
             autoClose=False,
