@@ -75,17 +75,8 @@ def __patch_pyppeteer():
 # endregion
 
 
-# region UTILS
-def __exit_if_wrong_url(page, url_to_check):
-    if not page.url == url_to_check:
-        print("Wrong URL!")
-        exit()
-        return
-# endregion
-
-
 # region PYPPETEER CONFIGURATION
-async def __config_browser(username=None, save_session=True):
+async def __config_browser(username=None, save_session=False):
     if username is not None and username != '' and save_session:
         return await launch(
             headless=False,
@@ -107,7 +98,13 @@ async def __get_pages(browser):
 async def __open_website(page, website):
     await page.bringToFront()
     await page.goto(website, waitUntil='networkidle2', timeout=0)
-    __exit_if_wrong_url(page, websites['whatsapp'])
+
+def __exit_if_wrong_url(page, browser, url_to_check):
+    if not page.url == url_to_check:
+        print("Wrong URL!")
+        browser.close()
+        exit()
+        return
 # endregion
 
 
@@ -123,17 +120,5 @@ async def intercept(request, page_one, page_two):
     else:
         await request.continue_()
     page.on('request', lambda req: asyncio.ensure_future(intercept(req)))
-'''
-# endregion
-
-
-# region DEV TEST
-'''
-import asyncio
-async def main():
-    pages, browser = await configure_browser_and_load_whatsapp(websites['whatsapp'])
-    await pages[0].waitFor(3000)
-    await browser.close()
-asyncio.get_event_loop().run_until_complete(main())
 '''
 # endregion
