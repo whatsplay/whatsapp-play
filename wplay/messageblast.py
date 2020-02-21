@@ -8,7 +8,8 @@ async def blast(target):
     page, browser = await pypConfig.configure_browser_and_load_whatsapp()
     
     try:
-        await pypSearch.search_for_target_and_get_ready_for_conversation(page, target)
+        #await pypSearch.search_for_target_simple(page, target)
+        await pypSearch.search_for_target_complete(page, target)
 
         #message = pypIO.ask_user_for_message()
         message = pypIO.ask_user_for_message_breakline_mode()
@@ -16,6 +17,6 @@ async def blast(target):
         number_of_messages = int(input("Enter the number of messages to blast: "))
 
         for _ in range(number_of_messages):
-            await pypIO.send_message(pages[0], message)
+            await pypIO.send_message(page, message)
     except:
         await browser.close()

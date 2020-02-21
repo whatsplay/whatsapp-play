@@ -12,7 +12,8 @@ async def tracker(target):
     page, browser = await pypConfig.configure_browser_and_load_whatsapp()
 
     try:
-        target_name = await pypSearch.search_for_target_and_get_ready_for_conversation(page, target, hide_groups=True)
+        #target_name = await pypSearch.search_for_target_simple(page, target, hide_groups=True)
+        target_name = await pypSearch.search_for_target_complete(page, target, hide_groups=True)
 
         # finds if online_status directory is present
         if not os.path.isdir(pypConfig.data_folder_path/'tracking_data'):
