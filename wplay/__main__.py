@@ -110,4 +110,9 @@ async def main():
     except KeyboardInterrupt:
         sys.exit(0)
 
-asyncio.get_event_loop().run_until_complete(main())
+try:
+    asyncio.get_event_loop().run_until_complete(main())
+except AssertionError:
+    for task in asyncio.all_tasks():
+        task.cancel()
+    #exit()
