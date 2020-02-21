@@ -1,3 +1,5 @@
+__author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
+
 # region IMPORTS
 import os
 import stat
