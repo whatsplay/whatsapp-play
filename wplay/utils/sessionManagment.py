@@ -1,3 +1,4 @@
+# region IMPORTS
 import os
 import stat
 import shutil
@@ -8,6 +9,7 @@ from whaaaaat import Validator, ValidationError, Separator, prompt
 from wplay.utils.helpers import whatsapp_selectors_dict, websites
 from wplay.utils.helpers import user_data_folder_path, data_folder_path
 from wplay.utils.helpers import menu_style
+# endregion
 
 # region SESSION MANAGEMENT
 user_options = {'restore': 'Restore a session',
@@ -106,7 +108,7 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
     elif answers_menu['user_options'] == user_options['continue']:
         username = None
         save_session = False
-        
+
     #Handle when person choose 'Delete a session'
     elif answers_menu['user_options'] == user_options['delete']:
         if len(answers_menu['delete']) > 0:
@@ -139,4 +141,4 @@ def __delete_session_data(path):
 
     shutil.rmtree(path, onerror=handleError)
 
-# endregions
+# endregion
