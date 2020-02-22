@@ -117,14 +117,14 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
 async def __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked):
     contact_titles_unchecked = []
     for i in range(len(contact_list_elements_unchecked)):
-        contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered"]}")[{i}].getAttribute("title")'))
+        contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return contact_titles_unchecked
 
 
 async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked):
     group_titles_unchecked = []
     for i in range(len(group_list_elements_unchecked)):
-        group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered"]}")[{i}].getAttribute("title")'))
+        group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return group_titles_unchecked
 
 # contact_list_unchecked is a zip (list of tuples) of contact_titles and
