@@ -28,9 +28,9 @@ from wplay.utils.helpers import whatsapp_selectors_dict, websites
 
 
 # region FOR SCRIPTING
-async def search_for_target_complete(page, target, hide_groups=False):
+async def search_and_select_target(page, target, hide_groups=False):
     await __open_new_chat(page)
-    await __type_in_search_bar(page, target)
+    await __type_in_new_chat_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
     group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
     contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
@@ -52,14 +52,10 @@ async def search_for_target_complete(page, target, hide_groups=False):
     await __wait_for_message_area(page)
 
     return target_focused_title
-
-
-async def search_for_target_simple(page, target, hide_groups=False):
-    pass
 # endregion
 
 
-# region SELECT TARGET COMPLETE MODE
+# region SEARCH AND SELECT TARGET
 async def __open_new_chat(page):
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
@@ -70,13 +66,13 @@ async def __open_new_chat(page):
     await page.click(whatsapp_selectors_dict['new_chat_button'])
 
 
-async def __type_in_search_bar(page, target):
+async def __type_in_new_chat_search_bar(page, target):
     print(f'Looking for: {target}')
     await page.waitForSelector(
-        whatsapp_selectors_dict['search_contact_input'],
+        whatsapp_selectors_dict['search_contact_input_new_chat'],
         visible=True
     )
-    await page.type(whatsapp_selectors_dict['search_contact_input'], target)
+    await page.type(whatsapp_selectors_dict['search_contact_input_new_chat'], target)
     await page.waitFor(3000)
 
 
@@ -84,13 +80,13 @@ async def __get_contacts_elements_filtered(page, target):
     contact_list_elements_unchecked = list()
     try:
         await page.waitForSelector(
-            whatsapp_selectors_dict['contact_list_elements_filtered'],
+            whatsapp_selectors_dict['contact_list_elements_filtered_new_chat'],
             visible=True,
             timeout=3000
         )
 
         contact_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['contact_list_elements_filtered']
+            whatsapp_selectors_dict['contact_list_elements_filtered_new_chat']
         )
     except:
         print(f'No contact named by "{target}"!')
@@ -105,13 +101,13 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
 
     try:
         await page.waitForSelector(
-            whatsapp_selectors_dict['group_list_elements_filtered'],
+            whatsapp_selectors_dict['group_list_elements_filtered_new_chat'],
             visible=True,
             timeout=3000
         )
 
         group_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['group_list_elements_filtered']
+            whatsapp_selectors_dict['group_list_elements_filtered_new_chat']
         )
     except:
         print(f'No group named by "{target}"!')
@@ -130,7 +126,6 @@ async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_
     for i in range(len(group_list_elements_unchecked)):
         group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered"]}")[{i}].getAttribute("title")'))
     return group_titles_unchecked
-
 
 # contact_list_unchecked is a zip (list of tuples) of contact_titles and
 # contact elements, unchecked.
