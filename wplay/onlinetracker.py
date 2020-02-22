@@ -1,28 +1,28 @@
 import time
-import os
+from pathlib import Path
 from datetime import datetime
-from playsound import playsound
-from wplay.utils import pyppeteerConfig as pypConfig
-from wplay.utils import pyppeteerSearch as pypSearch
 
+from playsound import playsound
+
+from wplay.utils import browser_config
+from wplay.utils import target_search
+from wplay.utils.helpers import data_folder_path
 
 async def tracker(target):
     #target = str(input("Enter the name of target: "))
 
-    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    #target_name = await pypSearch.search_for_target_simple(page, target, hide_groups=True)
-    target_name = await pypSearch.search_for_target_complete(page, target, hide_groups=True)
+    #target_name = await target_search.search_for_target_simple(page, target, hide_groups=True)
+    target_name = await target_search.search_for_target_complete(page, target, hide_groups=True)
 
-    # finds if online_status directory is present
-    if not os.path.isdir(pypConfig.data_folder_path/'tracking_data'):
-        os.mkdir(pypConfig.data_folder_path/'tracking_data')
+    Path(data_folder_path/'tracking_data').mkdir(parents=True, exist_ok=True)
 
     # create status.txt file and overwrite if exists
-    status_file = open(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'w').close()
+    status_file = open(data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'w').close()
 
     # open status.txt in memory with append mode
-    status_file = open(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'a')
+    status_file = open(data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'a')
 
     # check status
     is_sound_enabled = True
@@ -31,7 +31,7 @@ async def tracker(target):
         print(f'Tracking: {target_name}')
         status_file.write(f'Tracking: {target_name}\n')
         while True:
-            status = await pypSearch.get_status_from_focused_target(page)
+            status = await target_search.get_status_from_focused_target(page)
             if status == 'online':
                 is_online = True
             else:
@@ -65,4 +65,4 @@ async def tracker(target):
     finally:
         status_file.close()
         print(f'\nStatus file saved in: ' +
-                str(pypConfig.data_folder_path/'tracking_data'/f'status_{target_name}.txt'))
+                str(data_folder_path/'tracking_data'/f'status_{target_name}.txt'))

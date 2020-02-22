@@ -30,7 +30,7 @@ from pathlib import Path
 
 from pyppeteer import launch
 
-from wplay.utils import sessionManagment
+from wplay.utils import session_manager
 from wplay.utils.helpers import whatsapp_selectors_dict, websites
 from wplay.utils.helpers import user_data_folder_path, data_folder_path
 # endregion
