@@ -14,7 +14,7 @@
 #TODO io: Wait for the last message to be sent before closing the browser
 
 
-
+#BUG: session_manager: click 1, return, create new session -> the session is not saved
 
 
 
