@@ -6,6 +6,7 @@ from playsound import playsound
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
+from wplay.utils import target_data
 from wplay.utils.helpers import data_folder_path
 
 async def tracker(target):
@@ -31,7 +32,7 @@ async def tracker(target):
         print(f'Tracking: {target_name}')
         status_file.write(f'Tracking: {target_name}\n')
         while True:
-            status = await target_search.get_status_from_focused_target(page)
+            status = await target_data.get_last_seen_from_focused_target(page)
             if status == 'online':
                 is_online = True
             else:
