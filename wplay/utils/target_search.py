@@ -23,9 +23,6 @@ async def my_script(target):
 
 
 # region IMPORTS
-import sys
-from pyppeteer import launch
-
 from wplay.utils.helpers import whatsapp_selectors_dict, websites
 # endregion
 
@@ -59,15 +56,6 @@ async def search_for_target_complete(page, target, hide_groups=False):
 
 async def search_for_target_simple(page, target, hide_groups=False):
     pass
-
-
-async def get_status_from_focused_target(page):
-    #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
-    try:
-        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")')
-        return status
-    except:
-        return '#status not found'
 # endregion
 
 
@@ -238,7 +226,7 @@ def __ask_user_to_choose_the_filtered_target(target_tuple):
 def __get_choosed_target(target_tuple, target_index_choosed):
     lenght_of_contacts_tuple = len(target_tuple[0])
     if target_index_choosed is None:
-        sys.exit()
+        exit()
 
     try:
         if target_index_choosed < lenght_of_contacts_tuple:
@@ -247,10 +235,10 @@ def __get_choosed_target(target_tuple, target_index_choosed):
             choosed_target = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
-            sys.exit()
+            exit()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
-        sys.exit()
+        exit()
     return choosed_target
 
 
@@ -259,7 +247,7 @@ async def __navigate_to_target(page, choosed_target):
         await choosed_target[1].click()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
-        sys.exit()
+        exit()
 
 
 async def __get_focused_target_title(page, target):
@@ -268,7 +256,7 @@ async def __get_focused_target_title(page, target):
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
-        sys.exit()
+        exit()
     return target_focused_title
 
 
@@ -284,7 +272,7 @@ def __check_target_focused_title(page, target, target_focused_title):
         if must_continue.lower() in accepted_yes:
             pass
         else:
-            sys.exit()
+            exit()
 
 
 async def __wait_for_message_area(page):
