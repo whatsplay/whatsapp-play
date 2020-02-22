@@ -11,8 +11,7 @@ async def msgTimer(target):
 
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    #await target_search.search_for_target_simple(page, target)
-    await target_search.search_for_target_complete(page, target)
+    await target_search.search_and_select_target(page, target)
 
     #region INPUTS
     message_type_numbers = int(

@@ -14,8 +14,7 @@ async def tracker(target):
 
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    #target_name = await target_search.search_for_target_simple(page, target, hide_groups=True)
-    target_name = await target_search.search_for_target_complete(page, target, hide_groups=True)
+    target_name = await target_search.search_and_select_target(page, target, hide_groups=True)
 
     Path(data_folder_path/'tracking_data').mkdir(parents=True, exist_ok=True)
 

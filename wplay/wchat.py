@@ -6,8 +6,7 @@ async def chat(target):
     #target = str(input("Enter the name of target: "))
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    #await target_search.search_for_target_simple(page, target)
-    await target_search.search_for_target_complete(page, target)
+    await target_search.search_and_select_target(page, target)
 
     while True:
         #message = io.ask_user_for_message()
