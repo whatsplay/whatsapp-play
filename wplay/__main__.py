@@ -1,7 +1,11 @@
 import argparse
 import asyncio
 import sys
+import os
+
 from pyfiglet import Figlet
+
+from wplay.utils import kill_process
 from wplay import onlinetracker
 from wplay import messageblast
 from wplay import messagetimer
@@ -119,3 +123,5 @@ except AssertionError:
     except RuntimeError:
         exit()
     exit()
+finally:
+    kill_process.kill_child_processes(os.getpid())
