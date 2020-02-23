@@ -38,12 +38,10 @@ from wplay.utils.helpers import user_data_folder_path, data_folder_path
 
 # region FOR SCRIPTING
 async def configure_browser_and_load_whatsapp():
-    website = websites['whatsapp']
     __patch_pyppeteer()
     username, save_session = session_manager()
     browser = await __config_browser(username, save_session)
-    pages = await __get_pages(browser)
-    await __open_website(pages[0], website)
+    pages = __config_pages(browser)
     return pages[0], browser
 # endregion
 
@@ -85,6 +83,14 @@ async def __config_browser(username=None, save_session=False):
         return await launch(headless=False, autoClose=False)
 
 
+async def __config_pages(browser):
+    pages = await __get_pages(browser)
+    await __set_user_agent(pages[0])
+    # await __set_view_port(pages[0])
+    await __open_website(pages[0], websites['whatsapp'])
+    return pages
+
+
 async def __open_new_page(browser):
     await browser.newPage()
 
@@ -92,6 +98,13 @@ async def __open_new_page(browser):
 async def __get_pages(browser):
     return await browser.pages()
 
+
+async def __set_user_agent(page):
+    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
+
+
+async def __set_view_port(page):
+    await page.setViewport({'width': 1280, 'height': 800})
 
 async def __open_website(page, website):
     await page.bringToFront()
