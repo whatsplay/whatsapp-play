@@ -28,6 +28,7 @@ whatsapp_selectors_dict = {
 
 # region PATHS
 data_folder_path = Path.home()/'wplay'
+logs_path = Path.home()/'wplay'/'logs'
 user_data_folder_path = Path.home()/'wplay'/'.userData'
 # endregion
 

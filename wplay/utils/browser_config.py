@@ -41,7 +41,7 @@ async def configure_browser_and_load_whatsapp():
     __patch_pyppeteer()
     username, save_session = session_manager()
     browser = await __config_browser(username, save_session)
-    pages = __config_pages(browser)
+    pages = await __config_pages(browser)
     return pages[0], browser
 # endregion
 
