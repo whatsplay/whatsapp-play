@@ -1,5 +1,4 @@
 import tkinter
-import os
 from tkinter import filedialog
 from telegram.ext import CommandHandler, Updater
 from wplay.utils.helpers import data_folder_path
@@ -15,7 +14,7 @@ def start_tkinter():
 def ask_where_are_the_status_file():
     print('Choose a status text file.')
     status_file_path = filedialog.askopenfile(
-        initialdir = os.path.join(data_folder_path, 'tracking_data/'),
+        initialdir = data_folder_path / 'tracking_data',
         title = 'Choose a status text file.',
         filetypes = (("text files", "*.txt"), ("all files", "*.*"))
     )
