@@ -23,17 +23,14 @@ async def my_script(target):
 
 
 # region IMPORTS
-import sys
-from pyppeteer import launch
-
 from wplay.utils.helpers import whatsapp_selectors_dict, websites
 # endregion
 
 
 # region FOR SCRIPTING
-async def search_for_target_complete(page, target, hide_groups=False):
+async def search_and_select_target(page, target, hide_groups=False):
     await __open_new_chat(page)
-    await __type_in_search_bar(page, target)
+    await __type_in_new_chat_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
     group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
     contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
@@ -55,23 +52,10 @@ async def search_for_target_complete(page, target, hide_groups=False):
     await __wait_for_message_area(page)
 
     return target_focused_title
-
-
-async def search_for_target_simple(page, target, hide_groups=False):
-    pass
-
-
-async def get_status_from_focused_target(page):
-    #await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
-    try:
-        status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["status"]}").getAttribute("title")')
-        return status
-    except:
-        return '#status not found'
 # endregion
 
 
-# region SELECT TARGET COMPLETE MODE
+# region SEARCH AND SELECT TARGET
 async def __open_new_chat(page):
     await page.waitForSelector(
         whatsapp_selectors_dict['new_chat_button'],
@@ -82,13 +66,13 @@ async def __open_new_chat(page):
     await page.click(whatsapp_selectors_dict['new_chat_button'])
 
 
-async def __type_in_search_bar(page, target):
+async def __type_in_new_chat_search_bar(page, target):
     print(f'Looking for: {target}')
     await page.waitForSelector(
-        whatsapp_selectors_dict['search_contact_input'],
+        whatsapp_selectors_dict['search_contact_input_new_chat'],
         visible=True
     )
-    await page.type(whatsapp_selectors_dict['search_contact_input'], target)
+    await page.type(whatsapp_selectors_dict['search_contact_input_new_chat'], target)
     await page.waitFor(3000)
 
 
@@ -96,13 +80,13 @@ async def __get_contacts_elements_filtered(page, target):
     contact_list_elements_unchecked = list()
     try:
         await page.waitForSelector(
-            whatsapp_selectors_dict['contact_list_elements_filtered'],
+            whatsapp_selectors_dict['contact_list_elements_filtered_new_chat'],
             visible=True,
             timeout=3000
         )
 
         contact_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['contact_list_elements_filtered']
+            whatsapp_selectors_dict['contact_list_elements_filtered_new_chat']
         )
     except:
         print(f'No contact named by "{target}"!')
@@ -117,13 +101,13 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
 
     try:
         await page.waitForSelector(
-            whatsapp_selectors_dict['group_list_elements_filtered'],
+            whatsapp_selectors_dict['group_list_elements_filtered_new_chat'],
             visible=True,
             timeout=3000
         )
 
         group_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['group_list_elements_filtered']
+            whatsapp_selectors_dict['group_list_elements_filtered_new_chat']
         )
     except:
         print(f'No group named by "{target}"!')
@@ -133,16 +117,15 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
 async def __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked):
     contact_titles_unchecked = []
     for i in range(len(contact_list_elements_unchecked)):
-        contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered"]}")[{i}].getAttribute("title")'))
+        contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return contact_titles_unchecked
 
 
 async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked):
     group_titles_unchecked = []
     for i in range(len(group_list_elements_unchecked)):
-        group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered"]}")[{i}].getAttribute("title")'))
+        group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return group_titles_unchecked
-
 
 # contact_list_unchecked is a zip (list of tuples) of contact_titles and
 # contact elements, unchecked.
@@ -238,7 +221,7 @@ def __ask_user_to_choose_the_filtered_target(target_tuple):
 def __get_choosed_target(target_tuple, target_index_choosed):
     lenght_of_contacts_tuple = len(target_tuple[0])
     if target_index_choosed is None:
-        sys.exit()
+        exit()
 
     try:
         if target_index_choosed < lenght_of_contacts_tuple:
@@ -247,10 +230,10 @@ def __get_choosed_target(target_tuple, target_index_choosed):
             choosed_target = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
-            sys.exit()
+            exit()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
-        sys.exit()
+        exit()
     return choosed_target
 
 
@@ -259,7 +242,7 @@ async def __navigate_to_target(page, choosed_target):
         await choosed_target[1].click()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
-        sys.exit()
+        exit()
 
 
 async def __get_focused_target_title(page, target):
@@ -268,7 +251,7 @@ async def __get_focused_target_title(page, target):
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
-        sys.exit()
+        exit()
     return target_focused_title
 
 
@@ -284,7 +267,7 @@ def __check_target_focused_title(page, target, target_focused_title):
         if must_continue.lower() in accepted_yes:
             pass
         else:
-            sys.exit()
+            exit()
 
 
 async def __wait_for_message_area(page):

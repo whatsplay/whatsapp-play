@@ -1,21 +1,20 @@
 #TODO all code: logging
 #TODO all code: add type annotations
+#TODO all code: return browser.close and use it instead use exit
 
-
-#TODO pyppeteerSearch: Add a complete mode and a simple mode to search targets
-#TODO pyppeteerSearch: Add a whaaaaaat menu
-#TODO pyppeteerSearch: use map and filter in __check_contact_list and __check_group_list
-#FIXME pyppeteerSearch: False positive group -> Groups name use the same div as contact status,
+#TODO target_search: Add a complete mode and a simple mode to search targets
+#TODO target_search: Add a whaaaaaat menu
+#FIXME target_search: False positive group -> Groups name use the same div as contact status,
         so we need to verify if target name is in title, not in status. But, 
         sometimes the status contain the target name and shows up as 
         false-positive group. 
         WHERE WE CAN FIX? __checking_group_list
 
 
-#TODO pyppeteer: Wait for the last message to be sent before closing the browser
-#TODO pyppeteer: return browser.close and use it instead use sys.exit
+#TODO io: Wait for the last message to be sent before closing the browser
 
 
+#BUG: session_manager: click 1, return, create new session -> the session is not saved
 
 
 

@@ -1,31 +1,23 @@
 import time
 import random
-from wplay.utils import pyppeteerConfig as pypConfig
-from wplay.utils import pyppeteerSearch as pypSearch
-from wplay.utils import pyppeteerIO as pypIO
+
+from wplay.utils import browser_config
+from wplay.utils import target_search
+from wplay.utils import io
 
 
 async def msgTimer(target):
-    #target = str(input("Enter the name of target: "))
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
-
-    #await pypSearch.search_for_target_simple(page, target)
-    await pypSearch.search_for_target_complete(page, target)
+    await target_search.search_and_select_target(page, target)
 
     #region INPUTS
     message_type_numbers = int(
         input("How many types of messages will you send? "))
-
     messages = list()
     for _ in range(message_type_numbers):
-        #messages.append(pypIO.ask_user_for_message())
-        messages.append(pypIO.ask_user_for_message_breakline_mode())
-
+        messages.append(io.ask_user_for_message_breakline_mode())
     number_of_messages = int(input("Enter the number of messages to send: "))
-
-    # Enter the time interval of the messages, it will be sent using a random
-    # interval. For fixed interval, type the same number.
     minimumTimeInterval = int(
         input("Enter minimum interval number in seconds: "))
     maximumTimeInterval = int(
@@ -36,7 +28,7 @@ async def msgTimer(target):
     for _ in range(number_of_messages):
         if not messages:
             break
-        await pypIO.send_message(page, messages[random.randrange(0, message_type_numbers)])
+        await io.send_message(page, messages[random.randrange(0, message_type_numbers)])
         if minimumTimeInterval != maximumTimeInterval:
             time.sleep(random.randrange(minimumTimeInterval, maximumTimeInterval))
         else:

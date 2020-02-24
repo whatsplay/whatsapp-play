@@ -1,16 +1,17 @@
 import argparse
 import asyncio
 import sys
+import os
+
 from pyfiglet import Figlet
+
+from wplay.utils import kill_process
 from wplay import onlinetracker
 from wplay import messageblast
 from wplay import messagetimer
 from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
-
-
-#TODO: Change 'name' to 'target'
 
 
 def print_logo(text_logo):
@@ -22,8 +23,8 @@ def print_logo(text_logo):
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'WhatsApp-play')
     parser.add_argument(
-        "name",
-        metavar="NAME",
+        "target",
+        metavar="TARGET",
         type=str,
         help="contact or group name")
 
@@ -76,29 +77,29 @@ def get_arguments():
 # functions for different arguments
 async def match_args(args):
     if args.wtrack:
-        await onlinetracker.tracker(args.name)
+        await onlinetracker.tracker(args.target)
 
     elif args.wtgbot:
-        tgbot.telegram_status(args.name)
+        tgbot.telegram_status(args.target)
 
     elif args.wchat:
-        await wchat.chat(args.name)
+        await wchat.chat(args.target)
 
     elif args.wblast:
-        await messageblast.blast(args.name)
+        await messageblast.blast(args.target)
 
     elif args.wtimer:
-        await messagetimer.msgTimer(args.name)
+        await messagetimer.msgTimer(args.target)
 
     elif args.pull:
         try:
             bID = int(sys.argv[3])
         except (IndexError, ValueError):
             bID = 0
-        savechat.runMain('pull', str(args.name), bID)
+        savechat.runMain('pull', str(args.target), bID)
 
     # elif args.wlocation:
-    #     loactionfinder.finder(args.name)
+    #     loactionfinder.finder(args.target)
 
 
 async def main():
@@ -119,3 +120,5 @@ except AssertionError:
     except RuntimeError:
         exit()
     exit()
+finally:
+    kill_process.kill_child_processes(os.getpid())

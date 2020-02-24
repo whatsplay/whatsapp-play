@@ -15,7 +15,8 @@ setup(
                       "whaaaaat>=0.5.2",
                       "prompt_toolkit==1.0.14",
                       "pyfiglet>=0.8.post1",
-                      "requests>=2.22.0"
+                      "requests>=2.22.0",
+                      "psutil>=5.7.0"
                       ],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",

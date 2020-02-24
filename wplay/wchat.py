@@ -1,15 +1,12 @@
-from wplay.utils import pyppeteerConfig as pypConfig
-from wplay.utils import pyppeteerSearch as pypSearch
-from wplay.utils import pyppeteerIO as pypIO
+from wplay.utils import browser_config
+from wplay.utils import target_search
+from wplay.utils import io
 
 async def chat(target):
-    #target = str(input("Enter the name of target: "))
-    page, _ = await pypConfig.configure_browser_and_load_whatsapp()
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    #await pypSearch.search_for_target_simple(page, target)
-    await pypSearch.search_for_target_complete(page, target)
+    await target_search.search_and_select_target(page, target)
 
     while True:
-        #message = pypIO.ask_user_for_message()
-        message = pypIO.ask_user_for_message_breakline_mode()
-        await pypIO.send_message(page, message)
+        message = io.ask_user_for_message_breakline_mode()
+        await io.send_message(page, message)
