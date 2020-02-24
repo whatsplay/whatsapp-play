@@ -23,7 +23,7 @@ async def my_script(target):
 
 
 # region IMPORTS
-from wplay.utils.helpers import whatsapp_selectors_dict, websites
+from wplay.utils.helpers import whatsapp_selectors_dict
 # endregion
 
 
@@ -127,21 +127,16 @@ async def __get_groups_titles_from_elements_unchecked(page, group_list_elements_
         group_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["group_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return group_titles_unchecked
 
+
 # contact_list_unchecked is a zip (list of tuples) of contact_titles and
 # contact elements, unchecked.
-def __zip_contact_titles_and_elements_unchecked(
-    contact_titles_unchecked,
-    contact_list_elements_unchecked):
-    contact_list_unchecked = list(zip(
-        contact_titles_unchecked, contact_list_elements_unchecked))
+def __zip_contact_titles_and_elements_unchecked(contact_titles_unchecked, contact_list_elements_unchecked):
+    contact_list_unchecked = list(zip(contact_titles_unchecked, contact_list_elements_unchecked))
     return contact_list_unchecked
 
 
-def __zip_group_titles_and_elements_unchecked(
-    group_titles_unchecked,
-    group_list_elements_unchecked):
-    group_list_unchecked = list(
-        zip(group_titles_unchecked, group_list_elements_unchecked))
+def __zip_group_titles_and_elements_unchecked(group_titles_unchecked, group_list_elements_unchecked):
+    group_list_unchecked = list(zip(group_titles_unchecked, group_list_elements_unchecked))
     return group_list_unchecked
 
 
@@ -212,7 +207,7 @@ def __print_target_tuple(target_tuple):
 
 
 def __ask_user_to_choose_the_filtered_target(target_tuple):
-    if len(target_tuple[0]+target_tuple[1]) > 0:
+    if len(target_tuple[0] + target_tuple[1]) > 0:
         target_index_choosed = int(
             input('Enter the number of the target you wish to choose: '))
     return target_index_choosed
@@ -227,7 +222,7 @@ def __get_choosed_target(target_tuple, target_index_choosed):
         if target_index_choosed < lenght_of_contacts_tuple:
             choosed_target = target_tuple[0][target_index_choosed]
         elif target_index_choosed >= lenght_of_contacts_tuple:
-            choosed_target = target_tuple[1][target_index_choosed-lenght_of_contacts_tuple]
+            choosed_target = target_tuple[1][target_index_choosed - lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
             exit()
