@@ -105,7 +105,7 @@ def jsonPrint(data):
 
 
 def localFileLog(md5):
-    logfile = 'logs' + os.path.sep + 'files.log'
+    logfile = 'logs' / 'files.log'
     if not os.path.exists(os.path.dirname(logfile)):
         os.makedirs(os.path.dirname(logfile))
     with open(logfile, 'a') as log:
@@ -140,7 +140,7 @@ def getMultipleFiles(data, folder):
     for entries in data:
         if any(entries['m'] in lists for lists in files) is \
                 False or 'database' in entries['f'].lower():
-            local = folder + '/' + entries['f'].replace("/", os.path.sep)
+            local = folder + os.path.sep + entries['f'].replace("/", os.path.sep)
             if os.path.isfile(local) and 'database' not in local.lower():
                 quit('Skipped: "' + local + '".')
             else:
