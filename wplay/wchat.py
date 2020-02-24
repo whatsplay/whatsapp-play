@@ -2,6 +2,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import io
 
+
 async def chat(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 

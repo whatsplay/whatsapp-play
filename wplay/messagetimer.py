@@ -11,7 +11,7 @@ async def msgTimer(target):
 
     await target_search.search_and_select_target(page, target)
 
-    #region INPUTS
+    # Region INPUTS
     message_type_numbers = int(
         input("How many types of messages will you send? "))
     messages = list()
@@ -22,8 +22,8 @@ async def msgTimer(target):
         input("Enter minimum interval number in seconds: "))
     maximumTimeInterval = int(
         input("Enter maximum interval number in seconds: "))
-    #endregion
-    
+    # Endregion
+
     random.seed()
     for _ in range(number_of_messages):
         if not messages:
