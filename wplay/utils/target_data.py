@@ -6,7 +6,7 @@ from wplay.utils.helpers import whatsapp_selectors_dict
 
 # region FOR SCRIPTING
 async def get_last_seen_from_focused_target(page):
-    # Await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
+    # await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
     try:
         status = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["last_seen"]}").getAttribute("title")')
         return status
