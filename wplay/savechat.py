@@ -113,7 +113,7 @@ def localFileLog(md5):
 
 
 def localFileList():
-    logfile = 'logs' + '/' + 'files.log'
+    logfile = 'logs' / 'files.log'
     if os.path.isfile(logfile):
         flist = open(logfile, 'r')
         return [line.split('\n') for line in flist.readlines()]
@@ -180,7 +180,7 @@ def runMain(mode, asset, bID):
             r = target[2]
         except TypeError:
             quit('Unable to locate: "' + asset + '".')
-        local = 'WhatsApp' + '/' + f.replace("/", os.path.sep)
+        local = 'WhatsApp'+ os.path.sep + f.replace("/", os.path.sep)
         if os.path.isfile(local) and 'database' not in local.lower():
             quit('Skipped: "' + local + '".')
         else:
