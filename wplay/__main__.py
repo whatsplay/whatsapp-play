@@ -9,10 +9,6 @@ from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
 
-
-#TODO: Change 'name' to 'target'
-
-
 def print_logo(text_logo):
     figlet = Figlet(font='slant')
     print(figlet.renderText(text_logo))
@@ -22,10 +18,10 @@ def print_logo(text_logo):
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'WhatsApp-play')
     parser.add_argument(
-        "name",
+        "target",
         metavar="NAME",
         type=str,
-        help="contact or group name")
+        help="contact or group target")
 
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument(
@@ -76,29 +72,29 @@ def get_arguments():
 # functions for different arguments
 async def match_args(args):
     if args.wtrack:
-        await onlinetracker.tracker(args.name)
+        await onlinetracker.tracker(args.target)
 
     elif args.wtgbot:
-        tgbot.telegram_status(args.name)
+        tgbot.telegram_status(args.target)
 
     elif args.wchat:
-        await wchat.chat(args.name)
+        await wchat.chat(args.target)
 
     elif args.wblast:
-        await messageblast.blast(args.name)
+        await messageblast.blast(args.target)
 
     elif args.wtimer:
-        await messagetimer.msgTimer(args.name)
+        await messagetimer.msgTimer(args.target)
 
     elif args.pull:
         try:
             bID = int(sys.argv[3])
         except (IndexError, ValueError):
             bID = 0
-        savechat.runMain('pull', str(args.name), bID)
+        savechat.runMain('pull', str(args.target), bID)
 
     # elif args.wlocation:
-    #     loactionfinder.finder(args.name)
+    #     loactionfinder.finder(args.target)
 
 
 async def main():
