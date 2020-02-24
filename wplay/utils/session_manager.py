@@ -128,7 +128,7 @@ def __verify_if_session_file_exists(data_filenames, username, question_overwrite
     if username in data_filenames:
         answer_overwrite = prompt(question_overwrite, style=menu_style)
         if answer_overwrite['overwrite_data']:
-            __delete_session_data(str(user_data_folder_path + '/' + username))
+            __delete_session_data(user_data_folder_path / username)
         else:
             session_manager()
 
