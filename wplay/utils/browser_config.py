@@ -71,7 +71,7 @@ async def __config_browser(username = None, save_session = False):
         return await launch(
             headless = False,
             autoClose = False,
-            userDataDir = "user_data_folder_path" + "/" + "username"
+            userDataDir = 'user_data_folder_path' / 'username'
         )
     else:
         return await launch(headless = False, autoClose = False)
