@@ -3,7 +3,7 @@
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
 [![PyPi](https://img.shields.io/badge/pypi-v5.0.2-blue)](https://pypi.org/project/wplay/)
-[![CircleCI](https://circleci.com/gh/rpotter12/whatsapp-play/tree/master.svg?style=svg&circle-token=2b67dd21e60a01fdd36a670629574479aeb2f5c4)]
+![CircleCI](https://circleci.com/gh/rpotter12/whatsapp-play/tree/master.svg?style=svg&circle-token=2b67dd21e60a01fdd36a670629574479aeb2f5c4)
 [![twitter](https://img.shields.io/twitter/url/https/github.com/rpotter12/whatsapp-play.svg?style=social)](https://twitter.com/rpotter121998)
 [![HitCount](http://hits.dwyl.io/rpotter12/whatsapp-play.svg)](http://hits.dwyl.io/rpotter12/whatsapp-play)
 [![Gitter](https://badges.gitter.im/whatsapp-play/community.svg)](https://gitter.im/whatsapp-play/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
@@ -53,7 +53,7 @@ Install whatsapp-play from source code: <br />
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
 ## Contribute
-To contribute you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
+The first step is to create a fork and clone, then you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
 To create a launcher with arguments follow the steps bellow: <br />
 1. Click in 'Debug' tab
