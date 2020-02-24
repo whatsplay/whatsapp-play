@@ -1,23 +1,19 @@
 import time
 from pathlib import Path
 from datetime import datetime
-
 from playsound import playsound
-
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_data
 from wplay.utils.helpers import data_folder_path
 
+
 async def tracker(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-
-    target_name = await target_search.search_and_select_target(page, target, hide_groups=True)
-
-    Path(data_folder_path/'tracking_data').mkdir(parents=True, exist_ok=True)
-
-    status_file = open(data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'w').close()
-    status_file = open(data_folder_path/'tracking_data'/f'status_{target_name}.txt', 'a')
+    target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
+    Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
+    status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'w').close()
+    status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'a')
 
     is_sound_enabled = True
     last_status = 'offline'
@@ -40,15 +36,12 @@ async def tracker(target):
                         print("Error: Couldn't play the sound.")
                         is_sound_enabled = False
                 print(
-                    f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' +
-                    f' - Status: {status}'
+                    f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' + f' - Status: {status}'
                 )
                 status_file.write(
-                    f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' +
-                    f' - Status: {status}\n')
+                    f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' + f' - Status: {status}\n')
             last_status = is_online
             time.sleep(0.5)
     finally:
         status_file.close()
-        print(f'\nStatus file saved in: ' +
-                str(data_folder_path/'tracking_data'/f'status_{target_name}.txt'))
+        print(f'\nStatus file saved in: ' + str(data_folder_path + '/tracking_data' + '/' + f'status_{target_name}.txt'))

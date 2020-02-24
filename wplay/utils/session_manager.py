@@ -88,10 +88,10 @@ def __prepare_questions(data_filenames):
         }
     ]
     return questions_menu, question_overwrite
-      
+
 
 def __verify_answers(answers_menu, data_filenames, question_overwrite):
-    username = None; save_session = False
+    username, save_session = None, False
 
     # Handle when person choose 'Restore a session'
     if answers_menu['user_options'] == user_options['restore']:
@@ -109,18 +109,18 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
 
     # Handle when person choose 'Continue without saving'
     elif answers_menu['user_options'] == user_options['continue']:
-        username = None; save_session = False
+        username, save_session = None, False
 
     # Handle when person choose 'Delete a session'
     elif answers_menu['user_options'] == user_options['delete']:
         if len(answers_menu['delete']) > 0:
-            [__delete_session_data(user_data_folder_path/username) for username in answers_menu['delete']]
+            [__delete_session_data(str(user_data_folder_path + '/' + username)) for username in answers_menu['delete']]
         session_manager()
-    
+
     # Handle when person choose 'Exit'
     elif answers_menu['user_options'] == user_options['exit']:
         exit()
-    
+
     return username, save_session
 
 
@@ -128,14 +128,14 @@ def __verify_if_session_file_exists(data_filenames, username, question_overwrite
     if username in data_filenames:
         answer_overwrite = prompt(question_overwrite, style=menu_style)
         if answer_overwrite['overwrite_data']:
-            __delete_session_data(user_data_folder_path/username)
+            __delete_session_data(str(user_data_folder_path + '/' + username))
         else:
             session_manager()
 
 
 def __delete_session_data(path):
     def handleError(func, path, exc_info):
-        print('Handling Error for file ' , path)
+        print('Handling Error for file ', path)
         if not os.access(path, os.W_OK):
             print('Trying to change permission!')
             os.chmod(path, stat.S_IWUSR)

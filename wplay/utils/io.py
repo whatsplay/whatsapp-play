@@ -1,11 +1,11 @@
 __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 
-#region IMPORTS
-from wplay.utils.helpers import whatsapp_selectors_dict, websites
-#endregion
+# region IMPORTS
+from wplay.utils.helpers import whatsapp_selectors_dict
+# endregion
 
 
-#region FOR SCRIPTING
+# region FOR SCRIPTING
 def ask_user_for_message():
     return str(input("Write your message: "))
 
@@ -34,4 +34,4 @@ async def send_message(page, message):
             await page.keyboard.press('Enter')
             await page.keyboard.up('Shift')
     await page.keyboard.press('Enter')
-#endregion
+# endregion
