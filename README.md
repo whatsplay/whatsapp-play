@@ -29,7 +29,7 @@ It is command line software through which you can play with your WhatsApp. It is
 First, it is recommended to create a virtual environment but it is not mandatory. To create follow the steps below: <br />
 `cd 'whatsapp-play'` <br />
 `python3 -m venv .venv` <br />
-*Windows*: `./.venv/Scripts/activate` <br />
+*Windows*: `.venv\Scripts\activate` <br />
 *Unix*: `source .venv/bin/activate` <br />
 
 Secondly: <br /> 
@@ -41,7 +41,7 @@ Or
 
 Install whatsapp-play from source code: <br />
 `cd 'whatsapp-play'` <br />
-*Windows*: `./build.bat` <br />
+*Windows*: `build.bat` <br />
 *Unix*: `sh build.sh` <br />
 `cd dist` <br />
 `ls` -> get the name of the file ending with 'whl' <br />
