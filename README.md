@@ -48,6 +48,8 @@ Install whatsapp-play from source code: <br />
 *With Virtual Environment*: `pip install <name_of_file>.whl`. <br />
 *Without Virtual Environment*: `python3 -m pip install <name_of_file>.whl`. <br />
 
+Installation Video: [Link](https://www.youtube.com/watch?v=wNNB7fFUjT4)
+
 ## Usage
 <img src="/images/usage.png"><br>
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
