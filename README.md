@@ -48,7 +48,7 @@ Install whatsapp-play from source code: <br />
 *With Virtual Environment*: `pip install <name_of_file>.whl`. <br />
 *Without Virtual Environment*: `python3 -m pip install <name_of_file>.whl`. <br />
 
-Installation Video: https://youtu.be/wNNB7fFUjT4
+Installation Video: [Link](https://youtu.be/wNNB7fFUjT4)
 
 ## Usage
 <img src="/images/usage.png"><br>
