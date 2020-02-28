@@ -25,12 +25,12 @@ It is command line software through which you can play with your WhatsApp. It is
 ---
 
 ## Installation 
-###Install whatsapp-play from PyPI: <br />
+### Install whatsapp-play from PyPI: <br />
 Windows: `python -m pip install wplay` <br />
 Unix: `python3 -m pip install wplay` <br />
 **Installation Video:** [Simple Installation Link](https://youtu.be/HS6ksu6rCxQ)
 
-###ALTERNATIVE - Run whatsapp-play from source code: <br />
+### ALTERNATIVE - Run whatsapp-play from source code: <br />
 `git clone https://github.com/rpotter12/whatsapp-play.git` <br />
 `cd 'whatsapp-play'` <br />
 Windows: `python -m pip install -r requirements.txt` <br />
