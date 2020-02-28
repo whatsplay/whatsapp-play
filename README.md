@@ -24,31 +24,19 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ---
 
-## Installation
+## Installation 
+<h4>Install whatsapp-play from PyPI: </h4> <br />
+Windows: `python -m pip install wplay` <br />
+Unix: `python3 -m pip install wplay` <br />
+**Installation Video:** [Simple Installation Link](https://youtu.be/HS6ksu6rCxQ)
 
-First, it is recommended to create a virtual environment but it is not mandatory. To create follow the steps below: <br />
+<h4>ALTERNATIVE - Run whatsapp-play from source code:</h4> <br />
+`git clone https://github.com/rpotter12/whatsapp-play.git` <br />
 `cd 'whatsapp-play'` <br />
-`python3 -m venv .venv` <br />
-*Windows*: `.venv\Scripts\activate` <br />
-*Unix*: `source .venv/bin/activate` <br />
-
-Secondly: <br /> 
-Install whatsapp-play from PyPI: <br />
-*With Virtual Environment*: `pip install wplay`. <br />
-*Without Virtual Environment*: `python3 -m pip install wplay`. <br />
-
-Or
-
-Install whatsapp-play from source code: <br />
-`cd 'whatsapp-play'` <br />
-*Windows*: `build.bat` <br />
-*Unix*: `sh build.sh` <br />
-`cd dist` <br />
-`ls` -> get the name of the file ending with 'whl' <br />
-*With Virtual Environment*: `pip install <name_of_file>.whl`. <br />
-*Without Virtual Environment*: `python3 -m pip install <name_of_file>.whl`. <br />
-
-**Installation Video:** [Link](https://youtu.be/wNNB7fFUjT4)
+Windows: `python -m pip install -r requirements.txt` <br />
+Unix: `python3 -m pip install -r requirements.txt` <br />
+Windows: `python -m wplay -h` <br />
+Unix: `python3 -m wplay -h` <br />
 
 ## Usage
 <img src="/images/usage.png"><br>
@@ -63,6 +51,8 @@ To create a launcher with arguments follow the steps bellow: <br />
 1. Select 'Module'
 1. Type 'wplay' and press Enter
 1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
+
+**Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)
 
 ## Disclaimer
 This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
