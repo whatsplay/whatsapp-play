@@ -10,15 +10,14 @@ websites = {'whatsapp': 'https://web.whatsapp.com/'}
 # region SELECTOR
 whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
-    
+
     'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
     'search_contact_input_new_chat': '#app > div > div span > div > span > div div > label > input',
     'contact_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
     'group_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
-    
+
     'search_contact_input':'#side > div > div > label > input',
     'chat_list_elements_filtered':'#pane-side > div > div > div > div > div > div > div > div > div > span > span[title][dir]',
-    
 
     'target_focused_title': '#main > header div > div > span[title]',
     'message_area': '#main > footer div.selectable-text[contenteditable]',
@@ -27,9 +26,9 @@ whatsapp_selectors_dict = {
 # endregion
 
 # region PATHS
-data_folder_path = Path.home()/'wplay'
-logs_path = Path.home()/'wplay'/'logs'
-user_data_folder_path = Path.home()/'wplay'/'.userData'
+data_folder_path = Path.home() / 'wplay'
+logs_path = Path.home() / 'wplay' / 'logs'
+user_data_folder_path = Path.home() / 'wplay' / '.userData'
 # endregion
 
 # region MENU STYLES
