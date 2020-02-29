@@ -51,5 +51,3 @@ setup(
     ],
     entry_points={"console_scripts": ["wplay = wplay.__main__:main"]},
 )
-lay = wplay.__main__:main"]},
-)
