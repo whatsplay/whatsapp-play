@@ -26,9 +26,9 @@ async def my_script(target):
 # region IMPORTS
 from pyppeteer import launch
 from wplay.utils.session_manager import session_manager
-from wplay.utils.helpers import websites
+from wplay.utils.helpers import websites, user_data_folder_path
 # endregion
-from wplay.utils.helpers import user_data_folder_path 
+
 
 # region FOR SCRIPTING
 async def configure_browser_and_load_whatsapp():
