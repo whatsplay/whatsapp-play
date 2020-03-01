@@ -1,6 +1,8 @@
 __author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
 
-# region IMPORTS
+# https://github.com/pytransitions/transitions#the-non-quickstart
+from transitions import Machine, State
+
 import os
 import stat
 import shutil
@@ -10,137 +12,171 @@ from whaaaaat import Separator, prompt
 
 from wplay.utils.helpers import user_data_folder_path
 from wplay.utils.helpers import menu_style
-# endregion
 
-# region SESSION MANAGEMENT
-user_options = {'restore': 'Restore a session',
-                'save': 'Create a new session',
-                'continue': 'Continue without saving',
-                'delete': 'Delete a session',
-                'exit': 'Exit'}
+class CliWhatsappPlay(object):
 
+    def __init__(self):
+        self.data_filenames = None
+        self.questions_menu = None
+        self.question_overwrite = None
+        self.answers_menu = None
+        self.username = None
+        self.save_session = False
+        self.user_options = {
+            'restore': 'Restore a session',
+            'save': 'Create a new session',
+            'continue': 'Continue without saving',
+            'delete': 'Delete a session',
+            'exit': 'Exit'
+        }
+
+    def reset_fields(self):
+        self.data_filenames = None
+        self.questions_menu = None
+        self.question_overwrite = None
+        self.answers_menu = None
+        self.username = None
+        self.save_session = False
+
+
+    def create_user_data_folder(self):
+        Path(user_data_folder_path).mkdir(parents=True, exist_ok=True)
+
+    def get_user_data_filenames(self):
+        self.data_filenames = [file.stem for file in user_data_folder_path.glob('*')]
+
+    def prepare_questions(self):
+        self.questions_menu = [
+            {
+                'type': 'rawlist',
+                'name': 'user_options',
+                'message': '***Session Manager***:',
+                'choices': [
+                    Separator(),
+                    self.user_options['restore'],
+                    self.user_options['save'],
+                    self.user_options['continue'],
+                    Separator(),
+                    self.user_options['delete'],
+                    self.user_options['exit'],
+                    Separator()
+                ]
+            },
+            {
+                'type': 'rawlist',
+                'name': 'restore',
+                'message': 'Select a session to try to restore:',
+                'choices': [*[session for session in self.data_filenames], '<---Go-back---'],
+                'when': lambda answers: answers['user_options'] == self.user_options['restore']
+            },
+            {
+                'type': 'input',
+                'name': 'save',
+                'message': 'Write your first name or username to save:',
+                'when': lambda answers: answers['user_options'] == self.user_options['save']
+            },
+            {
+                'type': 'checkbox',
+                'name': 'delete',
+                'message': 'Mark the sessions you want to delete:',
+                'choices': list(map(lambda e: {'name': e}, self.data_filenames)),
+                'when': lambda answers: answers['user_options'] == self.user_options['delete']
+            }
+        ]
+
+        self.question_overwrite = [
+            {
+                'type': 'confirm',
+                'name': 'overwrite_data',
+                'message': 'There is already a session with that name, overwrite it?',
+                'default': True
+            }
+        ]
+    
+    def get_answer_menu(self):
+        self.answers_menu = prompt(self.questions_menu, style=menu_style)  
+
+    def verify_answers(self):
+
+        # Handle when person choose 'Restore a session'
+        if self.answers_menu['user_options'] == self.user_options['restore']:
+            if self.answers_menu['restore'] == '<---Go-back---':
+                return False
+            else:
+                self.username = self.answers_menu['restore']
+                self.save_session = True
+                return True
+
+        # Handle when person choose 'Create a new session'
+        elif self.answers_menu['user_options'] == self.user_options['save']:
+            self.username = self.answers_menu['save']
+            self.save_session = True
+            return self.__verify_if_session_file_exists()
+            
+
+        # Handle when person choose 'Continue without saving'
+        elif self.answers_menu['user_options'] == self.user_options['continue']:
+            self.username, self.save_session = None, False
+            return True
+
+        # Handle when person choose 'Delete a session'
+        elif self.answers_menu['user_options'] == self.user_options['delete']:
+            if len(self.answers_menu['delete']) > 0:
+                [self.__delete_session_data(user_data_folder_path / username) for username in self.answers_menu['delete']]
+            return False
+
+        # Handle when person choose 'Exit'
+        elif self.answers_menu['user_options'] == self.user_options['exit']:
+            exit()
+
+    def __verify_if_session_file_exists(self):
+        if self.username in self.data_filenames:
+            answer_overwrite = prompt(self.question_overwrite, style=menu_style)
+            if answer_overwrite['overwrite_data']:
+                self.__delete_session_data(user_data_folder_path / self.username)
+            return answer_overwrite['overwrite_data']
+        return True
+
+
+    def __delete_session_data(self, path):
+        def handleError(func, path, exc_info):
+            print('Handling Error for file ', path)
+            if not os.access(path, os.W_OK):
+                print('Trying to change permission!')
+                os.chmod(path, stat.S_IWUSR)
+                shutil.rmtree(path, ignore_errors=True)
+
+        shutil.rmtree(path, onerror=handleError)
+
+
+states = [
+    State(name='start'),
+    State(name='create_user_data_folder', on_enter='create_user_data_folder'),
+    State(name='get_user_data_filenames', on_enter='get_user_data_filenames'),
+    State(name='prepare_questions', on_enter='prepare_questions'),
+    State(name='get_answer_menu', on_enter='get_answer_menu'),
+    State(name='verify_answers', on_enter='verify_answers')
+]
+
+transitions = [
+    {"trigger": 'start', 'source': '*', 'dest': 'start'},
+    { 'trigger': 'create_user_data_folder', 'source': 'start', 'dest': 'create_user_data_folder'},
+    { 'trigger': 'get_user_data_filenames', 'source': 'create_user_data_folder', 'dest': 'get_user_data_filenames'},
+    { 'trigger': 'prepare_questions', 'source': 'get_user_data_filenames', 'dest': 'prepare_questions'},
+    { 'trigger': 'get_answer_menu', 'source': 'prepare_questions', 'dest': 'get_answer_menu'},
+    { 'trigger': 'verify_answers', 'source': 'get_answer_menu', 'dest': 'verify_answers'},
+]
 
 def session_manager():
-    __create_user_data_folder()
-    data_filenames = __get_user_data_filenames()
-    questions_menu, question_overwrite = __prepare_questions(data_filenames)
-    answers_menu = prompt(questions_menu, style=menu_style)
-    try:
-        username, save_session = __verify_answers(answers_menu, data_filenames, question_overwrite)
-    except KeyError:
-        exit()
-    return username, save_session
+    done = False
+    obj = CliWhatsappPlay()
+    while(not done):
+        if(obj.questions_menu != None): obj.reset_fields()
+        machine = Machine(obj, states, transitions=transitions, initial='start')
+        obj.create_user_data_folder()
+        obj.get_user_data_filenames()
+        obj.prepare_questions()
+        obj.get_answer_menu()
+        done = obj.verify_answers()
 
-
-def __create_user_data_folder():
-    Path(user_data_folder_path).mkdir(parents=True, exist_ok=True)
-
-
-def __get_user_data_filenames():
-    return [file.stem for file in user_data_folder_path.glob('*')]
-
-
-def __prepare_questions(data_filenames):
-    questions_menu = [
-        {
-            'type': 'rawlist',
-            'name': 'user_options',
-            'message': '***Session Manager***:',
-            'choices': [
-                Separator(),
-                user_options['restore'],
-                user_options['save'],
-                user_options['continue'],
-                Separator(),
-                user_options['delete'],
-                user_options['exit'],
-                Separator()
-            ]
-        },
-        {
-            'type': 'rawlist',
-            'name': 'restore',
-            'message': 'Select a session to try to restore:',
-            'choices': [*[session for session in data_filenames], '<---Go-back---'],
-            'when': lambda answers: answers['user_options'] == user_options['restore']
-        },
-        {
-            'type': 'input',
-            'name': 'save',
-            'message': 'Write your first name or username to save:',
-            'when': lambda answers: answers['user_options'] == user_options['save']
-        },
-        {
-            'type': 'checkbox',
-            'name': 'delete',
-            'message': 'Mark the sessions you want to delete:',
-            'choices': list(map(lambda e: {'name': e}, data_filenames)),
-            'when': lambda answers: answers['user_options'] == user_options['delete']
-        }
-    ]
-
-    question_overwrite = [
-        {
-            'type': 'confirm',
-            'name': 'overwrite_data',
-            'message': 'There is already a session with that name, overwrite it?',
-            'default': True
-        }
-    ]
-    return questions_menu, question_overwrite
-
-
-def __verify_answers(answers_menu, data_filenames, question_overwrite):
-    username, save_session = None, False
-
-    # Handle when person choose 'Restore a session'
-    if answers_menu['user_options'] == user_options['restore']:
-        if answers_menu['restore'] == '<---Go-back---':
-            username, save_session = session_manager()
-        else:
-            username = answers_menu['restore']
-            save_session = True
-
-    # Handle when person choose 'Create a new session'
-    elif answers_menu['user_options'] == user_options['save']:
-        username = answers_menu['save']
-        save_session = True
-        __verify_if_session_file_exists(data_filenames, username, question_overwrite)
-
-    # Handle when person choose 'Continue without saving'
-    elif answers_menu['user_options'] == user_options['continue']:
-        username, save_session = None, False
-
-    # Handle when person choose 'Delete a session'
-    elif answers_menu['user_options'] == user_options['delete']:
-        if len(answers_menu['delete']) > 0:
-            [__delete_session_data(user_data_folder_path / username) for username in answers_menu['delete']]
-        username, save_session = session_manager()
-
-    # Handle when person choose 'Exit'
-    elif answers_menu['user_options'] == user_options['exit']:
-        exit()
-
-    return username, save_session
-
-
-def __verify_if_session_file_exists(data_filenames, username, question_overwrite):
-    if username in data_filenames:
-        answer_overwrite = prompt(question_overwrite, style=menu_style)
-        if answer_overwrite['overwrite_data']:
-            __delete_session_data(user_data_folder_path / username)
-        else:
-            session_manager()
-
-
-def __delete_session_data(path):
-    def handleError(func, path, exc_info):
-        print('Handling Error for file ', path)
-        if not os.access(path, os.W_OK):
-            print('Trying to change permission!')
-            os.chmod(path, stat.S_IWUSR)
-            shutil.rmtree(path, ignore_errors=True)
-
-    shutil.rmtree(path, onerror=handleError)
-
-# endregion
+    return obj.username, obj.save_session
