@@ -44,4 +44,4 @@ async def tracker(target):
             time.sleep(0.5)
     finally:
         status_file.close()
-        print(f'\nStatus file saved in: ' + str(data_folder_path + '/tracking_data' + '/' + f'status_{target_name}.txt'))
+        print(f'\nStatus file saved in: {str(data_folder_path/"tracking_data"/"status_")}{target_name}.txt')
