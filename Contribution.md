@@ -2,13 +2,12 @@
 
 The first step is to create a fork and clone, then you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
-**Make sure you follow below guidelines before contributing.**
-
+Make sure you follow below guidelines before contributing: <br />
 1. Raise an issue before sending any PR.
 2. Make you changes to feature branch.
 3. See if there is already an open PR for the same issue.
 
-**To create a launcher with arguments follow the steps bellow:** <br />
+To create a launcher with arguments follow the steps bellow: <br />
 1. Click in 'Debug' tab
 1. Click in 'Add Configuration'
 1. Select 'Module'
