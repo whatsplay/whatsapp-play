@@ -96,7 +96,7 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
     # Handle when person choose 'Restore a session'
     if answers_menu['user_options'] == user_options['restore']:
         if answers_menu['restore'] == '<---Go-back---':
-            session_manager()
+            username, save_session = session_manager()
         else:
             username = answers_menu['restore']
             save_session = True
@@ -115,7 +115,7 @@ def __verify_answers(answers_menu, data_filenames, question_overwrite):
     elif answers_menu['user_options'] == user_options['delete']:
         if len(answers_menu['delete']) > 0:
             [__delete_session_data(user_data_folder_path / username) for username in answers_menu['delete']]
-        session_manager()
+        username, save_session = session_manager()
 
     # Handle when person choose 'Exit'
     elif answers_menu['user_options'] == user_options['exit']:
