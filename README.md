@@ -1,4 +1,4 @@
-# Whatsapp-Play
+# whatsapp-play
 
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
@@ -24,7 +24,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ---
 
-## Installation:
+## Installation
 
 ### Install whatsapp-play from PyPI: <br />
 Windows: `python -m pip install wplay` <br />
@@ -39,10 +39,10 @@ Unix: `python3 -m pip install -r requirements.txt` <br />
 Windows: `python -m wplay -h` <br />
 Unix: `python3 -m wplay -h` <br />
 
-## Usage:
+## Usage
 
 <img src="/images/usage.png"><br>
-### Usage of commands:
+### Usage of commands
 
 - Help - Used to display the help section of Wplay
 ```shell
@@ -73,7 +73,7 @@ python3 -m wplay -wtb "AnyName"
 python3 -m wplay -pull "AnyName"
 ```
 
-## Contributing:
+## Contributing
 
 The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
 
