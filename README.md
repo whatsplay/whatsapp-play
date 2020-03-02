@@ -44,31 +44,31 @@ Unix: `python3 -m wplay -h` <br />
 <img src="/images/usage.png"><br>
 ### Usage of commands
 
-- Help - Used to display the help section of Wplay
+1. Help - Used to display the help section of Wplay
 ```shell
 python3 -m wplay -h
 ```
-- Wchat - Used for chatting on whatsapp using CLI
+2. Wchat - Used for chatting on whatsapp using CLI
 ```shell
 python3 -m wplay -wc "AnyName"
 ```
-- Wbomb - Used for message bombing aperson whatsapp using CLI
+3. Wbomb - Used for message bombing aperson whatsapp using CLI
 ```shel
 python3 -m wplay -wb "AnyName"
 ```
-- Wtrack - Used for tracking whatsapp status of a user 
+4. Wtrack - Used for tracking whatsapp status of a user 
 ```shell
 python3 -m wplay -wt "AnyName"
 ```
-- Wtimer - Used for sending different message to a user in different time intervals
+5. Wtimer - Used for sending different message to a user in different time intervals
 ```shell
 python3 -m wplay -wt "AnyName"
 ```
-- Wtelegrambot - Used to send tracking status to telegram bot
+6. Wtelegrambot - Used to send tracking status to telegram bot
 ```shell
 python3 -m wplay -wtb "AnyName"
 ```
-- Pull - Used to pull the saved chats from whatsaap to your local system.
+7. Pull - Used to pull the saved chats from whatsaap to your local system.
 ```shell
 python3 -m wplay -pull "AnyName"
 ```
@@ -80,11 +80,11 @@ The easiest way to contribute to **Whatsapp-Play** is by starring the repository
 First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
 Steps to create a launcher with arguments follow the steps bellow: <br />
-- Click in 'Debug' tab
-- Click in 'Add Configuration'
-- Select 'Module'
-- Type 'wplay' and press Enter
-- A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
+1. Click in 'Debug' tab
+1. Click in 'Add Configuration'
+1. Select 'Module'
+1. Type 'wplay' and press Enter
+1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
 
 **Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)
 
