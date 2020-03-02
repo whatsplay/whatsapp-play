@@ -1,17 +1,17 @@
-__author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
-
-# https://github.com/pytransitions/transitions#the-non-quickstart
-from transitions import Machine, State
-
+# region Imports
 import os
 import stat
 import shutil
 from pathlib import Path
 
 from whaaaaat import Separator, prompt
+# https://github.com/pytransitions/transitions#the-non-quickstart
+from transitions import Machine, State
 
 from wplay.utils.helpers import user_data_folder_path
 from wplay.utils.helpers import menu_style
+# endregion
+
 
 class CliWhatsappPlay(object):
 
