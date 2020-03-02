@@ -73,7 +73,7 @@ python3 -m wplay -wtb "AnyName"
 python3 -m wplay -pull "AnyName"
 ```
 
-## Contributing
+## Contribute
 
 The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
 
