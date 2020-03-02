@@ -1,4 +1,4 @@
-# whatsapp-play
+# Whatsapp-Play
 
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
@@ -24,13 +24,14 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ---
 
-## Installation 
+## Installation:
+
 ### Install whatsapp-play from PyPI: <br />
 Windows: `python -m pip install wplay` <br />
 Unix: `python3 -m pip install wplay` <br />
 **Installation Video:** [Simple Installation Link](https://youtu.be/HS6ksu6rCxQ)
 
-### ALTERNATIVE - Run whatsapp-play from source code: <br />
+### Alternate way - Run whatsapp-play from source code: <br />
 `git clone https://github.com/rpotter12/whatsapp-play.git` <br />
 `cd 'whatsapp-play'` <br />
 Windows: `python -m pip install -r requirements.txt` <br />
@@ -38,19 +39,21 @@ Unix: `python3 -m pip install -r requirements.txt` <br />
 Windows: `python -m wplay -h` <br />
 Unix: `python3 -m wplay -h` <br />
 
-## Usage
+## Usage:
 <img src="/images/usage.png"><br>
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
-## Contribute
-The first step is to create a fork and clone, then you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
+## Contributing :
+The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
+
+First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
 To create a launcher with arguments follow the steps bellow: <br />
-1. Click in 'Debug' tab
-1. Click in 'Add Configuration'
-1. Select 'Module'
-1. Type 'wplay' and press Enter
-1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
+- Click in 'Debug' tab
+- Click in 'Add Configuration'
+- Select 'Module'
+- Type 'wplay' and press Enter
+- A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
 
 **Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)
 
