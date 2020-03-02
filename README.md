@@ -44,12 +44,34 @@ Unix: `python3 -m wplay -h` <br />
 <img src="/images/usage.png"><br>
 ### Usage of commands:
 
-1. Wchat - Used for chatting on whatsapp using CLI
+- Help - Used to display the help section of Wplay
+```shell
+python3 -m wplay -h
+```
+- Wchat - Used for chatting on whatsapp using CLI
 ```shell
 python3 -m wplay -wc "AnyName"
 ```
-
-Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
+- Wbomb - Used for message bombing aperson whatsapp using CLI
+```shel
+python3 -m wplay -wb "AnyName"
+```
+- Wtrack - Used for tracking whatsapp status of a user 
+```shell
+python3 -m wplay -wt "AnyName"
+```
+- Wtimer - Used for sending different message to a user in different time intervals
+```shell
+python3 -m wplay -wt "AnyName"
+```
+- Wtelegrambot - Used to send tracking status to telegram bot
+```shell
+python3 -m wplay -wtb "AnyName"
+```
+- Pull - Used to pull the saved chats from whatsaap to your local system.
+```shell
+python3 -m wplay -pull "AnyName"
+```
 
 ## Contributing:
 
