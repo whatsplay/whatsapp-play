@@ -40,15 +40,24 @@ Windows: `python -m wplay -h` <br />
 Unix: `python3 -m wplay -h` <br />
 
 ## Usage:
+
 <img src="/images/usage.png"><br>
+### Usage of commands:
+
+1. Wchat - Used for chatting on whatsapp using CLI
+```shell
+python3 -m wplay -wc "AnyName"
+```
+
 Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
 
-## Contributing :
+## Contributing:
+
 The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
 
 First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
-To create a launcher with arguments follow the steps bellow: <br />
+Steps to create a launcher with arguments follow the steps bellow: <br />
 - Click in 'Debug' tab
 - Click in 'Add Configuration'
 - Select 'Module'
