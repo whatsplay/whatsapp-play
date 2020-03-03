@@ -73,25 +73,4 @@ python3 -m wplay -wtb "AnyName"
 python3 -m wplay -pull "AnyName"
 ```
 
-## Contribute
-
-The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
-
-First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
-
-Steps to create a launcher with arguments follow the steps bellow: <br />
-1. Click in 'Debug' tab
-1. Click in 'Add Configuration'
-1. Select 'Module'
-1. Type 'wplay' and press Enter
-1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
-
-**Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)
-
-## Disclaimer
-This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
-
-## License
-[![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
-
 ***If you like the project, support us by star***
