@@ -5,7 +5,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>Wplay GUI</h1>
+        <h1>whatsapp-play</h1>
       </header>
     </div>
   );
