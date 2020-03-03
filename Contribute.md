@@ -6,10 +6,9 @@ To create a launcher with arguments follow the steps bellow: <br />
 1. Click in 'Add Configuration'
 1. Select 'Module'
 1. Type 'wplay' and press Enter
-1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
+1. A json file will be opened. Inside configurations add the args,for example:"args" : {"-wb","name"} 
 
-
-Make sure you follow below guidelines before contributing: <br />
+Make sure you follo w below guidelines before contributing: <br />
 1. Raise an issue before sending any PR.
 2. Make you changes to feature branch.
 3. See if there is already an open PR for the same issue.
