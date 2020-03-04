@@ -12,7 +12,7 @@ whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
 
     'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
-    'search_contact_input_new_chat': '#app > div > div > div > div > span > div > span > div > div > div > label > div > div',
+    'search_contact_input_new_chat': '#app > div > div span > div > span > div > div > div > label > div > div:last-of-type',
     'contact_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
     'group_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
 
@@ -21,7 +21,9 @@ whatsapp_selectors_dict = {
 
     'target_focused_title': '#main > header div > div > span[title]',
     'message_area': '#main > footer div.selectable-text[contenteditable]',
-    'last_seen':'#main > header > div > div > span[title]'
+    'last_seen':'#main > header > div > div > span[title]',
+    'target_chat_header': '#main > header',
+    'contact_info_page_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > div > div:first-child > div'
 }
 # endregion
 
