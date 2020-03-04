@@ -79,6 +79,8 @@ The easiest way to contribute to **Whatsapp-Play** is by starring the repository
 
 First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
+Check more about contribution guidelines [here](https://www.github.com/rpotter12/whatsapp-play/CONTRIBUTION.md)
+
 Steps to create a launcher with arguments follow the steps bellow: <br />
 1. Click in 'Debug' tab
 1. Click in 'Add Configuration'
