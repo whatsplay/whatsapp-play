@@ -9,8 +9,8 @@ We have a code of conduct, please follow it in all your interactions with the pr
 
 1. Ensure any install or build dependencies are checked and verified before the end when releasing a build.<br />
 
-2. Update the README.md with details of changes including environment variables, various file parameters and container details **if needed**.<br />
+1. Update the README.md with details of changes including environment variables, various file parameters and container details **if needed**.<br />
 
-3. Try adding screenshots in your pull request of the changes you made.
+1. Try adding screenshots in your pull request of the changes you made.
 
-4. You may be able to merge the pull request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the maintainer or reviewer to merge it for you.
+1. You may be able to merge the pull request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the maintainer or reviewer to merge it for you.
