@@ -68,7 +68,8 @@ async def get_complete_info_on_target(page):
         await page.click(whatsapp_selectors_dict['target_chat_header'])
         contact_page_elements = await get_contact_page_elements(page)
         complete_target_info = {}
-        await get_contact_name_info(contact_page_elements[0], complete_target_info )
+        await get_contact_name_info(contact_page_elements[0], complete_target_info)
+        await get_contact_about_and_phone(contact_page_elements[3], complete_target_info)
     except Exception as e:
         print(e)
     return complete_target_info
@@ -87,9 +88,16 @@ async def get_contact_page_elements(page):
         print(e)
     return contact_page_elements
 
+
 async def get_contact_name_info(contact_name_element,complete_target_info):
     complete_target_info['name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
     complete_target_info['last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
+
+
+async def get_contact_about_and_phone(contact_name_element, complete_target_info):
+    complete_target_info['about'] = await contact_name_element.querySelectorEval('div:nth-child(2) > div > div > span > span', 'element => element.getAttribute("title")')
+    complete_target_info['mobile'] = await contact_name_element.querySelectorEval('div:last-of-type > div > div > span > span', 'element => element.innerText')
+
 
 async def __open_new_chat(page):
     await page.waitForSelector(
