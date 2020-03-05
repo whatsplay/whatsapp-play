@@ -68,6 +68,7 @@ async def get_complete_info_on_target(page):
         await page.click(whatsapp_selectors_dict['target_chat_header'])
         contact_page_elements = await get_contact_page_elements(page)
         complete_target_info = {}
+        await get_contact_groups_common_with_target(complete_target_info, page)
         await get_contact_name_info(contact_page_elements[0], complete_target_info)
         await get_contact_about_and_phone(contact_page_elements[3], complete_target_info)
     except Exception as e:
@@ -90,13 +91,36 @@ async def get_contact_page_elements(page):
 
 
 async def get_contact_name_info(contact_name_element,complete_target_info):
-    complete_target_info['name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
-    complete_target_info['last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
+    try:
+        complete_target_info['name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
+        complete_target_info['last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
+    except Exception as e:
+        print(e)
 
 
 async def get_contact_about_and_phone(contact_name_element, complete_target_info):
-    complete_target_info['about'] = await contact_name_element.querySelectorEval('div:nth-child(2) > div > div > span > span', 'element => element.getAttribute("title")')
-    complete_target_info['mobile'] = await contact_name_element.querySelectorEval('div:last-of-type > div > div > span > span', 'element => element.innerText')
+    try:
+        complete_target_info['about'] = await contact_name_element.querySelectorEval('div:nth-child(2) > div > div > span > span', 'element => element.getAttribute("title")')
+        complete_target_info['mobile'] = await contact_name_element.querySelectorEval('div:last-of-type > div > div > span > span', 'element => element.innerText')
+    except Exception as e:
+        print(e)
+
+
+async def get_contact_groups_common_with_target(complete_target_info,page):
+    try:
+        await page.waitForSelector(
+            whatsapp_selectors_dict['contact_info_page_group_element_heading'],
+            visible= True,
+            timeout=3000
+        )
+
+        assert (await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["contact_info_page_group_element_heading"]}").innerText'))\
+               == "Groups in common"
+        group_elements = await page.querySelectorAll(whatsapp_selectors_dict['contact_info_page_group_elements'])
+        complete_target_info['groups'] = [await ele.querySelectorEval('div>div>div:nth-child(2)>div:first-child>div>div>span', 'e => e.getAttribute("title")') for ele in group_elements]
+    except Exception as e:
+        complete_target_info['groups'] = []
+        print(e)
 
 
 async def __open_new_chat(page):

@@ -23,7 +23,11 @@ whatsapp_selectors_dict = {
     'message_area': '#main > footer div.selectable-text[contenteditable]',
     'last_seen':'#main > header > div > div > span[title]',
     'target_chat_header': '#main > header',
-    'contact_info_page_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > div > div:first-child > div'
+    'contact_info_page_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > div > div:first-child > div',
+    'contact_info_page_group_element_heading': '#app > div > div > div:nth-child(2) > div:last-of-type > '
+                                    'span > div > span > div > div > div:first-child > div:nth-child(5)>div>div>div>div:first-child>span',
+    'contact_info_page_group_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > '
+                                    'span > div > span > div > div > div:first-child > div:nth-child(5)>div:nth-child(2)>div>div'
 }
 # endregion
 
