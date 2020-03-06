@@ -26,7 +26,7 @@ async def my_script(target):
 # region IMPORTS
 from pyppeteer import launch
 from wplay.utils.session_manager import session_manager
-from wplay.utils.helpers import websites
+from wplay.utils.helpers import websites, user_data_folder_path
 # endregion
 
 
@@ -71,7 +71,7 @@ async def __config_browser(username = None, save_session = False):
         return await launch(
             headless = False,
             autoClose = False,
-            userDataDir = 'user_data_folder_path' / 'username'
+            userDataDir = user_data_folder_path / username
         )
     else:
         return await launch(headless = False, autoClose = False)
