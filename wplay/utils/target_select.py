@@ -30,7 +30,8 @@ async def __open_new_chat(page):
 
 async def __get_focused_target_title(page):
     try:
-        await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'])
+        await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'], visible=True,
+        timeout=0)
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
@@ -39,7 +40,7 @@ async def __get_focused_target_title(page):
 
 async def __wait_for_message_area(page):
     try:
-        await page.waitForSelector(whatsapp_selectors_dict['message_area'])
+        await page.waitForSelector(whatsapp_selectors_dict['message_area'], timeout=0)
     except Exception as e:
         print(f"You don't belong this group anymore! Error: {str(e)}")
 # endregion
