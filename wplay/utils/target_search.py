@@ -48,6 +48,7 @@ async def search_and_select_target(page, target, hide_groups=False):
     await __navigate_to_target(page, choosed_target)
     complete_target_info = await get_complete_info_on_target(page)
     print_complete_target_info(complete_target_info)
+    await close_contact_info_page(page)
     target_focused_title = await __get_focused_target_title(page, target)
     #__print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
@@ -96,7 +97,7 @@ async def get_contact_name_info(contact_name_element,complete_target_info):
         complete_target_info['Name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
         complete_target_info['Last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
     except Exception as e:
-        print(f'last seen not available {e}')
+        print(f'last seen not available')
 
 
 async def get_contact_about_and_phone(contact_name_element, complete_target_info):
@@ -121,6 +122,18 @@ async def get_contact_groups_common_with_target(complete_target_info,page):
         complete_target_info['Groups'] = [await ele.querySelectorEval('div>div>div:nth-child(2)>div:first-child>div>div>span', 'e => e.getAttribute("title")') for ele in group_elements]
     except Exception as e:
         complete_target_info['Groups'] = []
+        print(f'No groups in common')
+
+
+async def close_contact_info_page(page):
+    try:
+        await page.waitForSelector(
+            whatsapp_selectors_dict['contact_info_page_close_button'],
+            visible = True,
+            timeout = 5000
+        )
+        await page.click(whatsapp_selectors_dict['contact_info_page_close_button'])
+    except Exception as e:
         print(e)
 
 

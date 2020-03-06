@@ -27,7 +27,8 @@ whatsapp_selectors_dict = {
     'contact_info_page_group_element_heading': '#app > div > div > div:nth-child(2) > div:last-of-type > '
                                     'span > div > span > div > div > div:first-child > div:nth-child(5)>div>div>div>div:first-child>span',
     'contact_info_page_group_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > '
-                                    'span > div > span > div > div > div:first-child > div:nth-child(5)>div:nth-child(2)>div>div'
+                                    'span > div > span > div > div > div:first-child > div:nth-child(5)>div:nth-child(2)>div>div',
+    'contact_info_page_close_button': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > header > div > div > button'
 }
 # endregion
 
