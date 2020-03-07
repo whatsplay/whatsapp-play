@@ -98,7 +98,7 @@ async def get_contact_name_info(contact_name_element,complete_target_info):
     try:
         complete_target_info['Name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
         complete_target_info['Last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
-    except Exception as e:
+    except:
         print(f'last seen not available')
 
 
