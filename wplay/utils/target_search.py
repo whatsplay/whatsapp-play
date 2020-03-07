@@ -46,11 +46,13 @@ async def search_and_select_target(page, target, hide_groups=False):
     target_index_choosed = __ask_user_to_choose_the_filtered_target(target_tuple)
     choosed_target = __get_choosed_target(target_tuple, target_index_choosed)
     await __navigate_to_target(page, choosed_target)
-    complete_target_info = await get_complete_info_on_target(page)
-    print_complete_target_info(complete_target_info)
-    await close_contact_info_page(page)
     target_focused_title = await __get_focused_target_title(page, target)
-    #__print_selected_target_title(target_focused_title)
+    if any(choosed_target[0] in i for i in contact_tuple):
+        complete_target_info = await get_complete_info_on_target(page)
+        print_complete_target_info(complete_target_info)
+        await close_contact_info_page(page)
+    else:
+        __print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
 
