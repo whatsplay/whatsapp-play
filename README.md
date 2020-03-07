@@ -7,6 +7,7 @@
 [![twitter](https://img.shields.io/twitter/url/https/github.com/rpotter12/whatsapp-play.svg?style=social)](https://twitter.com/rpotter121998)
 [![HitCount](http://hits.dwyl.io/rpotter12/whatsapp-play.svg)](http://hits.dwyl.io/rpotter12/whatsapp-play)
 [![Gitter](https://badges.gitter.im/whatsapp-play/community.svg)](https://gitter.im/whatsapp-play/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rpotter12/whatsapp-play) 
 
 It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. This CLI software does not require any API key for the execution.
 
@@ -24,13 +25,14 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ---
 
-## Installation 
+## Installation
+
 ### Install whatsapp-play from PyPI: <br />
 Windows: `python -m pip install wplay` <br />
 Unix: `python3 -m pip install wplay` <br />
 **Installation Video:** [Simple Installation Link](https://youtu.be/HS6ksu6rCxQ)
 
-### ALTERNATIVE - Run whatsapp-play from source code: <br />
+### Alternate way - Run whatsapp-play from source code: <br />
 `git clone https://github.com/rpotter12/whatsapp-play.git` <br />
 `cd 'whatsapp-play'` <br />
 Windows: `python -m pip install -r requirements.txt` <br />
@@ -39,13 +41,46 @@ Windows: `python -m wplay -h` <br />
 Unix: `python3 -m wplay -h` <br />
 
 ## Usage
+
 <img src="/images/usage.png"><br>
-Example - `wplay -wt "target_name_of_your_whatsapp_contact"` or `wplay -pull "Databases/msgstore.db.crypt12"`
+### Usage of commands
+
+1. Help - Used to display the help section of Wplay
+```shell
+python3 -m wplay -h
+```
+2. Wchat - Used for chatting on whatsapp using CLI
+```shell
+python3 -m wplay -wc "AnyName"
+```
+3. Wbomb - Used for message bombing aperson whatsapp using CLI
+```shel
+python3 -m wplay -wb "AnyName"
+```
+4. Wtrack - Used for tracking whatsapp status of a user 
+```shell
+python3 -m wplay -wt "AnyName"
+```
+5. Wtimer - Used for sending different message to a user in different time intervals
+```shell
+python3 -m wplay -wt "AnyName"
+```
+6. Wtelegrambot - Used to send tracking status to telegram bot
+```shell
+python3 -m wplay -wtb "AnyName"
+```
+7. Pull - Used to pull the saved chats from whatsaap to your local system.
+```shell
+python3 -m wplay -pull "AnyName"
+```
 
 ## Contribute
-The first step is to create a fork and clone, then you can solve our [issues](https://github.com/rpotter12/whatsapp-play/issues) and help us find new ones. To debug with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
 
-To create a launcher with arguments follow the steps bellow: <br />
+The easiest way to contribute to **Whatsapp-Play** is by starring the repository and opening more and more [issues](https://github.com/rpotter12/whatsapp-play/issues) for features you'd like to see in future. <br />
+
+First step is to create a fork and clone, then you can solve the [issues](https://github.com/rpotter12/whatsapp-play/issues) listed and help us find new ones. Then try debugging with Visual Studio Code it is necessary to create a launcher with the arguments. <br />
+
+Steps to create a launcher with arguments follow the steps bellow: <br />
 1. Click in 'Debug' tab
 1. Click in 'Add Configuration'
 1. Select 'Module'
