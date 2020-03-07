@@ -118,11 +118,13 @@ async def get_contact_groups_common_with_target(complete_target_info,page):
             timeout=3000
         )
 
-        assert (await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["contact_info_page_group_element_heading"]}").innerText'))\
-               == "Groups in common"
-        group_elements = await page.querySelectorAll(whatsapp_selectors_dict['contact_info_page_group_elements'])
-        complete_target_info['Groups'] = [await ele.querySelectorEval('div>div>div:nth-child(2)>div:first-child>div>div>span', 'e => e.getAttribute("title")') for ele in group_elements]
-    except Exception as e:
+        if (await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["contact_info_page_group_element_heading"]}").innerText'))\
+               == "Groups in common":
+            group_elements = await page.querySelectorAll(whatsapp_selectors_dict['contact_info_page_group_elements'])
+            complete_target_info['Groups'] = [await ele.querySelectorEval('div>div>div:nth-child(2)>div:first-child>div>div>span', 'e => e.getAttribute("title")') for ele in group_elements]
+        else:
+            complete_target_info['Groups'] = []
+    except:
         complete_target_info['Groups'] = []
         print(f'No groups in common')
 
