@@ -6,14 +6,14 @@ EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
 '''
 
-
+# All the python functions imports
 from configparser import ConfigParser
 import json
 import os
 import re
 import requests
 
-
+# Gets the value of google account access.
 def getGoogleAccountTokenFromAuth():
     payload = {'Email': gmail, 'Passwd': passw, 'app': client_pkg,
                'client_sig': client_sig, 'parentAndroidId': devid}
@@ -25,7 +25,7 @@ def getGoogleAccountTokenFromAuth():
     else:
         quit(request.text)
 
-
+# Gets google drive data
 def getGoogleDriveToken(token):
     payload = {
         'Token': token,
@@ -82,7 +82,7 @@ def gDriveFileMap():
         quit('Unable to locate google drive file map for: ' + pkg)
     return backups
 
-
+# Checks and reads all the configuration needed.
 def getConfigs():
     global gmail, passw, devid, pkg, sig, client_pkg, client_sig, client_ver
     config = ConfigParser()
@@ -103,7 +103,7 @@ def getConfigs():
 def jsonPrint(data):
     print(json.dumps(json.loads(data), indent=4, sort_keys=True))
 
-
+# Opens and writes the log data
 def localFileLog(md5):
     logfile = 'logs' / 'files.log'
     if not os.path.exists(os.path.dirname(logfile)):
@@ -111,7 +111,7 @@ def localFileLog(md5):
     with open(logfile, 'a') as log:
         log.write(md5 + '\n')
 
-
+# Makes a files of all the logs and returns a structures log file.
 def localFileList():
     logfile = 'logs' / 'files.log'
     if os.path.isfile(logfile):
@@ -121,7 +121,7 @@ def localFileList():
         open(logfile, 'w')
         return localFileList()
 
-
+# A function to create settings and writes the value in configuration
 def createSettingsFile():
     with open('settings.cfg', 'w') as cfg:
         cfg.write('[auth]\ngmail = alias@gmail.com\npassw = yourpassword\ndevid = 0000000000000000\n\n[app]\npkg = com.whatsapp\nsig = 38a0f7d505fe18fec64fbf343ecaaaf310dbd799\n\n[client]\npkg = com.google.android.gms\nsig = 38918a453d07199354f8b19af05ec6562ced5788\nver = 9877000')
@@ -150,7 +150,7 @@ def getMultipleFiles(data, folder):
                     local)
                 localFileLog(entries['m'])
 
-
+# The main function checks for the settings file if not creates a new one and gets drive access and locates whatsapp local folder and creates a backup
 def runMain(mode, asset, bID):
     global bearer
     if not os.path.isfile('settings.cfg'):
