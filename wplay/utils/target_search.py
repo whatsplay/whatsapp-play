@@ -26,7 +26,6 @@ async def my_script(target):
 from wplay.utils.helpers import whatsapp_selectors_dict
 # endregion
 
-
 # region FOR SCRIPTING
 async def search_and_select_target(page, target, hide_groups=False):
     await __open_new_chat(page)
@@ -65,7 +64,7 @@ async def __open_new_chat(page):
     await page.waitFor(500)
     await page.click(whatsapp_selectors_dict['new_chat_button'])
 
-
+# Checks for username enter by client by using whatsapp selectors.
 async def __type_in_new_chat_search_bar(page, target):
     print(f'Looking for: {target}')
     await page.waitForSelector(
@@ -75,7 +74,7 @@ async def __type_in_new_chat_search_bar(page, target):
     await page.type(whatsapp_selectors_dict['search_contact_input_new_chat'], target)
     await page.waitFor(3000)
 
-
+# The process gets killed automatically if the username enter by the client is not found and return a string saying no contacts found.
 async def __get_contacts_elements_filtered(page, target):
     contact_list_elements_unchecked = list()
     try:
