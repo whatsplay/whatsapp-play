@@ -9,7 +9,7 @@ async def chat(target):
 
     await target_search.search_and_select_target(page, target)
     
-    # If all the configurations are correct whatsapp web is loaded and target found then ask for message and send message.
+# If all the configurations are correct whatsapp web is loaded and target found then ask for message and send message.
     while True:
         message = io.ask_user_for_message_breakline_mode()
         await io.send_message(page, message)
