@@ -1,3 +1,5 @@
+# The first four lines import python library scripts.
+
 import argparse
 import asyncio
 import sys
@@ -5,6 +7,7 @@ import os
 
 from pyfiglet import Figlet
 
+# These import wplay scripts which are in the same folder of main.
 from wplay.utils import kill_process
 from wplay import onlinetracker
 from wplay import messageblast
@@ -13,13 +16,13 @@ from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
 
-
+# The logo of wplay gets printed by this function
 def print_logo(text_logo):
     figlet = Figlet(font='slant')
     print(figlet.renderText(text_logo))
 
 
-# parse positional and optional arguments
+# parse positional and optional arguments which are used to do various things like tracking and bombing messages etc.
 def get_arguments():
     parser = argparse.ArgumentParser(description = 'WhatsApp-play')
     parser.add_argument(
@@ -101,7 +104,7 @@ async def match_args(args):
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)
 
-
+# This fun prints logo and waits for matching arguments if not found exits.
 async def main():
     print_logo("wplay")
     args = get_arguments()
