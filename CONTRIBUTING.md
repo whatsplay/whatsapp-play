@@ -4,7 +4,7 @@ To start contributing to [Whatsapp-Play](https://github.com/rpotter12/whatsapp-p
 in the issue section or any other method with the owners of this repository before making a change.<br />
 We have a code of conduct, please follow it in all your interactions with the project.<br />
 
-# Steps for creating your first pull request
+# Creating your first pull request
 
 1.Ensure any install or build dependencies are checked and verified before the end when releasing a build.<br />
 2.Update the README.md with details of changes including environment variables, various file parameters and container details **if needed**.<br />
