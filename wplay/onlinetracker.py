@@ -12,9 +12,9 @@ from wplay.utils.helpers import data_folder_path
 
 # After the client run the command line script, the user enters a name and that is the target which is used here.
 async def tracker(target):
-    # Waiting for Whatsapp web to be loading
+# Waiting for Whatsapp web to be loading
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-    # Searching for the target name 
+# Searching for the target name 
     target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
     Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
     
@@ -25,11 +25,11 @@ async def tracker(target):
     
     last_status = 'offline'
     try:
-        # After username is found it prints the various name if matching strings are there and asks the user for which name to track and sets that name to target.
+# After username is found it prints the various name if matching strings are there and asks the user for which name to track and sets that name to target.
         print(f'Tracking: {target_name}')
-        # It writes the status whether offline or online in tracking file.
+# It writes the status whether offline or online in tracking file.
         
-        # Checks for the status and plays the sound for confirmation
+# Checks for the status and plays the sound for confirmation
         status_file.write(f'Tracking: {target_name}\n')
         while True:
             status = await target_data.get_last_seen_from_focused_target(page)
