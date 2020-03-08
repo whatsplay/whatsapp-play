@@ -67,11 +67,11 @@ def get_arguments():
         action = "store_true",
         help = "save all chats")
 
-    # group.add_argument(
-    #     "-wl",
-    #     "--wlocation",
-    #     action = "store_true",
-    #     help = "finds the location of the person")
+# group.add_argument(
+#     "-wl",
+#     "--wlocation",
+#     action = "store_true",
+#     help = "finds the location of the person")
 
     args = parser.parse_args()
     return args
@@ -100,9 +100,8 @@ async def match_args(args):
         except (IndexError, ValueError):
             bID = 0
         savechat.runMain('pull', str(args.target), bID)
-
-    # elif args.wlocation:
-    #     loactionfinder.finder(args.target)
+# elif args.wlocation:
+#     loactionfinder.finder(args.target)
 
 # This fun prints logo and waits for matching arguments if not found exits.
 async def main():
