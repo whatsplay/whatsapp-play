@@ -12,11 +12,11 @@ whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
 
     'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
-    'search_contact_input_new_chat': '#app > div > div span > div > span > div div > label > input',
+    'search_contact_input_new_chat': '#app > div > div > div > div > span > div > span > div > div > div > label > div > div',
     'contact_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
     'group_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
 
-    'search_contact_input':'#side > div > div > label > input',
+    'search_contact_input':'#side > div > div > label > div > div',
     'chat_list_elements_filtered':'#pane-side > div > div > div > div > div > div > div > div > div > span > span[title][dir]',
 
     'target_focused_title': '#main > header div > div > span[title]',
