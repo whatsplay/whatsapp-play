@@ -1,16 +1,21 @@
+# This is a telegram bot script
+# Imports gui library tkinter
 import tkinter
 from tkinter import filedialog
+# Imports modules from telegram
 from telegram.ext import CommandHandler, Updater
+
+# Imports data_folder_path from wplay utils folder
 from wplay.utils.helpers import data_folder_path
 
 status_file_path = None
 
-
+# Creates a gui window
 def start_tkinter():
     root_window = tkinter.Tk()
     root_window.withdraw()
 
-
+# Checks for the data folder where tracking data is kept
 def ask_where_are_the_status_file():
     print('Choose a status text file.')
     status_file_path = filedialog.askopenfile(
@@ -23,7 +28,7 @@ def ask_where_are_the_status_file():
         exit()
     return status_file_path
 
-
+# Sets the message id return a text and sends the messages using the various chat id's created
 def startmessage(bot, update):
     chat_id = update.message.chat_id
     text = '''
@@ -31,7 +36,7 @@ def startmessage(bot, update):
     '''
     bot.send_message(chat_id = chat_id, text = text)
 
-
+# Returns the status of bot
 def send_status(bot, update):
     # Display last updated online status message
     chat_id = update.message.chat_id
