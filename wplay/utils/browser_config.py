@@ -27,6 +27,7 @@ async def my_script(target):
 from pyppeteer import launch
 from wplay.utils.session_manager import session_manager
 from wplay.utils.helpers import websites, user_data_folder_path
+from wplay.utils import logg
 # endregion
 
 
@@ -38,6 +39,11 @@ async def configure_browser_and_load_whatsapp():
     pages = await __config_pages(browser)
     return pages[0], browser
 # endregion
+
+
+#region LOGGER create
+logger = logg.setup_logger('browser_config_logger', 'browser_config_logfile.log')
+#endregion
 
 
 # region PYPPETEER PATCH
@@ -68,6 +74,7 @@ def __patch_pyppeteer():
 # region PYPPETEER CONFIGURATION
 async def __config_browser(username = None, save_session = False):
     if username is not None and username != '' and save_session:
+        logger.info('Configuring Browser')
         return await launch(
             headless = False,
             autoClose = False,
