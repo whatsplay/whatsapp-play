@@ -1,4 +1,4 @@
-# region Imports
+# region Imports 
 import os
 import stat
 import shutil
@@ -12,9 +12,10 @@ from wplay.utils.helpers import user_data_folder_path
 from wplay.utils.helpers import menu_style
 # endregion
 
-
+# Here client whatsapp object is created to intitialize whatsapp play.
 class CliWhatsappPlay(object):
-
+   
+    # A constructor is defined. The inital values are all set to none.
     def __init__(self):
         self.data_filenames = None
         self.questions_menu = None
@@ -45,6 +46,7 @@ class CliWhatsappPlay(object):
     def get_user_data_filenames(self):
         self.data_filenames = [file.stem for file in user_data_folder_path.glob('*')]
 
+    # These are the questions which you see everytime you run whatsapp play
     def prepare_questions(self):
         self.questions_menu = [
             {
@@ -83,7 +85,8 @@ class CliWhatsappPlay(object):
                 'when': lambda answers: answers['user_options'] == self.user_options['delete']
             }
         ]
-
+        
+        # This works when we have a session with the same name and want to create a new username for the same it asks to overwrite it or not?
         self.question_overwrite = [
             {
                 'type': 'confirm',
@@ -92,10 +95,11 @@ class CliWhatsappPlay(object):
                 'default': True
             }
         ]
-    
+    # This gets user answer
     def get_answer_menu(self):
         self.answers_menu = prompt(self.questions_menu, style=menu_style)  
-
+ 
+    # This gets user answer and checks for various options with various logics.
     def verify_answers(self):
 
         # Handle when person choose 'Restore a session'
@@ -137,7 +141,7 @@ class CliWhatsappPlay(object):
             return answer_overwrite['overwrite_data']
         return True
 
-
+    
     def __delete_session_data(self, path):
         def handleError(func, path, exc_info):
             print('Handling Error for file ', path)
@@ -179,4 +183,5 @@ def session_manager():
         obj.get_answer_menu()
         done = obj.verify_answers()
 
+     # It saves the username and session of the user
     return obj.username, obj.save_session
