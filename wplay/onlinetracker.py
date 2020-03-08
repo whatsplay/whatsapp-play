@@ -25,7 +25,7 @@ async def tracker(target):
     
     last_status = 'offline'
     try:
-        # After username is found it prints the various name if matching strings are there 
+        # After username is found it prints the various name if matching strings are there and asks the user for which name to track and sets that name to target.
         print(f'Tracking: {target_name}')
         # It writes the status whether offline or online in tracking file.
         
