@@ -1,3 +1,6 @@
+# This file provides all the requirements to run whatsapp-play.
+
+
 python-telegram-bot >= 11.1.0
 datetime >= 4.3
 argparse >= 1.4.0
