@@ -87,7 +87,8 @@ Steps to create a launcher with arguments follow the steps bellow: <br />
 1. Type 'wplay' and press Enter
 1. A json file will be opened. Inside configurations add the args, for example: "args":["-wb","name"] 
 
-**Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)
+**Debug Tutorial Video:** [Debug Tutorial Link](https://youtu.be/NyJgUGvyWnY)<br />
+Check more about contribution guidelines [here](https://www.github.com/rpotter12/whatsapp-play/CONTRIBUTION.md)
 
 ## Disclaimer
 This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
