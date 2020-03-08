@@ -1,12 +1,8 @@
 #This python file is used to import the neccessary files for Whatsapp play.
-
-
 from setuptools import setup, find_packages
-
 #Imports setup and find_packages module from setup tools
 with open("README.md", "r") as f:
     long_description = f.read()
-
 #Requirements are the various libraries along with their version.
 setup(
     name="wplay",
@@ -28,17 +24,13 @@ setup(
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
     long_description=long_description,
-    
     # all about the software description
-    
     long_description_content_type="text/markdown",
     author="Rohit Potter, Alexandre Calil",
     author_email="rohitpotter12@gmail.com, alexandrecalilmf@gmail.com",
     license="MIT",
-    
     #The minimum python version requirement
     python_requires=">=3.6",
-    
     # The url where the software files are located.
     url="https://github.com/rpotter12/whatsapp-play/",
     download_url="https://pypi.org/project/wplay/",
