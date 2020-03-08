@@ -1,6 +1,6 @@
 # Contributing Guidelines
 
-To start contributing to [Whatsapp-Play](https://github.com/rpotter12/whatsapp-play), please first discuss the change you wish to make via creating a issue 
+To start contributing to [Whatsapp-Play](https://github.com/rpotter12/whatsapp-play) project, please first discuss the change you wish to make via creating a issue 
 in the issue section or any other method with the owners of this repository before making a change.<br />
 We have a code of conduct, please follow it in all your interactions with the project.<br />
 
