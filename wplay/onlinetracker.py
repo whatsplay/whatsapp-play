@@ -1,7 +1,10 @@
+# These lines import python library files.
 import time
 from pathlib import Path
 from datetime import datetime
 from playsound import playsound
+
+# These import from util folder in wplay
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_data
