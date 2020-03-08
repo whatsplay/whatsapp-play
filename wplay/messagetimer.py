@@ -2,7 +2,7 @@
 import time
 import random
 
-#These lines import functions from utils pyton file in wplay.
+#These lines import from utils pyton file in wplay.
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import io
