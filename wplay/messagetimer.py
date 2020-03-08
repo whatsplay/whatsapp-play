@@ -11,18 +11,18 @@ from wplay.utils import io
 async def msgTimer(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
-    # Waiting till the target username is found.
+# Waiting till the target username is found.
     await target_search.search_and_select_target(page, target)
 
-    # Region INPUTS
+# Region INPUTS
     message_type_numbers = int(
         input("How many types of messages will you send? "))
     messages = list()
     for _ in range(message_type_numbers):
         messages.append(io.ask_user_for_message_breakline_mode())
-    # Asking the client for no of message inputs.
+# Asking the client for no of message inputs.
     number_of_messages = int(input("Enter the number of messages to send: "))
-    # The interval of inputs that is time after which the messages are to be send
+# The interval of inputs that is time after which the messages are to be send
     minimumTimeInterval = int(
         input("Enter minimum interval number in seconds: "))
     maximumTimeInterval = int(
