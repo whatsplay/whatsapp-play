@@ -4,13 +4,17 @@ from datetime import datetime
 from playsound import playsound
 from wplay.utils import browser_config
 from wplay.utils import target_search
+from wplay.utils import target_select
 from wplay.utils import target_data
 from wplay.utils.helpers import data_folder_path
 
 
 async def tracker(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-    target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
+    if target is not None:
+        target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
+    else:
+        target_name = await target_select.manual_select_target(page, hide_groups = True)
     Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
     status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'w').close()
     status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'a')
