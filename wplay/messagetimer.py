@@ -14,8 +14,7 @@ async def msgTimer(target):
     await pypSearch.search_for_target_complete(page, target)
 
     #region INPUTS
-    message_type_numbers = int(
-        input("How many types of messages will you send? "))
+    message_type_numbers = int(input("How many types of messages will you send? "))
 
     messages = list()
     for _ in range(message_type_numbers):
@@ -26,12 +25,10 @@ async def msgTimer(target):
 
     # Enter the time interval of the messages, it will be sent using a random
     # interval. For fixed interval, type the same number.
-    minimumTimeInterval = int(
-        input("Enter minimum interval number in seconds: "))
-    maximumTimeInterval = int(
-        input("Enter maximum interval number in seconds: "))
+    minimumTimeInterval = int(input("Enter minimum interval number in seconds: "))
+    maximumTimeInterval = int(input("Enter maximum interval number in seconds: "))
     #endregion
-    
+  
     random.seed()
     for _ in range(number_of_messages):
         if not messages:
