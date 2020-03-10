@@ -1,4 +1,4 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages as fp
 
 with open("README.md", "r") as f:
     long_description = f.read()
@@ -10,26 +10,26 @@ setup(
                       "datetime >= 4.3",
                       "playsound >= 1.2.2",
                       "argparse >= 1.4.0",
-                      "beautifulsoup4 >= 4.8.1",
+                      "bs4 >= 4.8.1",
                       "pyppeteer >= 0.0.25",
-                      "whaaaaat>=0.5.2",
+                      "whaaaaat >= 0.5.2",
                       "prompt_toolkit==1.0.14",
-                      "pyfiglet>=0.8.post1",
-                      "requests>=2.22.0",
-                      "psutil>=5.7.0",
-                      "flake8>=3.7.9",
-                      "transitions>=0.7.2"
+                      "pyfiglet >= 0.8.post1",
+                      "requests >= 2.22.0",
+                      "psutil >= 5.7.0",
+                      "flake8 >= 3.7.9",
+                      "transitions >= 0.7.2"
                       ],
-    packages=find_packages(),
+    packages=fp(),
     description="command line software to play with your WhatsApp",
     long_description=long_description,
     long_description_content_type="text/markdown",
     author="Rohit Potter, Alexandre Calil",
     author_email="rohitpotter12@gmail.com, alexandrecalilmf@gmail.com",
     license="MIT",
-    python_requires=">=3.6",
-    url="https://github.com/rpotter12/whatsapp-play/",
-    download_url="https://pypi.org/project/wplay/",
+    python_version=">=3.6",
+    link="https://github.com/rpotter12/whatsapp-play/",
+    download_link="https://pypi.org/project/wplay/",
     keywords=[
         "whatsapp",
         "whatsapp-cli",
