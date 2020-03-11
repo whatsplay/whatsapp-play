@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="wplay",
-    version="5.0.3",
+    version="6.0.0",
     install_requires=["python-telegram-bot >= 11.1.0",
                       "datetime >= 4.3",
                       "playsound >= 1.2.2",
@@ -17,7 +17,8 @@ setup(
                       "pyfiglet>=0.8.post1",
                       "requests>=2.22.0",
                       "psutil>=5.7.0",
-                      "flake8"
+                      "flake8>=3.7.9",
+                      "transitions>=0.7.2"
                       ],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
