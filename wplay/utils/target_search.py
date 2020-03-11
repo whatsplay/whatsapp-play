@@ -24,7 +24,7 @@ async def my_script(target):
 
 # region IMPORTS
 from wplay.utils.helpers import whatsapp_selectors_dict
-from wplay.utils import logg
+from wplay.utils import Logger
 # endregion
 
 
@@ -57,7 +57,7 @@ async def search_and_select_target(page, target, hide_groups=False):
 
 
 #region LOGGER create
-logger = logg.setup_logger('target_search_logger', 'target_search_logfile.log')
+logger = Logger.setup_logger('target_search_logger', 'target_search_logfile.log')
 #endregion
 
 
