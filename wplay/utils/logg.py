@@ -1,7 +1,10 @@
+# region IMPORTS
 import logging
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
+# endregion
 
 
+#region for logger class
 def setup_logger(name, log_file, level=logging.INFO):
     """To setup as many loggers as you want"""
 
@@ -13,3 +16,4 @@ def setup_logger(name, log_file, level=logging.INFO):
     logger.addHandler(handler)
 
     return logger
+#endregion
