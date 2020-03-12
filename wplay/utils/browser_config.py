@@ -28,6 +28,7 @@ from pyppeteer import launch
 from wplay.utils.session_manager import session_manager
 from wplay.utils.helpers import websites, user_data_folder_path
 from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
 # endregion
 
 
@@ -42,7 +43,7 @@ async def configure_browser_and_load_whatsapp():
 
 
 #region LOGGER create
-logger = Logger.setup_logger('browser_config_logger', 'browser_config_logfile.log')
+logger = Logger.setup_logger('logs',f'{logs_path}/logs.log')
 #endregion
 
 

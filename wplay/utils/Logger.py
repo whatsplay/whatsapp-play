@@ -1,10 +1,16 @@
 # region IMPORTS
 import logging
+from pathlib import Path
+from wplay.utils.helpers import logs_path
+# endregion
+
+
+# region for FORMAT
 formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 # endregion
 
 
-#region for logger class
+# region for logger class
 def setup_logger(name, log_file, level=logging.INFO):
     """To setup as many loggers as you want"""
 
@@ -16,4 +22,9 @@ def setup_logger(name, log_file, level=logging.INFO):
     logger.addHandler(handler)
 
     return logger
-#endregion
+# endregion
+
+
+# region for log folder creation
+Path(logs_path).mkdir(parents = True, exist_ok = True)
+# endregion
