@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="wplay",
-    version="6.0.0",
+    version="6.0.1",
     install_requires=["python-telegram-bot >= 11.1.0",
                       "datetime >= 4.3",
                       "playsound >= 1.2.2",
