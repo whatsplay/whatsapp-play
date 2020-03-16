@@ -16,12 +16,9 @@ def ask_user_for_message_breakline_mode():
     print("Write your message ('Enter' to breakline)('.' alone to finish)('...' alone to change target person):")
     while True:
         message.append(str(input()))
-        if message[i] == '.' :
+        if message[i] == '.':
             message.pop(i)
             break
-        elif message[i] == '...' :
-            break
-        i += 1
     return message
 
 
