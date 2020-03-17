@@ -63,6 +63,7 @@ async def search_and_select_target(page, target, hide_groups=False):
 async def search_and_select_target_without_new_chat_button(page,target, hide_groups=False):
     await __type_in_chat_or_message_search(page,target)
     chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
+    index_contact_name_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
     target_name="name"
     return target_name
 
@@ -97,6 +98,16 @@ async def __get_chats_messages_groups_elements(page):
     except Exception as e:
         print(e)
         exit()
+
+async def __get_contacts_matched_with_query(chats_groups_messages_elements_list):
+    contacts_to_choose_from = []
+    get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
+    try:
+        contacts_to_choose_from = [(idx,await e.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function))
+                                   for idx,e in enumerate(chats_groups_messages_elements_list)]
+    except Exception as e:
+        print(e)
+    return contacts_to_choose_from
 
 
 async def get_complete_info_on_target(page):
