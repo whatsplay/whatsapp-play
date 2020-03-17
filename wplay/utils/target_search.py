@@ -62,6 +62,7 @@ async def search_and_select_target(page, target, hide_groups=False):
 
 async def search_and_select_target_without_new_chat_button(page,target, hide_groups=False):
     await __type_in_chat_or_message_search(page,target)
+    chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
     target_name="name"
     return target_name
 
@@ -84,6 +85,15 @@ async def __type_in_chat_or_message_search(page,target):
         )
         await page.type(whatsapp_selectors_dict['chat_or_message_search'], target)
         await page.waitFor(3000)
+    except Exception as e:
+        print(e)
+        exit()
+
+
+async def __get_chats_messages_groups_elements(page):
+    try:
+        chats_messages_groups_elements_list = await page.querySelectorAll(whatsapp_selectors_dict['chats_groups_messages_elements'])
+        return chats_messages_groups_elements_list
     except Exception as e:
         print(e)
         exit()
