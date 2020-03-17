@@ -109,7 +109,7 @@ async def get_and_match_args(parser):
         except (IndexError, ValueError):
             bID = 0
         savechat.runMain('pull', str(args.target), bID)
-    
+
     elif args.schedule:
         await scheduleMessage.schedule_message(args.target)
 
