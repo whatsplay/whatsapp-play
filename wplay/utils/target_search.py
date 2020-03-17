@@ -57,8 +57,15 @@ async def search_and_select_target(page, target, hide_groups=False):
         __print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
-
     return target_focused_title
+
+
+async def search_and_select_target_without_new_chat_button(page,target, hide_groups=False):
+    await __type_in_chat_or_message_search(page,target)
+    target_name="name"
+    return target_name
+
+
 # endregion
 
 
@@ -68,6 +75,20 @@ logger = Logger.setup_logger('logs',logs_path/'logs.log')
 
 
 # region SEARCH AND SELECT TARGET
+async def __type_in_chat_or_message_search(page,target):
+    try:
+        print(f'Looking for: {target}')
+        await page.waitForSelector(
+            whatsapp_selectors_dict['chat_or_message_search'],
+            visible=True
+        )
+        await page.type(whatsapp_selectors_dict['chat_or_message_search'], target)
+        await page.waitFor(3000)
+    except Exception as e:
+        print(e)
+        exit()
+
+
 async def get_complete_info_on_target(page):
     contact_page_elements = []
     try:

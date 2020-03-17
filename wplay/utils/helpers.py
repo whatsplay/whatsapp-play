@@ -28,7 +28,11 @@ whatsapp_selectors_dict = {
                                     'span > div > span > div > div > div:first-child > div:nth-child(5)>div>div>div>div:first-child>span',
     'contact_info_page_group_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > '
                                     'span > div > span > div > div > div:first-child > div:nth-child(5)>div:nth-child(2)>div>div',
-    'contact_info_page_close_button': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > header > div > div > button'
+    'contact_info_page_close_button': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > header > div > div > button',
+    'chat_or_message_search': '#side > div:nth-child(3) > div > label > div > div:last-child',
+    'chats_groups_messages_elements': '#side > div:last-child > div > div > div > div',
+    'contact_element': 'div > div > div > div:last-child > div:first-child > div:first-child > div > span > span > span[class^="matched_text"]',
+    'group_element': 'div > div > div > div:last-child > div:first-child > div:first-child > div > span > span[class^="matched_text"]',
 }
 # endregion
 
