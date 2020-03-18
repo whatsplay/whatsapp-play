@@ -13,4 +13,11 @@ async def chat(target):
 
     while True:
         message = io.ask_user_for_message_breakline_mode()
+        if message[0] == '...':
+            target = input("New Target Name: ")
+            if target is not None:
+                await target_search.search_and_select_target(page, target)
+            else:
+                await target_select.manual_select_target(page)
+            message = io.ask_user_for_message_breakline_mode()
         await io.send_message(page, message)
