@@ -26,6 +26,7 @@ async def my_script(target):
 from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
+from pyppeteer.errors import ElementHandleError
 # endregion
 
 
@@ -82,31 +83,40 @@ async def __type_in_chat_or_message_search(page,target):
         print(f'Looking for: {target}')
         await page.waitForSelector(
             whatsapp_selectors_dict['chat_or_message_search'],
-            visible=True
+            visible=True,
+            timeout=0
         )
+        await page.waitFor(500)
         await page.type(whatsapp_selectors_dict['chat_or_message_search'], target)
         await page.waitFor(3000)
     except Exception as e:
         print(e)
-        exit()
 
 
 async def __get_chats_messages_groups_elements(page):
+    chats_messages_groups_elements_list = []
     try:
-        chats_messages_groups_elements_list = await page.querySelectorAll(whatsapp_selectors_dict['chats_groups_messages_elements'])
+        chats_messages_groups_elements_list = await page.querySelectorAll\
+            (whatsapp_selectors_dict['chats_groups_messages_elements'])
         return chats_messages_groups_elements_list
     except Exception as e:
         print(e)
         exit()
 
+
 async def __get_contacts_matched_with_query(chats_groups_messages_elements_list):
     contacts_to_choose_from = []
     get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
-    try:
-        contacts_to_choose_from = [(idx,await e.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function))
-                                   for idx,e in enumerate(chats_groups_messages_elements_list)]
-    except Exception as e:
-        print(e)
+    for idx, element in enumerate(chats_groups_messages_elements_list):
+        try:
+            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function)
+            contacts_to_choose_from.append((idx,contact_name))
+        except ElementHandleError:
+            # if it is not a contact element, move to the next one
+            continue
+        except Exception as e:
+            print(e)
+
     return contacts_to_choose_from
 
 
