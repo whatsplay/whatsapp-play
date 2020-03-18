@@ -12,7 +12,7 @@ from wplay.utils.helpers import logs_path
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',f'{logs_path}/logs.log')
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 

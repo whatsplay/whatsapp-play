@@ -63,7 +63,7 @@ async def search_and_select_target(page, target, hide_groups=False):
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',f'{logs_path}/logs.log')
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 
