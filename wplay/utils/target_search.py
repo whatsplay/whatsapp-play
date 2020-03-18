@@ -65,6 +65,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     await __type_in_chat_or_message_search(page,target)
     chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
     index_contact_name_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
+    index_group_name_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list)
     target_name="name"
     return target_name
 
@@ -118,6 +119,23 @@ async def __get_contacts_matched_with_query(chats_groups_messages_elements_list)
             print(e)
 
     return contacts_to_choose_from
+
+
+async def __get_groups_matched_with_query(chats_groups_messages_elements_list):
+    groups_to_choose_from = []
+    get_group_node_title_function = 'node => node.parentNode.getAttribute("title")'
+    for idx, element in enumerate(chats_groups_messages_elements_list):
+        try:
+            group_name = await element.querySelectorEval(whatsapp_selectors_dict['group_element'],
+                                                         get_group_node_title_function)
+            groups_to_choose_from.append((idx, group_name))
+        except ElementHandleError:
+            # if it is not a contact element, move to the next one
+            continue
+        except Exception as e:
+            print(e)
+
+    return groups_to_choose_from
 
 
 async def get_complete_info_on_target(page):

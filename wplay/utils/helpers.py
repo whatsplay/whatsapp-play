@@ -32,7 +32,7 @@ whatsapp_selectors_dict = {
     'chat_or_message_search': '#side > div:nth-child(3) > div > label > div > div:last-child',
     'chats_groups_messages_elements': '#side > div:last-child > div > div > div > div',
     'contact_element': 'span > span > span[class^="matched-text"]',
-    'group_element': 'span > span[class^="matched-text"]',
+    'group_element': 'div:last-child > div:first-child > div:first-child > div > span > span[class^="matched-text"]',
 }
 # endregion
 
