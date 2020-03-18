@@ -2,6 +2,13 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
+
+
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
 
 
 async def blast(target):
@@ -13,4 +20,5 @@ async def blast(target):
     message = io.ask_user_for_message_breakline_mode()
     number_of_messages = int(input("Enter the number of messages to blast: "))
     for _ in range(number_of_messages):
+        logger.info("Blasting messages")
         await io.send_message(page, message)
