@@ -70,6 +70,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     __print_target_tuple(target_tuple)
     target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
     chosen_target = __get_choosed_target(target_tuple, target_index_chosen)
+    await __open_selected_chat(chosen_target[1],chats_messages_groups_elements_list)
     target_name="name"
     return target_name
 
@@ -140,6 +141,14 @@ async def __get_groups_matched_with_query(chats_groups_messages_elements_list):
             print(e)
 
     return groups_to_choose_from
+
+
+async def __open_selected_chat(target_index,chats_messages_groups_elements_list):
+    try:
+        await chats_messages_groups_elements_list[target_index].click()
+    except Exception as e:
+        print(f"This target doesn't exist! Error: {str(e)}")
+        exit()
 
 
 async def get_complete_info_on_target(page):
