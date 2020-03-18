@@ -12,6 +12,13 @@ from wplay import messagetimer
 from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
+
+
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
 
 
 def print_logo(text_logo):
@@ -114,10 +121,13 @@ async def main():
         await get_and_match_args(parser)
         sys.exit(0)
     except KeyboardInterrupt:
+        logger.error('User Pressed Ctrl+C')
         sys.exit(0)
 
 try:
     asyncio.get_event_loop().run_until_complete(main())
+except KeyboardInterrupt:
+        logger.error('User Pressed Ctrl+C')
 except AssertionError:
     try:
         for task in asyncio.all_tasks():

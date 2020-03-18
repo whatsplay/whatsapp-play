@@ -5,6 +5,13 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
+
+
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
 
 
 async def msgTimer(target):
@@ -14,6 +21,7 @@ async def msgTimer(target):
     else:
         await target_select.manual_select_target(page)
     # Region INPUTS
+    logger.info("Input message information for message timer")
     message_type_numbers = int(
         input("How many types of messages will you send? "))
     messages = list()

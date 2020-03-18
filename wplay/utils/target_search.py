@@ -24,6 +24,8 @@ async def my_script(target):
 
 # region IMPORTS
 from wplay.utils.helpers import whatsapp_selectors_dict
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
 # endregion
 
 
@@ -58,6 +60,11 @@ async def search_and_select_target(page, target, hide_groups=False):
 
     return target_focused_title
 # endregion
+
+
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
 
 
 # region SEARCH AND SELECT TARGET
@@ -162,6 +169,7 @@ async def __open_new_chat(page):
 
 async def __type_in_new_chat_search_bar(page, target):
     print(f'Looking for: {target}')
+    logger.info('Searching Target')
     await page.waitForSelector(
         whatsapp_selectors_dict['search_contact_input_new_chat'],
         visible=True
@@ -184,6 +192,7 @@ async def __get_contacts_elements_filtered(page, target):
         )
     except:
         print(f'No contact named by "{target}"!')
+        logger.info('Target not found')
     return contact_list_elements_unchecked
 
 
@@ -205,6 +214,7 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
         )
     except:
         print(f'No group named by "{target}"!')
+        logger.info('Target not found in groups')
     return group_list_elements_unchecked
 
 
@@ -291,6 +301,7 @@ def __print_target_tuple(target_tuple):
             break
         if i == 0:
             print("Contacts found:")
+            logger.info('List of Targets')
         print(f'{i}: {target_tuple[0][i][0]}')
 
     for i in range(lenght_of_contacts_tuple, lenght_of_groups_tuple + lenght_of_contacts_tuple):
@@ -298,11 +309,13 @@ def __print_target_tuple(target_tuple):
             break
         if i == lenght_of_contacts_tuple:
             print("Groups found:")
+            logger.info('List of Target in groups')
         print(f'{i}: {target_tuple[1][i-lenght_of_contacts_tuple][0]}')
 
 
 def __ask_user_to_choose_the_filtered_target(target_tuple):
     if len(target_tuple[0] + target_tuple[1]) > 0:
+        logger.info('Input Target Number')
         target_index_choosed = int(
             input('Enter the number of the target you wish to choose: '))
     return target_index_choosed
@@ -320,9 +333,11 @@ def __get_choosed_target(target_tuple, target_index_choosed):
             choosed_target = target_tuple[1][target_index_choosed - lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
+            logger.error('Invalid Target')
             exit()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
+        logger.error('Invalid Target')
         exit()
     return choosed_target
 
@@ -332,6 +347,7 @@ async def __navigate_to_target(page, choosed_target):
         await choosed_target[1].click()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
+        logger.error('Invalid Target')
         exit()
 
 
@@ -341,12 +357,14 @@ async def __get_focused_target_title(page, target):
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
+        logger.error('Target not selected from list')
         exit()
     return target_focused_title
 
 
 def __print_selected_target_title(target_focused_title):
     print(f"You've selected the target named by: {target_focused_title}")
+    logger.info('Selected Target')
 
 
 def __check_target_focused_title(page, target, target_focused_title):

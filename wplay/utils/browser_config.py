@@ -27,6 +27,8 @@ async def my_script(target):
 from pyppeteer import launch
 from wplay.utils.session_manager import session_manager
 from wplay.utils.helpers import websites, user_data_folder_path
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
 # endregion
 
 
@@ -40,6 +42,11 @@ async def configure_browser_and_load_whatsapp():
 # endregion
 
 
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
+
+
 # region PYPPETEER PATCH
 # https://github.com/miyakogi/pyppeteer/pull/160
 # HACK: We need this until this PR is accepted. Solves the bug bellow.
@@ -48,6 +55,7 @@ def __patch_pyppeteer():
     from typing import Any
     from pyppeteer import connection, launcher
     import websockets.client
+    logger.debug("Using Pyppeteer for connecting to Chromium")
 
     class PatchedConnection(connection.Connection):  # type: ignore
         def __init__(self, *args: Any, **kwargs: Any) -> None:
@@ -68,6 +76,7 @@ def __patch_pyppeteer():
 # region PYPPETEER CONFIGURATION
 async def __config_browser(username = None, save_session = False):
     if username is not None and username != '' and save_session:
+        logger.info('Configuring Browser')
         return await launch(
             headless = False,
             autoClose = False,
@@ -78,6 +87,7 @@ async def __config_browser(username = None, save_session = False):
 
 
 async def __config_pages(browser):
+    logger.info('Opening Browser')
     pages = await __get_pages(browser)
     await __set_user_agent(pages[0])
     # await __set_view_port(pages[0])
@@ -108,6 +118,7 @@ async def __open_website(page, website):
 
 def __exit_if_wrong_url(page, browser, url_to_check):
     if not page.url == url_to_check:
+        logger.error('Exit due to Wrong URL!')
         print("Wrong URL!")
         browser.close()
         exit()
