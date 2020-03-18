@@ -65,7 +65,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     await __type_in_chat_or_message_search(page,target)
     chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
     contact_name_index_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
-    group_name_index_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list)
+    group_name_index_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list,hide_groups)
     target_tuple = (contact_name_index_tuple_list,group_name_index_tuple_list)
     __print_target_tuple(target_tuple)
     target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
@@ -82,7 +82,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
         await close_contact_info_page(page)
     else:
         __print_selected_target_title(target_name)
-
+    await __wait_for_message_area(page)
     return target_name
 
 
@@ -137,8 +137,12 @@ async def __get_contacts_matched_with_query(chats_groups_messages_elements_list)
     return contacts_to_choose_from
 
 
-async def __get_groups_matched_with_query(chats_groups_messages_elements_list):
+async def __get_groups_matched_with_query(chats_groups_messages_elements_list,hide_groups):
     groups_to_choose_from = []
+
+    if hide_groups:
+        return groups_to_choose_from
+
     get_group_node_title_function = 'node => node.parentNode.getAttribute("title")'
     for idx, element in enumerate(chats_groups_messages_elements_list):
         try:
