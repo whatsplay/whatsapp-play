@@ -70,8 +70,8 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     __print_target_tuple(target_tuple)
     target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
 
-    '''chosen_target will be a tuple (a,b) such that a is the name of the target and b is the 
-    index of that element in chats_messages_groups_elements_list'''
+    #chosen_target will be a tuple (a,b) such that a is the name of the target and b is the
+    #index of that element in chats_messages_groups_elements_list
 
     chosen_target = __get_choosed_target(target_tuple, target_index_chosen)
     await __open_selected_chat(chosen_target[1],chats_messages_groups_elements_list)
