@@ -12,6 +12,7 @@ from wplay import messagetimer
 from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
+from wplay import scheduleMessage
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
 
@@ -19,6 +20,7 @@ from wplay.utils.helpers import logs_path
 #region LOGGER create
 logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
+
 
 
 def print_logo(text_logo):
@@ -73,6 +75,12 @@ def get_arg_parser():
         action = "store_true",
         help = "save all chats, target is necessary")
 
+    group.add_argument(
+        "-sch",
+        "--schedule",
+        action = "store_true",
+        help = "send the message at scheduled time")
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -109,6 +117,9 @@ async def get_and_match_args(parser):
         except (IndexError, ValueError):
             bID = 0
         savechat.runMain('pull', str(args.target), bID)
+
+    elif args.schedule:
+        await scheduleMessage.schedule_message(args.target)
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)
