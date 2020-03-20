@@ -27,22 +27,22 @@ async def tracker(target):
     else:
         target_name = await target_select.manual_select_target(page, hide_groups = True)
     Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
-    status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'w').close()
-    status_file = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'a')
+    status_file : str = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'w').close()
+    status_file : str = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'a')
 
-    is_sound_enabled = True
-    last_status = 'offline'
+    is_sound_enabled : bool = True
+    last_status : str = 'offline'
     try:
         print(f'Tracking: {target_name}')
         logger.info("Tracking target")
         status_file.write(f'Tracking: {target_name}\n')
         while True:
-            status = await target_data.get_last_seen_from_focused_target(page)
+            status : str = await target_data.get_last_seen_from_focused_target(page)
             if status == 'online':
-                is_online = True
+                is_online : bool = True
             else:
-                is_online = False
-                status = 'offline'
+                is_online : bool = False
+                status : str = 'offline'
             if last_status != is_online:
                 if is_online:
                     try:
@@ -50,13 +50,13 @@ async def tracker(target):
                             playsound('plucky.wav')
                     except:
                         print("Error: Couldn't play the sound.")
-                        is_sound_enabled = False
+                        is_sound_enabled : bool = False
                 print(
                     f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' + f' - Status: {status}'
                 )
                 status_file.write(
                     f'{datetime.now().strftime("%d/%m/%Y, %H:%M:%S")}' + f' - Status: {status}\n')
-            last_status = is_online
+            last_status : str = is_online
             time.sleep(0.5)
     except KeyboardInterrupt:
         logger.error("User Pressed Ctrl+C")

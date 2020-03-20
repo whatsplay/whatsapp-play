@@ -7,7 +7,7 @@ from wplay.utils.helpers import logs_path
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',logs_path/'logs.log')
+logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 
@@ -25,5 +25,5 @@ async def chat(target):
         await target_select.manual_select_target(page)
 
     while True:
-        message = io.ask_user_for_message_breakline_mode()
+        message : list[str] = io.ask_user_for_message_breakline_mode()
         await io.send_message(page, message)

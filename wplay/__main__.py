@@ -113,9 +113,9 @@ async def get_and_match_args(parser):
             parser.print_help()
             parser.exit()
         try:
-            bID = int(sys.argv[3])
+            bID : int = int(sys.argv[3])
         except (IndexError, ValueError):
-            bID = 0
+            bID : int = 0
         savechat.runMain('pull', str(args.target), bID)
 
     elif args.schedule:
