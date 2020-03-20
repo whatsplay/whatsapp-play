@@ -73,10 +73,11 @@ python3 -m wplay -wtb "AnyName"
 ```shell
 python3 -m wplay -pull "AnyName"
 ```
-8. Schedule - Used to schedule a message to deliver it at a specified time
+8. Schedule - Used to deliver a message at a scheduled time.
+```shell
+python3 -m wplay -schedule "AnyName"
 ```
-python3 -m wplay -sch "AnyName"
-```
+
 
 ## Contribute
 
