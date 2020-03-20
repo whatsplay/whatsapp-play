@@ -17,7 +17,11 @@ logger = Logger.setup_logger('logs',logs_path/'logs.log')
 async def msgTimer(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
-        await target_search.search_and_select_target(page, target)
+        try:
+            await target_search.search_and_select_target(page, target)
+        except Exception as e:
+            print(e)
+            await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
     # Region INPUTS

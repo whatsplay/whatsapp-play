@@ -19,7 +19,11 @@ logger = Logger.setup_logger('logs',logs_path/'logs.log')
 async def tracker(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
-        target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
+        try:
+            target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
+        except Exception as e:
+            print(e)
+            target_name = await target_search.search_and_select_target_without_new_chat_button(page,target,hide_groups=True)
     else:
         target_name = await target_select.manual_select_target(page, hide_groups = True)
     Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
