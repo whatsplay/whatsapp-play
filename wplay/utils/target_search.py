@@ -24,6 +24,9 @@ async def my_script(target):
 
 # region IMPORTS
 from wplay.utils.helpers import whatsapp_selectors_dict
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
+from pyppeteer.errors import ElementHandleError
 # endregion
 
 
@@ -55,12 +58,114 @@ async def search_and_select_target(page, target, hide_groups=False):
         __print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
-
     return target_focused_title
+
+
+async def search_and_select_target_without_new_chat_button(page,target, hide_groups=False):
+    await __type_in_chat_or_message_search(page,target)
+    chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
+    contact_name_index_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
+    group_name_index_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list,hide_groups)
+    target_tuple = (contact_name_index_tuple_list,group_name_index_tuple_list)
+    __print_target_tuple(target_tuple)
+    target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
+
+    #chosen_target will be a tuple (a,b) such that a is the name of the target and b is the
+    #index of that element in chats_messages_groups_elements_list
+
+    chosen_target = __get_choosed_target(target_tuple, target_index_chosen)
+    await __open_selected_chat(chosen_target[1],chats_messages_groups_elements_list)
+    target_name = chosen_target[0]
+    if any(chosen_target[0] in i for i in contact_name_index_tuple_list):
+        complete_target_info = await get_complete_info_on_target(page)
+        print_complete_target_info(complete_target_info)
+        await close_contact_info_page(page)
+    else:
+        __print_selected_target_title(target_name)
+    await __wait_for_message_area(page)
+    return target_name
+
+
 # endregion
 
 
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
+
+
 # region SEARCH AND SELECT TARGET
+async def __type_in_chat_or_message_search(page,target):
+    try:
+        print(f'Looking for: {target}')
+        await page.waitForSelector(
+            whatsapp_selectors_dict['chat_or_message_search'],
+            visible=True,
+            timeout=0
+        )
+        await page.waitFor(500)
+        await page.type(whatsapp_selectors_dict['chat_or_message_search'], target)
+        await page.waitFor(3000)
+    except Exception as e:
+        print(e)
+
+
+async def __get_chats_messages_groups_elements(page):
+    chats_messages_groups_elements_list = []
+    try:
+        chats_messages_groups_elements_list = await page.querySelectorAll\
+            (whatsapp_selectors_dict['chats_groups_messages_elements'])
+        return chats_messages_groups_elements_list
+    except Exception as e:
+        print(e)
+        exit()
+
+
+async def __get_contacts_matched_with_query(chats_groups_messages_elements_list):
+    contacts_to_choose_from = []
+    get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
+    for idx, element in enumerate(chats_groups_messages_elements_list):
+        try:
+            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function)
+            contacts_to_choose_from.append((contact_name,idx))
+        except ElementHandleError:
+            # if it is not a contact element, move to the next one
+            continue
+        except Exception as e:
+            print(e)
+
+    return contacts_to_choose_from
+
+
+async def __get_groups_matched_with_query(chats_groups_messages_elements_list,hide_groups):
+    groups_to_choose_from = []
+
+    if hide_groups:
+        return groups_to_choose_from
+
+    get_group_node_title_function = 'node => node.parentNode.getAttribute("title")'
+    for idx, element in enumerate(chats_groups_messages_elements_list):
+        try:
+            group_name = await element.querySelectorEval(whatsapp_selectors_dict['group_element'],
+                                                         get_group_node_title_function)
+            groups_to_choose_from.append((group_name,idx))
+        except ElementHandleError:
+            # if it is not a contact element, move to the next one
+            continue
+        except Exception as e:
+            print(e)
+
+    return groups_to_choose_from
+
+
+async def __open_selected_chat(target_index,chats_messages_groups_elements_list):
+    try:
+        await chats_messages_groups_elements_list[target_index].click()
+    except Exception as e:
+        print(f"This target doesn't exist! Error: {str(e)}")
+        exit()
+
+
 async def get_complete_info_on_target(page):
     contact_page_elements = []
     try:
@@ -162,6 +267,7 @@ async def __open_new_chat(page):
 
 async def __type_in_new_chat_search_bar(page, target):
     print(f'Looking for: {target}')
+    logger.info('Searching Target')
     await page.waitForSelector(
         whatsapp_selectors_dict['search_contact_input_new_chat'],
         visible=True
@@ -184,6 +290,7 @@ async def __get_contacts_elements_filtered(page, target):
         )
     except:
         print(f'No contact named by "{target}"!')
+        logger.info('Target not found')
     return contact_list_elements_unchecked
 
 
@@ -205,6 +312,7 @@ async def __get_groups_elements_filtered(page, target, hide_groups=False):
         )
     except:
         print(f'No group named by "{target}"!')
+        logger.info('Target not found in groups')
     return group_list_elements_unchecked
 
 
@@ -291,6 +399,7 @@ def __print_target_tuple(target_tuple):
             break
         if i == 0:
             print("Contacts found:")
+            logger.info('List of Targets')
         print(f'{i}: {target_tuple[0][i][0]}')
 
     for i in range(lenght_of_contacts_tuple, lenght_of_groups_tuple + lenght_of_contacts_tuple):
@@ -298,11 +407,13 @@ def __print_target_tuple(target_tuple):
             break
         if i == lenght_of_contacts_tuple:
             print("Groups found:")
+            logger.info('List of Target in groups')
         print(f'{i}: {target_tuple[1][i-lenght_of_contacts_tuple][0]}')
 
 
 def __ask_user_to_choose_the_filtered_target(target_tuple):
     if len(target_tuple[0] + target_tuple[1]) > 0:
+        logger.info('Input Target Number')
         target_index_choosed = int(
             input('Enter the number of the target you wish to choose: '))
     return target_index_choosed
@@ -320,9 +431,11 @@ def __get_choosed_target(target_tuple, target_index_choosed):
             choosed_target = target_tuple[1][target_index_choosed - lenght_of_contacts_tuple]
         else:
             print("This target doesn't exist!")
+            logger.error('Invalid Target')
             exit()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
+        logger.error('Invalid Target')
         exit()
     return choosed_target
 
@@ -332,6 +445,7 @@ async def __navigate_to_target(page, choosed_target):
         await choosed_target[1].click()
     except Exception as e:
         print(f"This target doesn't exist! Error: {str(e)}")
+        logger.error('Invalid Target')
         exit()
 
 
@@ -341,12 +455,14 @@ async def __get_focused_target_title(page, target):
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')
+        logger.error('Target not selected from list')
         exit()
     return target_focused_title
 
 
 def __print_selected_target_title(target_focused_title):
     print(f"You've selected the target named by: {target_focused_title}")
+    logger.info('Selected Target')
 
 
 def __check_target_focused_title(page, target, target_focused_title):
