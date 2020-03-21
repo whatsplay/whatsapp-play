@@ -25,8 +25,8 @@ def ask_where_are_the_status_file():
 
 
 def startmessage(bot, update):
-    chat_id = update.message.chat_id
-    text = '''
+    chat_id : int = update.message.chat_id
+    text : str = '''
         Hi, I am here to send all the messages you want to track online status in whatsapp :)
     '''
     bot.send_message(chat_id = chat_id, text = text)
@@ -38,7 +38,7 @@ def send_status(bot, update):
     try:
         f = open(status_file_path, 'r')
         file_data = f.readlines()
-        text = file_data[len(file_data) - 1]
+        text : Union[str , bytes] = file_data[len(file_data) - 1]
         bot.send_message(chat_id = chat_id, text = text)
     except:
         bot.send_message(chat_id = chat_id, text = 'oops! An error occurred')

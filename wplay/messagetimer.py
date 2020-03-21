@@ -26,15 +26,15 @@ async def msgTimer(target):
         await target_select.manual_select_target(page)
     # Region INPUTS
     logger.info("Input message information for message timer")
-    message_type_numbers = int(
+    message_type_numbers : int = int(
         input("How many types of messages will you send? "))
-    messages = list()
+    messages : list[str] = list()
     for _ in range(message_type_numbers):
         messages.append(io.ask_user_for_message_breakline_mode())
-    number_of_messages = int(input("Enter the number of messages to send: "))
-    minimumTimeInterval = int(
+    number_of_messages : int = int(input("Enter the number of messages to send: "))
+    minimumTimeInterval : int = int(
         input("Enter minimum interval number in seconds: "))
-    maximumTimeInterval = int(
+    maximumTimeInterval : int = int(
         input("Enter maximum interval number in seconds: "))
     # Endregion
 

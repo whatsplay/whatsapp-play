@@ -8,7 +8,7 @@ from wplay.utils.helpers import logs_path
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',logs_path/'logs.log')
+logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 
@@ -19,7 +19,7 @@ def ask_user_for_message():
 
 
 def ask_user_for_message_breakline_mode():
-    message = []
+    message = []  # type : list[str]
     i = 0
     print("Write your message ('Enter' to breakline)('.' alone to finish):")
     while True:
