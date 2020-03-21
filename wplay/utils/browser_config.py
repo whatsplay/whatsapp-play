@@ -37,13 +37,13 @@ async def configure_browser_and_load_whatsapp():
     __patch_pyppeteer()
     username, save_session = session_manager()
     browser = await __config_browser(username, save_session)
-    pages = await __config_pages(browser)
+    pages : list[int] = await __config_pages(browser)
     return pages[0], browser
 # endregion
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',logs_path/'logs.log')
+logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 
@@ -88,7 +88,7 @@ async def __config_browser(username = None, save_session = False):
 
 async def __config_pages(browser):
     logger.info('Opening Browser')
-    pages = await __get_pages(browser)
+    pages : list[int] = await __get_pages(browser)
     await __set_user_agent(pages[0])
     # await __set_view_port(pages[0])
     await __open_website(pages[0], websites['whatsapp'])

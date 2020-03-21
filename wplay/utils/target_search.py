@@ -90,7 +90,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
 
 
 #region LOGGER create
-logger = Logger.setup_logger('logs',logs_path/'logs.log')
+logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 #endregion
 
 
@@ -111,7 +111,7 @@ async def __type_in_chat_or_message_search(page,target):
 
 
 async def __get_chats_messages_groups_elements(page):
-    chats_messages_groups_elements_list = []
+    chats_messages_groups_elements_list = []  # type : list[int]
     try:
         chats_messages_groups_elements_list = await page.querySelectorAll\
             (whatsapp_selectors_dict['chats_groups_messages_elements'])
@@ -122,7 +122,7 @@ async def __get_chats_messages_groups_elements(page):
 
 
 async def __get_contacts_matched_with_query(chats_groups_messages_elements_list):
-    contacts_to_choose_from = []
+    contacts_to_choose_from = []  # type : list[str , int]
     get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
     for idx, element in enumerate(chats_groups_messages_elements_list):
         try:

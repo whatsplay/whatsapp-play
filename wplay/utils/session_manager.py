@@ -16,27 +16,27 @@ from wplay.utils.helpers import menu_style
 class CliWhatsappPlay(object):
 
     def __init__(self):
-        self.data_filenames = None
-        self.questions_menu = None
-        self.question_overwrite = None
-        self.answers_menu = None
-        self.username = None
-        self.save_session = False
+        self.data_filenames = None  # type : list
+        self.questions_menu = None  # type : list
+        self.question_overwrite = None  # type : list
+        self.answers_menu = None  # type : dict
+        self.username = None  # type : str
+        self.save_session = False  # type : bool
         self.user_options = {
             'restore': 'Restore a session',
             'save': 'Create a new session',
             'continue': 'Continue without saving',
             'delete': 'Delete a session',
             'exit': 'Exit'
-        }
+        }    # type : dict
 
     def reset_fields(self):
-        self.data_filenames = None
-        self.questions_menu = None
-        self.question_overwrite = None
-        self.answers_menu = None
-        self.username = None
-        self.save_session = False
+        self.data_filenames = None  # type : list
+        self.questions_menu = None  # type : list
+        self.question_overwrite = None  # type : list
+        self.answers_menu = None  # type : dict
+        self.username = None  # type : str
+        self.save_session = False  # type : bool
 
 
     def create_user_data_folder(self):

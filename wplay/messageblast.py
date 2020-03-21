@@ -21,8 +21,8 @@ async def blast(target):
             await target_search.search_and_select_target_without_new_chat_button(page,target)
     else:
         await target_select.manual_select_target(page)
-    message = io.ask_user_for_message_breakline_mode()
-    number_of_messages = int(input("Enter the number of messages to blast: "))
+    message : list[str] = io.ask_user_for_message_breakline_mode()
+    number_of_messages : int = int(input("Enter the number of messages to blast: "))
     for _ in range(number_of_messages):
         logger.info("Blasting messages")
         await io.send_message(page, message)

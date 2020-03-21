@@ -11,7 +11,7 @@ formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
 
 
 # region for logger class
-def setup_logger(name, log_file, level=logging.DEBUG):
+def setup_logger(name : str , log_file : str , level : int = logging.DEBUG) :
     """To setup as many loggers as you want"""
 
     handler = logging.FileHandler(log_file)

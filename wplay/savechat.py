@@ -15,7 +15,7 @@ import requests
 
 
 def getGoogleAccountTokenFromAuth():
-    payload = {'Email': gmail, 'Passwd': passw, 'app': client_pkg,
+    payload : dict = {'Email': gmail, 'Passwd': passw, 'app': client_pkg,
                'client_sig': client_sig, 'parentAndroidId': devid}
     request = requests.post(
         'https://android.clients.google.com/auth', data=payload)
@@ -27,7 +27,7 @@ def getGoogleAccountTokenFromAuth():
 
 
 def getGoogleDriveToken(token):
-    payload = {
+    payload : dict = {
         'Token': token,
         'app': pkg,
         'client_sig': sig,
@@ -46,8 +46,8 @@ def getGoogleDriveToken(token):
 
 
 def rawGoogleDriveRequest(bearer, url):
-    headers = {'Authorization': 'Bearer ' + bearer}
-    request = requests.get(url, headers=headers)
+    headers : dict = {'Authorization': 'Bearer ' + bearer}
+    request : dict = requests.get(url, headers=headers)
     return request.text
 
 
@@ -56,7 +56,7 @@ def downloadFileGoogleDrive(bearer, url, local):
         os.makedirs(os.path.dirname(local))
     if os.path.isfile(local):
         os.remove(local)
-    headers = {'Authorization': 'Bearer ' + bearer}
+    headers : dict = {'Authorization': 'Bearer ' + bearer}
     request = requests.get(url, headers=headers, stream=True)
     request.raw.decode_content = True
     if request.status_code == 200:
@@ -71,7 +71,7 @@ def gDriveFileMap():
     data = rawGoogleDriveRequest(
         bearer, 'https://www.googleapis.com/drive/v2/files')
     jres = json.loads(data)
-    backups = []
+    backups = [] #  type : list
     for result in jres['items']:
         if result['title'] == 'gdrive_file_map':
             backups.append((result['description'],
@@ -88,8 +88,8 @@ def getConfigs():
     config = ConfigParser()
     try:
         config.read('settings.cfg')
-        gmail = input("enter WhatsApp backup Email: ")
-        passw = input("enter password: ")
+        gmail = input("enter WhatsApp backup Email: ")  # type : str
+        passw = input("enter password: ")  # type : str
         devid = config.get('auth', 'devid')
         pkg = config.get('app', 'pkg')
         sig = config.get('app', 'sig')
@@ -105,7 +105,7 @@ def jsonPrint(data):
 
 
 def localFileLog(md5):
-    logfile = 'logs' / 'files.log'
+    logfile = 'logs' / 'files.log'  # type : str
     if not os.path.exists(os.path.dirname(logfile)):
         os.makedirs(os.path.dirname(logfile))
     with open(logfile, 'a') as log:
@@ -113,7 +113,7 @@ def localFileLog(md5):
 
 
 def localFileList():
-    logfile = 'logs' / 'files.log'
+    logfile = 'logs' / 'files.log'  # type : str
     if os.path.isfile(logfile):
         flist = open(logfile, 'r')
         return [line.split('\n') for line in flist.readlines()]
