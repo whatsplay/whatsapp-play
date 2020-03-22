@@ -80,6 +80,7 @@ async def __config_browser(username = None, save_session = False):
         return await launch(
             headless = False,
             autoClose = False,
+            args = ['--no-sandbox'],
             userDataDir = user_data_folder_path / username
         )
     else:
