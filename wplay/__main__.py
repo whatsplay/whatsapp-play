@@ -12,6 +12,15 @@ from wplay import messagetimer
 from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
+from wplay import scheduleMessage
+from wplay.utils import Logger
+from wplay.utils.helpers import logs_path
+
+
+#region LOGGER create
+logger = Logger.setup_logger('logs',logs_path/'logs.log')
+#endregion
+
 
 
 def print_logo(text_logo):
@@ -66,6 +75,12 @@ def get_arg_parser():
         action = "store_true",
         help = "save all chats, target is necessary")
 
+    group.add_argument(
+        "-sch",
+        "--schedule",
+        action = "store_true",
+        help = "send the message at scheduled time")
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -98,10 +113,13 @@ async def get_and_match_args(parser):
             parser.print_help()
             parser.exit()
         try:
-            bID = int(sys.argv[3])
+            bID : int = int(sys.argv[3])
         except (IndexError, ValueError):
-            bID = 0
+            bID : int = 0
         savechat.runMain('pull', str(args.target), bID)
+
+    elif args.schedule:
+        await scheduleMessage.schedule_message(args.target)
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)
@@ -114,10 +132,13 @@ async def main():
         await get_and_match_args(parser)
         sys.exit(0)
     except KeyboardInterrupt:
+        logger.error('User Pressed Ctrl+C')
         sys.exit(0)
 
 try:
     asyncio.get_event_loop().run_until_complete(main())
+except KeyboardInterrupt:
+        logger.error('User Pressed Ctrl+C')
 except AssertionError:
     try:
         for task in asyncio.all_tasks():
