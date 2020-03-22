@@ -28,7 +28,7 @@ async def chat(target):
 
     while True:
         message : list[str] = io.ask_user_for_message_breakline_mode()
-        
+
         if '...' in message:
             message.remove('...')
             await io.send_message(page, message)
