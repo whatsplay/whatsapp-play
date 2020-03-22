@@ -10,11 +10,11 @@ async def chat(target):
         await target_search.search_and_select_target(page, target)
     else:
         await target_select.manual_select_target(page)
-
+    print("\033[91m {}\033[00m".format("\nType '...' alone in the message to change target person.\n\n"))
     while True:
         message = io.ask_user_for_message_breakline_mode()
-        if message[0] == '...':
-            target = input("New Target Name: ")
+        if '...' in message:
+            target = input("\n\nNew Target Name: ")
             if target is not None:
                 await target_search.search_and_select_target(page, target)
             else:
