@@ -51,9 +51,9 @@ async def search_and_select_target(page, target, hide_groups=False):
     await __navigate_to_target(page, choosed_target)
     target_focused_title = await __get_focused_target_title(page, target)
     if any(choosed_target[0] in i for i in contact_tuple):
-        complete_target_info = await get_complete_info_on_target(page)
-        print_complete_target_info(complete_target_info)
-        await close_contact_info_page(page)
+        complete_target_info = await __get_complete_info_on_target(page)
+        __print_complete_target_info(complete_target_info)
+        await __close_contact_info_page(page)
     else:
         __print_selected_target_title(target_focused_title)
     __check_target_focused_title(page, target, target_focused_title)
@@ -77,9 +77,9 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     await __open_selected_chat(chosen_target[1],chats_messages_groups_elements_list)
     target_name = chosen_target[0]
     if any(chosen_target[0] in i for i in contact_name_index_tuple_list):
-        complete_target_info = await get_complete_info_on_target(page)
-        print_complete_target_info(complete_target_info)
-        await close_contact_info_page(page)
+        complete_target_info = await __get_complete_info_on_target(page)
+        __print_complete_target_info(complete_target_info)
+        await __close_contact_info_page(page)
     else:
         __print_selected_target_title(target_name)
     await __wait_for_message_area(page)
@@ -166,8 +166,21 @@ async def __open_selected_chat(target_index,chats_messages_groups_elements_list)
         exit()
 
 
-async def get_complete_info_on_target(page):
+async def __get_complete_info_on_target(page):
     contact_page_elements = []
+    try:
+        await __open_target_chat_info_page(page)
+        contact_page_elements = await __get_contact_page_elements(page)
+        complete_target_info = {}
+        await __get_contact_name_info(contact_page_elements[0], complete_target_info)
+        await __get_contact_about_and_phone(contact_page_elements[3], complete_target_info)
+        await __get_contact_groups_common_with_target(complete_target_info, page)
+        return complete_target_info
+    except Exception as e:
+        print(e)
+
+
+async def __open_target_chat_info_page(page):
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['target_chat_header'],
@@ -175,17 +188,11 @@ async def get_complete_info_on_target(page):
             timeout=3000
         )
         await page.click(whatsapp_selectors_dict['target_chat_header'])
-        contact_page_elements = await get_contact_page_elements(page)
-        complete_target_info = {}
-        await get_contact_name_info(contact_page_elements[0], complete_target_info)
-        await get_contact_about_and_phone(contact_page_elements[3], complete_target_info)
-        await get_contact_groups_common_with_target(complete_target_info, page)
     except Exception as e:
         print(e)
-    return complete_target_info
 
 
-async def get_contact_page_elements(page):
+async def __get_contact_page_elements(page):
     contact_page_elements = []
     try:
         await page.waitForSelector(
@@ -194,12 +201,13 @@ async def get_contact_page_elements(page):
             timeout=8000
         )
         contact_page_elements = await page.querySelectorAll(whatsapp_selectors_dict['contact_info_page_elements'])
+        return contact_page_elements
     except Exception as e:
         print(e)
-    return contact_page_elements
 
 
-async def get_contact_name_info(contact_name_element,complete_target_info):
+
+async def __get_contact_name_info(contact_name_element,complete_target_info):
     try:
         complete_target_info['Name'] = await contact_name_element.querySelectorEval('span > span', 'element => element.innerText')
         complete_target_info['Last_seen'] = await contact_name_element.querySelectorEval('div > span:last-of-type > div > span', 'element => element.getAttribute("title")')
@@ -207,7 +215,7 @@ async def get_contact_name_info(contact_name_element,complete_target_info):
         print(f'last seen not available')
 
 
-async def get_contact_about_and_phone(contact_name_element, complete_target_info):
+async def __get_contact_about_and_phone(contact_name_element, complete_target_info):
     try:
         complete_target_info['About'] = await contact_name_element.querySelectorEval('div:nth-child(2) > div > div > span > span', 'element => element.getAttribute("title")')
         complete_target_info['Mobile'] = await contact_name_element.querySelectorEval('div:last-of-type > div > div > span > span', 'element => element.innerText')
@@ -215,7 +223,7 @@ async def get_contact_about_and_phone(contact_name_element, complete_target_info
         print(e)
 
 
-async def get_contact_groups_common_with_target(complete_target_info,page):
+async def __get_contact_groups_common_with_target(complete_target_info,page):
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_info_page_group_element_heading'],
@@ -234,7 +242,7 @@ async def get_contact_groups_common_with_target(complete_target_info,page):
         print(f'No groups in common')
 
 
-async def close_contact_info_page(page):
+async def __close_contact_info_page(page):
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_info_page_close_button'],
@@ -246,7 +254,7 @@ async def close_contact_info_page(page):
         print(e)
 
 
-def print_complete_target_info(complete_target_info):
+def __print_complete_target_info(complete_target_info):
     for key in complete_target_info.keys():
         if key == "Groups":
             print("Groups:")
