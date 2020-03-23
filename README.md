@@ -63,7 +63,7 @@ python3 -m wplay -wt "AnyName"
 ```
 5. Wtimer - Used for sending different message to a user in different time intervals
 ```shell
-python3 -m wplay -wt "AnyName"
+python3 -m wplay -wti "AnyName"
 ```
 6. Wtelegrambot - Used to send tracking status to telegram bot
 ```shell
