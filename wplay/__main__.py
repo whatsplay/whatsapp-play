@@ -13,6 +13,7 @@ from wplay import wchat
 from wplay import savechat
 from wplay import tgbot
 from wplay import scheduleMessage
+from wplay import changeAbout
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
 
@@ -81,6 +82,13 @@ def get_arg_parser():
         action = "store_true",
         help = "send the message at scheduled time")
 
+    group.add_argument(
+        "-wabt",
+        "--wabout",
+        action = "store_true",
+        help = "Changes the about section"
+    )
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -120,6 +128,9 @@ async def get_and_match_args(parser):
 
     elif args.schedule:
         await scheduleMessage.schedule_message(args.target)
+
+    elif args.wabout:
+        await changeAbout.changeAbout()
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)

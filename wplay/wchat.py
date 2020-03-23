@@ -38,8 +38,10 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
+
         #File Share:
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
+
         await io.send_message(page, message)

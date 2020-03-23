@@ -28,7 +28,7 @@ def ask_user_for_message_breakline_mode():
             message.pop(i)
             break
         elif message[i] == '...' or message[i] == '#_FILE':
-            break
+             break
         i += 1
     return message
 
