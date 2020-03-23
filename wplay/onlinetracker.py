@@ -23,6 +23,7 @@ async def tracker(target):
             target_name = await target_search.search_and_select_target(page, target, hide_groups = True)
         except Exception as e:
             print(e)
+            await page.reload()
             target_name = await target_search.search_and_select_target_without_new_chat_button(page,target,hide_groups=True)
     else:
         target_name = await target_select.manual_select_target(page, hide_groups = True)
