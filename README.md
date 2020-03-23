@@ -77,7 +77,10 @@ python3 -m wplay -pull "AnyName"
 ```shell
 python3 -m wplay -schedule "AnyName"
 ```
-
+9. WAbout - Change your about in every second or every 30 min.
+```shell
+python3 -m wplay -wabt
+```
 
 ## Contribute
 
