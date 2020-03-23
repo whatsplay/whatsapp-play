@@ -66,6 +66,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     chats_messages_groups_elements_list = await __get_chats_messages_groups_elements(page)
     contact_name_index_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
     group_name_index_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list,hide_groups)
+    await __get_number_of_all_contacts(page, contact_name_index_tuple_list, chats_messages_groups_elements_list)
     target_tuple = (contact_name_index_tuple_list,group_name_index_tuple_list)
     __print_target_tuple(target_tuple)
     target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
@@ -95,6 +96,19 @@ logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 
 
 # region SEARCH AND SELECT TARGET
+async def __get_number_of_all_contacts(page,contact_name_index_tuple_list, chats_messages_groups_elements_list):
+    try:
+        for index,contact_name_index_tuple in enumerate(contact_name_index_tuple_list):
+            await chats_messages_groups_elements_list[contact_name_index_tuple[1]].click()
+            await __open_target_chat_info_page(page)
+            contact_page_elements = await __get_contact_page_elements(page)
+            complete_target_info = {}
+            await __get_contact_about_and_phone(contact_page_elements[3], complete_target_info)
+            contact_name_index_tuple_list[index] = (contact_name_index_tuple[0] + " : " + complete_target_info['Mobile'],contact_name_index_tuple[1])
+            await __close_contact_info_page(page)
+    except Exception as e:
+        print(e)
+
 async def __type_in_chat_or_message_search(page,target):
     try:
         print(f'Looking for: {target}')
@@ -127,7 +141,8 @@ async def __get_contacts_matched_with_query(chats_groups_messages_elements_list)
     for idx, element in enumerate(chats_groups_messages_elements_list):
         try:
             contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function)
-            contacts_to_choose_from.append((contact_name,idx))
+            if contact_name is not None:
+                contacts_to_choose_from.append((contact_name,idx))
         except ElementHandleError:
             # if it is not a contact element, move to the next one
             continue
