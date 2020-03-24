@@ -14,14 +14,15 @@ We love your input! We want to make contributing to this project as easy and tra
 - [Reporting a bug]( https://github.com/rpotter12/whatsapp-play/blob/master/.github/IssueTemplate/BugReportTemplate.md)
 - [Submitting a fix](https://github.com/rpotter12/whatsapp-play/blob/master/.github/Pull_Request_Template.md)
 - [Proposing new features]( https://github.com/rpotter12/whatsapp-play/blob/master/.github/IssueTemplate/FeatureRequestTemplate.md)
-## Points to remember
+
+# Points to remember
 
 1.Ensure any install or build dependencies are checked and verified before the end when releasing a build. <br />
 2.Update the README.md with details of changes including environment variables, various file parameters and container details **if needed**.<br />
 3.Try adding screenshots in your pull request of the changes you made. <br />
 4.You may be able to merge the pull request in once you have the sign-off of two other developers, or if you do not have permission to do that, you may request the maintainer or reviewer to merge it for you.
 
-## Steps to follow :scroll:
+# Steps to follow :scroll:
 
 ### 1. Fork it :fork_and_knife:
 
@@ -95,7 +96,7 @@ git reset --hard upstream/master
 git push origin master
 ```
 
-### 5. Ready Steady Go... :turtle: :rabbit2:
+### 5. Ready Steady Go :turtle: :rabbit2:
 
 Once you have completed these steps, you are ready to start contributing by checking our `Help Wanted` Issues and creating [pull requests](https://github.com/rpotter12/whatsapp-play/pulls).
 
@@ -145,4 +146,3 @@ Then add a title and description to your pull request that explains your preciou
 Sit and relax till we review your PR, you've made your contribution to our project.
 
 :tada: :confetti_ball: :smiley: _**Happy Contributing**_ :smiley: :confetti_ball: :tada:
-
