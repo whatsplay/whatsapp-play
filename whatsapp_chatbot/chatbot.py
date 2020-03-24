@@ -1,4 +1,4 @@
-import os    
+import os
 from twilio.rest import Client
 import dialogflow
 from google.api_core.exceptions import InvalidArgument
@@ -28,11 +28,5 @@ while text_to_be_analyzed!="Thanks" :
     print("Detected intent:", response.query_result.intent.display_name)
     print("Detected intent confidence:", response.query_result.intent_detection_confidence)
     print("Fulfillment text:", response.query_result.fulfillment_text)
-    client.messages.create(
-         body=response.query_result.query_text,  
-         from_=from_whatsapp_number,
-         to=to_whatsapp_number)
-    client.messages.create(
-         body=response.query_result.fulfillment_text,  
-         from_=from_whatsapp_number,
-         to=to_whatsapp_number)
+    client.messages.create(body=response.query_result.query_text,from_=from_whatsapp_number,to=to_whatsapp_number)
+    client.messages.create(body=response.query_result.fulfillment_text,from_=from_whatsapp_number,to=to_whatsapp_number)
