@@ -54,7 +54,7 @@ python3 -m wplay -h
 python3 -m wplay -wc "AnyName"
 ```
 3. Wbomb - Used for message bombing aperson whatsapp using CLI
-```shel
+```shell
 python3 -m wplay -wb "AnyName"
 ```
 4. Wtrack - Used for tracking whatsapp status of a user 
@@ -75,7 +75,7 @@ python3 -m wplay -pull "AnyName"
 ```
 8. Schedule - Used to deliver a message at a scheduled time.
 ```shell
-python3 -m wplay -schedule "AnyName"
+python3 -m wplay --sch "AnyName"
 ```
 9. WAbout - Change your about in every second or every 30 min.
 ```shell
