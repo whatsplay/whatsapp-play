@@ -4,9 +4,11 @@ import time
 import sys
 import requests
 
+
 async def changeAbout():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-    choice = input("Choose 1 for changing About section every second and 2 for changing About in every 30 min : ")
+    choice = input(
+        "Choose 1 for changing About section every second and 2 for changing About in every 30 min : ")
     if choice not in ['1', '2']:
         print("Wrong choice")
         sys.exit()
@@ -28,6 +30,7 @@ async def changeAbout():
         else:
             time.sleep(1800)
 
+
 def get_live_cases():
     '''
     Gives total cases live in world for coronavirus(IN)
@@ -36,4 +39,5 @@ def get_live_cases():
     data = requests.get(URL).json()
 
     live_cases = data['results'][0]['total_cases']
+
     return str("Total Coronavirus Cases: " + str(live_cases))
