@@ -27,7 +27,7 @@ def ask_user_for_message_breakline_mode():
         if message[i] == '.':
             message.pop(i)
             break
-        elif message[i] == '...':
+        elif message[i] == '...' or message[i] == '#_FILE':
             break
         i += 1
     return message
@@ -45,4 +45,14 @@ async def send_message(page, message):
             await page.keyboard.press('Enter')
             await page.keyboard.up('Shift')
     await page.keyboard.press('Enter')
+
+#For Files
+
+async def send_file(page):
+    logger.info("Sending File")
+    await page.click(whatsapp_selectors_dict['attach_file'])
+    await page.click(whatsapp_selectors_dict['choose_file'])
+    await page.waitForSelector(whatsapp_selectors_dict['send_file'],timeout=30000)
+    await page.click(whatsapp_selectors_dict['send_file'])
+
 # endregion

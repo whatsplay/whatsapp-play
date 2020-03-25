@@ -24,7 +24,7 @@ async def chat(target):
     else:
         await target_select.manual_select_target(page)
 
-    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\n\n"))
+    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
     while True:
         message : list[str] = io.ask_user_for_message_breakline_mode()
@@ -38,5 +38,10 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
+
+        #File Share:
+        if '#_FILE' in message:
+            message.remove('#_FILE')
+            await io.send_file(page)
 
         await io.send_message(page, message)

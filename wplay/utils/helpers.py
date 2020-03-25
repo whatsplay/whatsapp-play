@@ -33,6 +33,9 @@ whatsapp_selectors_dict = {
     'chats_groups_messages_elements': '#side > div:last-child > div > div > div > div',
     'contact_element': 'span > span > span[class^="matched-text"]',
     'group_element': 'div:last-child > div:first-child > div:first-child > div > span > span[class^="matched-text"]',
+    'attach_file' : '#main > header > div > div > div:nth-child(2) > div',
+    'choose_file' : '#main > header > div > div > div > span > div > div > ul > li:nth-child(3) > button',
+    'send_file' : '#app > div > div > div > div > span > div > span > div > div > div > span > div > div > span',
     'profile_photo_element': '#side > header > div > div > img',
     'about_edit_button_element': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > span > div > span',
     'about_text_area': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > div > div'
