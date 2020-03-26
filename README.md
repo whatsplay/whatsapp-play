@@ -83,6 +83,10 @@ python3 -m wplay --sch "AnyName"
 ```shell
 python3 -m wplay -wabt
 ```
+10. WNews - Get news in whatsapp group.
+```shell
+python3 -m wplay -wnews "AnyName"
+```
 
 ## Contribute
 
