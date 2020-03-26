@@ -70,8 +70,10 @@ python3 -m wplay -wti "AnyName"
 python3 -m wplay -wtb "AnyName"
 ```
 7. Pull - Used to pull the saved chats from whatsapp to your local system.
+
+To download all the chats, write the exact command:
 ```shell
-wplay -pull "Anyname"
+wplay -pull "Databases/msgstore.db.crypt12"
 ```
 8. Schedule - Used to deliver a message at a scheduled time.
 ```shell
