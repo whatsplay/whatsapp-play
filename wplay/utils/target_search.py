@@ -32,6 +32,11 @@ from pyppeteer.errors import ElementHandleError
 
 # region FOR SCRIPTING
 async def search_and_select_target(page, target, hide_groups=False):
+    try: 
+        if int(target):
+            await __open_website(page, f'https://wa.me/{target}')
+    except:
+        pass    
     await __open_new_chat(page)
     await __type_in_new_chat_search_bar(page, target)
     contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
