@@ -12,6 +12,7 @@ async def schedule_message(target):
         await target_search.search_and_select_target(page, target)
     else:
         await target_select.manual_select_target(page)
+    
     time_ = input("Enter the schedule time in HH:MM:SS format-> ")
     hour, minute, second = time_.split(':')
     current_time = datetime.now()
@@ -24,5 +25,6 @@ async def schedule_message(target):
         sys.exit()
     message : list[str] = io.ask_user_for_message_breakline_mode()
     print("Your message is scheduled at : ", time_)
+    
     time.sleep(total_seconds)
     await io.send_message(page, message)
