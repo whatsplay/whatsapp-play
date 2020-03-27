@@ -14,6 +14,7 @@ from wplay import savechat
 from wplay import tgbot
 from wplay import scheduleMessage
 from wplay import changeAbout
+from wplay import wnews
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
 
@@ -89,6 +90,13 @@ def get_arg_parser():
         help = "Changes the about section"
     )
 
+    group.add_argument(
+        "-wnews",
+        "--wnews",
+        action = "store_true",
+        help = "Get news in whatsapp group"
+    )
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -131,6 +139,9 @@ async def get_and_match_args(parser):
 
     elif args.wabout:
         await changeAbout.changeAbout()
+
+    elif args.wnews:
+        await wnews.get_news(args.target)
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)

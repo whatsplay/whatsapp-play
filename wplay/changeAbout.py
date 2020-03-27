@@ -36,7 +36,7 @@ def get_live_cases():
     Gives total cases live in world for coronavirus(IN)
     '''
     URL = "https://thevirustracker.com/free-api?global=stats"
-    data = requests.get(URL).json()
+    data = requests.get(URL, headers={"User-Agent": "XY"}).json()
 
     live_cases = data['results'][0]['total_cases']
 
