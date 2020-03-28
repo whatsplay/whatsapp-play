@@ -2,8 +2,15 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
-import requests
+from newsapi import NewsApiClient
 import time
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+print(os.getenv('NEWS_API_KEY'))
+newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 async def get_news(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
@@ -16,7 +23,7 @@ async def get_news(target):
     else:
         await target_select.manual_select_target(page)
     
-    country = input("Enter your country code: ")
+    country = input("Enter your country code (ex: us or in): ")
     while True:
         try:
             news, source = fetch_news(country)
@@ -28,10 +35,7 @@ async def get_news(target):
 
 
 def fetch_news(country_code):
-    try:
-        data = requests.get(f"https://thevirustracker.com/free-api?countryNewsTotal={country_code}", headers={"User-Agent": "XY"}).json()
-        news = data['countrynewsitems'][0]['1']['title']
-        source = data['countrynewsitems'][0]['1']['url']
-        return news, source
-    except:
-        return "Sorry", "Unable to fetch news"
+    headlines = newsapi.get_top_headlines(country=country_code, language='en')
+    url = headlines['articles'][0]['url']
+    title = headlines['articles'][0]['title']
+    return title, url
