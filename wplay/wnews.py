@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-print(os.getenv('NEWS_API_KEY'))
 newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 async def get_news(target):
