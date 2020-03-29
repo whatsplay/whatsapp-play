@@ -21,8 +21,6 @@ __all__ = [
     'DEVNULL' , 'PYTHON_EXE', 'TESTFILE_PREFIX' , 'TESTFN',
     # subprocesses
     'get_test_subprocess',
-    # test utils
-    'unittest' ,
     # fs utils
     'safe_rmpath' ,
     # sync primitives
