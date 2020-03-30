@@ -1,9 +1,6 @@
 #region imports
-import os
-import signal
-import subprocess
 import unittest
-import psutil 
+import psutil
 from wplay.tests import test_func
 from wplay.utils import kill_process
 #endregion
