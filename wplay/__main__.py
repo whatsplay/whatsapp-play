@@ -15,6 +15,7 @@ from wplay import tgbot
 from wplay import scheduleMessage
 from wplay import changeAbout
 from wplay import wnews
+from wplay import get_media
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
 
@@ -97,6 +98,13 @@ def get_arg_parser():
         help = "Get news in whatsapp group"
     )
 
+    group.add_argument(
+        "-wmedia",
+        "--wgetmedia",
+        action = "store_true",
+        help = "Get profile photo of all your contacts"
+    )
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -142,6 +150,9 @@ async def get_and_match_args(parser):
 
     elif args.wnews:
         await wnews.get_news(args.target)
+
+    elif args.wgetmedia:
+        await get_media.get_all_media()
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)
