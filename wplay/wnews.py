@@ -2,7 +2,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
-from newsapi import NewsApiClient
+from newsapi.newsapi_client import NewsApiClient
 import time
 import os
 from dotenv import load_dotenv

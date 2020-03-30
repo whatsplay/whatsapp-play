@@ -1,7 +1,9 @@
 from wplay.utils import browser_config
 import time
+import os
 
 async def get_all_media():
+    cur_path = os.getcwd() + '/wplay/media_images'
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     total_contacts = int(input("Please provide total whatsapp contacts: "))
     loop = round(total_contacts/7)
@@ -22,10 +24,10 @@ async def get_all_media():
                 print("No profile image found")
         await page.evaluate("document.querySelector('#pane-side').scrollBy(0, 500)")
   
-    for count in range(1, len(images_list)+1):
+    for count in range(len(images_list)):
         try:
             viewSource = await page.goto(images_list[count])
-            f = open(f'media_images/{count}.jpg', 'wb')
+            f = open(os.path.join(cur_path, f'{count}.jpg'), 'wb')
             f.write(await viewSource.buffer())
             f.close()
         except:
