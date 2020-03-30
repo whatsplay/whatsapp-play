@@ -87,6 +87,10 @@ python3 -m wplay -wabt
 ```shell
 python3 -m wplay -wnews "AnyName"
 ```
+11. WMedia - Download all the images of contacts.
+```shell
+python3 -m wplay -wmedia
+```
 
 ## Contribute
 
