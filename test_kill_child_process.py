@@ -1,7 +1,7 @@
 #region imports
 import unittest
 import psutil
-from wplay.tests import test_func
+import test_func
 from wplay.utils import kill_process
 #endregion
 
