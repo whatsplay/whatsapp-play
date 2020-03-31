@@ -1,3 +1,8 @@
+'''
+To run tests run
+python3 -m unittest discover -s tests
+on terminal
+'''
 #region imports
 import unittest
 import psutil
