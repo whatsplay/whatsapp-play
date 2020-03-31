@@ -38,7 +38,10 @@ whatsapp_selectors_dict = {
     'send_file' : '#app > div > div > div > div > span > div > span > div > div > div > span > div > div > span',
     'profile_photo_element': '#side > header > div > div > img',
     'about_edit_button_element': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > span > div > span',
-    'about_text_area': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > div > div'
+    'about_text_area': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > div > div',
+    'contact_info_page_target_group_name_element': 'div:nth-child(2)>div>div> div:last-of-type',
+    'contact_info_page_target_group_creation_info_element': ':scope > div:last-child > span',
+    'contact_info_page_target_group_description_element': ":scope > div:last-child span:first-of-type"
 }
 # endregion
 
