@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="images/Screenshot%20from%202020-03-31%2016-16-31.png>
+  <img src="images/Screenshot%20from%202020-03-31%2016-16-31.png">
 </p>
             
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
