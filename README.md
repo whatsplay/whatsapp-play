@@ -1,5 +1,7 @@
-# whatsapp-play
-
+<p align="center">
+  <img src="images/Screenshot%20from%202020-03-31%2016-16-31.png">
+</p>
+            
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
 [![PyPi](https://img.shields.io/badge/pypi-v5.0.2-blue)](https://pypi.org/project/wplay/)
