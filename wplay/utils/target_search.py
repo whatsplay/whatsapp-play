@@ -212,6 +212,7 @@ async def __get_complete_info_on_group(page):
         complete_target_group_info = {}
         await __get_target_group_name(contact_page_elements[0],complete_target_group_info)
         await __get_target_group_creation_info(contact_page_elements[0],complete_target_group_info)
+        await __get_target_group_description(contact_page_elements[1],complete_target_group_info)
         return complete_target_group_info
     except Exception as e:
         print(e)
@@ -231,6 +232,23 @@ async def __get_target_group_creation_info(element, complete_target_info):
         get_inner_text_function = 'e => e.innerText'
         complete_target_info['Creation Info'] = await element.querySelectorEval\
             (whatsapp_selectors_dict['contact_info_page_target_group_creation_info_element'],get_inner_text_function)
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_description(element,complete_target_info):
+    try:
+        get_inner_text_function = 'e => e.innerText'
+        complete_target_info['Description'] = await element.querySelectorEval \
+            (whatsapp_selectors_dict['contact_info_page_target_group_description_element'], get_inner_text_function)
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_members(element, complete_target_info):
+    try:
+        target_group_member_elements = await element.querySelectorAll\
+            (whatsapp_selectors_dict['contact_info_page_target_group_member_elements'])
     except Exception as e:
         print(e)
 
