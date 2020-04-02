@@ -213,6 +213,7 @@ async def __get_complete_info_on_group(page):
         await __get_target_group_name(contact_page_elements[0],complete_target_group_info)
         await __get_target_group_creation_info(contact_page_elements[0],complete_target_group_info)
         await __get_target_group_description(contact_page_elements[1],complete_target_group_info)
+        await __get_target_group_members(contact_page_elements[4],complete_target_group_info)
         return complete_target_group_info
     except Exception as e:
         print(e)
@@ -249,6 +250,10 @@ async def __get_target_group_members(element, complete_target_info):
     try:
         target_group_member_elements = await element.querySelectorAll\
             (whatsapp_selectors_dict['contact_info_page_target_group_member_elements'])
+        group_member_name_selector = ':scope span[title]'
+        get_element_title_function = 'e => e.getAttribute("title")'
+        complete_target_info['Members'] = [await ele.querySelectorEval(group_member_name_selector,get_element_title_function)
+                                           for ele in target_group_member_elements]
     except Exception as e:
         print(e)
 
@@ -328,8 +333,8 @@ async def __close_contact_info_page(page):
 
 def __print_complete_target_info(complete_target_info):
     for key in complete_target_info.keys():
-        if key == "Groups":
-            print("Groups:")
+        if key == "Groups" or key == "Members":
+            print(key + ":")
             print(*complete_target_info[key], sep=",")
         else:
             print(f'{key}: {complete_target_info[key]} ')
