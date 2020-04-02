@@ -5,9 +5,6 @@ on terminal
 '''
 #region imports
 import unittest
-import logging
-from pathlib import Path
-#import os.path
 from os import path
 from wplay.utils import Logger
 from wplay.utils.helpers import logs_path
@@ -30,7 +27,7 @@ class CaptureLogsExample(unittest.TestCase):
         with self.assertLogs(logger) as logs:
             logger.info("Testing logg class")
         self.assertEqual(logs.output, ['INFO:logs:Testing logg class'])
-    
+
 if __name__ == '__main__':
 	unittest.main()
 #endregion
