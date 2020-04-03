@@ -43,8 +43,8 @@ Windows: `python -m wplay -h` <br />
 Unix: `python3 -m wplay -h` <br />
 
 ## Usage
+<img src="/images/usage.png"><br />
 
-<img src="/images/usage.png"><br>
 ### Usage of commands
 
 1. Help - Used to display the help section of Wplay
