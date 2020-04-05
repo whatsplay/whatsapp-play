@@ -8,7 +8,7 @@ async def get_all_media():
     total_contacts = int(input("Please provide total whatsapp contacts: "))
     loop = round(total_contacts/7)
     images_list =  []
-
+    
     await page.waitForSelector('#pane-side > div:nth-child(1) > div > div > div:nth-child(1) > div > div > div > div > img')
 
     for c in range(loop):
