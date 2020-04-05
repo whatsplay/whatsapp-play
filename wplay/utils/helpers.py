@@ -7,7 +7,8 @@ from whaaaaat import style_from_dict, Token
 # endregion
 
 # region WEBSITES
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
+websites = {'whatsapp': 'https://web.whatsapp.com/',
+            'wpp_unknown': 'https://web.whatsapp.com/send?phone='}
 # endregion
 
 # region SELECTORS
