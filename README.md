@@ -29,13 +29,6 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***changeAbout*** is a script to change the about section of your profile. User can select personal quote, news, quotes, etc.
 
-### Steps to use changeAbout
-The changeAbout script uses a news api. For fetching content from the api, you need to generate an api key from [here](https://newsapi.org/). After getting the api key you need to create a `.env` file and then place this key in `.env` file as `NEWS_API_KEY=YOUR KEY`. Now you simple need to run the script:
-
-- `python3 -m wplay --wabout`
-- The script will then prompt the user to input `news's theme`. The news can be related to any **keyword**. For example - Football, Bitcoin etc. You can also specify the category of the news(eg. Business, Sports etc).
-- The script will then change your about section automatically on every latest news fetched from the api related to your input.
-
 ***wnews*** is a script to get all types of news in your whatsapp group.
 
 ***get_media*** is a script to download profile photos of all the contacts in your whatsapp contact list and save them in the `wplay` folder.
