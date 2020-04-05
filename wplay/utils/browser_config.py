@@ -29,7 +29,7 @@ from pyppeteer import launch, connection, launcher
 from pyppeteer.browser import Browser
 from pyppeteer.page import Page
 
-from wplay.utils.session_manager import session_manager
+from wplay.utils.SessionManager import SessionManager
 from wplay.utils.helpers import websites, user_data_folder_path
 from wplay.utils.Logger import Logger
 # endregion
@@ -50,7 +50,7 @@ async def configure_browser_and_load_whatsapp() -> (Page, Browser):
         Browser -- return the browser object
     """
     __patch_pyppeteer()
-    username, save_session = session_manager()
+    username, save_session = SessionManager.session_manager()
     browser = await __config_browser(username, save_session)
     pages = await get_pages(browser)
     first_page = pages[0]

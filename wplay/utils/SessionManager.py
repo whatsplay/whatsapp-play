@@ -5,7 +5,6 @@ import shutil
 from pathlib import Path
 
 from whaaaaat import Separator, prompt
-# https://github.com/pytransitions/transitions#the-non-quickstart
 from transitions import Machine, State
 
 from wplay.utils.helpers import user_data_folder_path
@@ -13,8 +12,22 @@ from wplay.utils.helpers import menu_style
 # endregion
 
 
-class CliWhatsappPlay(object):
+states = [
+    State(name='start'),
+    State(name='get_user_data_filenames', on_enter='get_user_data_filenames'),
+    State(name='prepare_questions', on_enter='prepare_questions'),
+    State(name='get_answer_menu', on_enter='get_answer_menu'),
+    State(name='verify_answers', on_enter='verify_answers')]
 
+transitions = [
+    {'trigger': 'start', 'source': '*', 'dest': 'start'},
+    {'trigger': 'get_user_data_filenames', 'source': 'start', 'dest': 'get_user_data_filenames'},
+    {'trigger': 'prepare_questions', 'source': 'get_user_data_filenames', 'dest': 'prepare_questions'},
+    {'trigger': 'get_answer_menu', 'source': 'prepare_questions', 'dest': 'get_answer_menu'},
+    {'trigger': 'verify_answers', 'source': 'get_answer_menu', 'dest': 'verify_answers'}]
+
+
+class SessionManager(object):
     def __init__(self):
         self.data_filenames = None  # type : list
         self.questions_menu = None  # type : list
@@ -37,10 +50,6 @@ class CliWhatsappPlay(object):
         self.answers_menu = None  # type : dict
         self.username = None  # type : str
         self.save_session = False  # type : bool
-
-
-    def create_user_data_folder(self):
-        Path(user_data_folder_path).mkdir(parents=True, exist_ok=True)
 
     def get_user_data_filenames(self):
         self.data_filenames = [file.stem for file in user_data_folder_path.glob('*')]
@@ -137,7 +146,6 @@ class CliWhatsappPlay(object):
             return answer_overwrite['overwrite_data']
         return True
 
-
     def __delete_session_data(self, path):
         def handleError(func, path, exc_info):
             print('Handling Error for file ', path)
@@ -148,35 +156,16 @@ class CliWhatsappPlay(object):
 
         shutil.rmtree(path, onerror=handleError)
 
+    @staticmethod
+    def session_manager():
+        done = False
+        obj = SessionManager()
+        while(not done):
+            if(obj.questions_menu != None): obj.reset_fields()
+            machine = Machine(obj, states, transitions=transitions, initial='start')
+            obj.get_user_data_filenames()
+            obj.prepare_questions()
+            obj.get_answer_menu()
+            done = obj.verify_answers()
 
-states = [
-    State(name='start'),
-    State(name='create_user_data_folder', on_enter='create_user_data_folder'),
-    State(name='get_user_data_filenames', on_enter='get_user_data_filenames'),
-    State(name='prepare_questions', on_enter='prepare_questions'),
-    State(name='get_answer_menu', on_enter='get_answer_menu'),
-    State(name='verify_answers', on_enter='verify_answers')
-]
-
-transitions = [
-    {"trigger": 'start', 'source': '*', 'dest': 'start'},
-    { 'trigger': 'create_user_data_folder', 'source': 'start', 'dest': 'create_user_data_folder'},
-    { 'trigger': 'get_user_data_filenames', 'source': 'create_user_data_folder', 'dest': 'get_user_data_filenames'},
-    { 'trigger': 'prepare_questions', 'source': 'get_user_data_filenames', 'dest': 'prepare_questions'},
-    { 'trigger': 'get_answer_menu', 'source': 'prepare_questions', 'dest': 'get_answer_menu'},
-    { 'trigger': 'verify_answers', 'source': 'get_answer_menu', 'dest': 'verify_answers'},
-]
-
-def session_manager():
-    done = False
-    obj = CliWhatsappPlay()
-    while(not done):
-        if(obj.questions_menu != None): obj.reset_fields()
-        machine = Machine(obj, states, transitions=transitions, initial='start')
-        obj.create_user_data_folder()
-        obj.get_user_data_filenames()
-        obj.prepare_questions()
-        obj.get_answer_menu()
-        done = obj.verify_answers()
-
-    return obj.username, obj.save_session
+        return obj.username, obj.save_session
