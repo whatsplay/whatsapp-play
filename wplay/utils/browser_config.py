@@ -1,6 +1,3 @@
-__author__ = 'Alexandre Calil Martins Fonseca, github: xandao6'
-
-
 # region TUTORIAL
 '''
 Go to region 'FOR SCRIPTING' and use the methods in your script!
@@ -24,27 +21,75 @@ async def my_script(target):
 
 
 # region IMPORTS
-from pyppeteer import launch
+from typing import Any, List
+from pathlib import Path
+
+import websockets.client
+from pyppeteer import launch, connection, launcher
+from pyppeteer.browser import Browser
+from pyppeteer.page import Page
+
 from wplay.utils.session_manager import session_manager
 from wplay.utils.helpers import websites, user_data_folder_path
-from wplay.utils import Logger
-from wplay.utils.helpers import logs_path
+from wplay.utils.Logger import Logger
+# endregion
+
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
 # endregion
 
 
 # region FOR SCRIPTING
-async def configure_browser_and_load_whatsapp():
+async def configure_browser_and_load_whatsapp() -> (Page, Browser):
+    """
+    Configure browser, configure the first page and open whatsapp website.
+    
+    Returns:
+        Page -- return the first page, with whatsapp open
+        Browser -- return the browser object
+    """
     __patch_pyppeteer()
     username, save_session = session_manager()
     browser = await __config_browser(username, save_session)
-    pages : list[int] = await __config_pages(browser)
-    return pages[0], browser
+    pages = await get_pages(browser)
+    first_page = pages[0]
+    await config_page(first_page)
+    await load_website(first_page, websites['whatsapp'])
+    return first_page, browser
+
+
+async def get_pages(browser: Browser) -> List[Page]:
+    __logger.debug('Getting open pages')
+    return await browser.pages()
+
+
+async def open_new_page(browser: Browser):
+    """
+    Open a new tab.
+    """
+    __logger.debug('Opening new page(tab)')
+    await browser.newPage()
+
+
+async def config_page(page: Page):
+    __logger.debug('Configuring page')
+    await __set_user_agent(page)
+    # await __set_view_port(page)
+
+
+async def load_website(page: Page, website: str):
+    __logger.debug(f'Loading website: {website}')
+    await page.bringToFront()
+    await page.goto(website, waitUntil='networkidle2', timeout=0)
+
+
+def exit_if_wrong_url(page: Page, browser: Browser, url_to_check: str):
+    if not page.url == url_to_check:
+        __logger.error('Exit due to Wrong URL!')
+        browser.close()
+        exit()
 # endregion
-
-
-#region LOGGER create
-logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
-#endregion
 
 
 # region PYPPETEER PATCH
@@ -52,20 +97,16 @@ logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
 # HACK: We need this until this PR is accepted. Solves the bug bellow.
 # BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
 def __patch_pyppeteer():
-    from typing import Any
-    from pyppeteer import connection, launcher
-    import websockets.client
-    logger.debug("Using Pyppeteer for connecting to Chromium")
-
-    class PatchedConnection(connection.Connection):  # type: ignore
+    __logger.debug("Patching Pyppeteer.")
+    class PatchedConnection(connection.Connection):
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             super().__init__(*args, **kwargs)
             self._ws = websockets.client.connect(
                 self._url,
                 loop=self._loop,
-                max_size=None,  # type: ignore
-                ping_interval=None,  # type: ignore
-                ping_timeout=None,  # type: ignore
+                max_size=None,
+                ping_interval=None,
+                ping_timeout=None,
             )
 
     connection.Connection = PatchedConnection
@@ -73,56 +114,25 @@ def __patch_pyppeteer():
 # endregion
 
 
-# region PYPPETEER CONFIGURATION
-async def __config_browser(username = None, save_session = False):
-    if username is not None and username != '' and save_session:
-        logger.info('Configuring Browser')
+# region PYPPETEER PRIVATE FUNCTIONS
+async def __config_browser(username: str = None, save_session: bool = False):
+    __logger.debug('Configuring Browser.')
+    if username is not None and username.strip() != '' and save_session:
         return await launch(
-            headless = False,
-            autoClose = False,
-            userDataDir = user_data_folder_path / username
+            headless=False,
+            autoClose=False,
+            userDataDir=user_data_folder_path / username
         )
     else:
-        return await launch(headless = False, autoClose = False)
+        return await launch(headless=False, autoClose=False)
 
 
-async def __config_pages(browser):
-    logger.info('Opening Browser')
-    pages : list[int] = await __get_pages(browser)
-    await __set_user_agent(pages[0])
-    # await __set_view_port(pages[0])
-    await __open_website(pages[0], websites['whatsapp'])
-    return pages
-
-
-async def __open_new_page(browser):
-    await browser.newPage()
-
-
-async def __get_pages(browser):
-    return await browser.pages()
-
-
-async def __set_user_agent(page):
+async def __set_user_agent(page: Page):
     await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/61.0.3163.100 Safari/537.36')
 
 
-async def __set_view_port(page):
+async def __set_view_port(page: Page):
     await page.setViewport({'width': 1280, 'height': 800})
-
-
-async def __open_website(page, website):
-    await page.bringToFront()
-    await page.goto(website, waitUntil='networkidle2', timeout=0)
-
-
-def __exit_if_wrong_url(page, browser, url_to_check):
-    if not page.url == url_to_check:
-        logger.error('Exit due to Wrong URL!')
-        print("Wrong URL!")
-        browser.close()
-        exit()
-        return
 # endregion
 
 
