@@ -6,7 +6,7 @@ from wplay.utils.helpers import logs_path
 
 
 class Logger:
-    def __init__(self, script_name: str, level : int = logging.DEBUG):
+    def __init__(self, script_name: str, level : int = logging.WARNING):
         self.logger = logging.getLogger(script_name)
         self.level = level
         self.logger.setLevel(self.level)
