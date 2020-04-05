@@ -28,10 +28,10 @@ class Logger:
             self.logger.addHandler(file_handler)
 
     def debug(self, msg: str):
-        self.logger.debug(m)
+        self.logger.debug(msg)
 
     def error(self, msg: str):
-        self.logger.error(m)
+        self.logger.error(msg)
 
     def info(self, msg: str):
-        self.logger.info(m)
+        self.logger.info(msg)
