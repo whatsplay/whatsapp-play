@@ -5,26 +5,33 @@ from wplay.utils.helpers import logs_path
 # endregion
 
 
-# region for FORMAT
-formatter = logging.Formatter('%(asctime)s %(levelname)s %(message)s')
-# endregion
+class Logger:
+    def __init__(self, script_name: str, level : int = logging.DEBUG):
+        self.logger = logging.getLogger(script_name)
+        self.level = level
+        self.logger.setLevel(self.level)
+        
+        if not self.logger.handlers:
+            # Create handlers
+            file_handler = logging.FileHandler(logs_path/'wplay.log')
+            console = logging.StreamHandler()
+            file_handler.setLevel(self.level)
+            console.setLevel(self.level)
 
+            # create formatter and add it to the handlers
+            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            console.setFormatter(formatter)
+            file_handler.setFormatter(formatter)
 
-# region for logger class
-def setup_logger(name : str , log_file : str , level : int = logging.DEBUG) :
-    """To setup as many loggers as you want"""
+            # add the handlers to logger
+            self.logger.addHandler(console)
+            self.logger.addHandler(file_handler)
 
-    handler = logging.FileHandler(log_file)
-    handler.setFormatter(formatter)
+    def debug(self, msg: str):
+        self.logger.debug(m)
 
-    logger = logging.getLogger(name)
-    logger.setLevel(level)
-    logger.addHandler(handler)
+    def error(self, msg: str):
+        self.logger.error(m)
 
-    return logger
-# endregion
-
-
-# region for log folder creation
-Path(logs_path).mkdir(parents = True, exist_ok = True)
-# endregion
+    def info(self, msg: str):
+        self.logger.info(m)
