@@ -1,5 +1,8 @@
 # region IMPORTS
 from pathlib import Path
+
+import signal
+import psutil
 from whaaaaat import style_from_dict, Token
 # endregion
 
@@ -7,7 +10,7 @@ from whaaaaat import style_from_dict, Token
 websites = {'whatsapp': 'https://web.whatsapp.com/'}
 # endregion
 
-# region SELECTOR
+# region SELECTORS
 whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
 
@@ -62,4 +65,20 @@ menu_style = style_from_dict({
     Token.Answer: '#5F819D bold',
     Token.Question: '',
 })
+# endregion
+
+# region FUNCTIONS
+def create_dirs():
+    logs_path.mkdir(parents=True, exist_ok=True)
+    user_data_folder_path.mkdir(parents=True, exist_ok=True)
+
+def kill_child_processes(parent_pid, sig=signal.SIGTERM):
+    try:
+        parent = psutil.Process(parent_pid)
+    except psutil.NoSuchProcess:
+        return
+    children = parent.children(recursive=True)
+    print('Process Killed!')
+    for process in children:
+        process.send_signal(sig)
 # endregion
