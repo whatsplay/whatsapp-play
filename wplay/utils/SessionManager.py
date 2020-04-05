@@ -106,7 +106,6 @@ class SessionManager(object):
         self.answers_menu = prompt(self.questions_menu, style=menu_style)  
 
     def verify_answers(self):
-
         # Handle when person choose 'Restore a session'
         if self.answers_menu['user_options'] == self.user_options['restore']:
             if self.answers_menu['restore'] == '<---Go-back---':
@@ -138,7 +137,7 @@ class SessionManager(object):
         elif self.answers_menu['user_options'] == self.user_options['exit']:
             exit()
 
-    def __verify_if_session_file_exists(self):
+    def __verify_if_session_file_exists(self) -> bool:
         if self.username in self.data_filenames:
             answer_overwrite = prompt(self.question_overwrite, style=menu_style)
             if answer_overwrite['overwrite_data']:
@@ -153,7 +152,6 @@ class SessionManager(object):
                 print('Trying to change permission!')
                 os.chmod(path, stat.S_IWUSR)
                 shutil.rmtree(path, ignore_errors=True)
-
         shutil.rmtree(path, onerror=handleError)
 
     @staticmethod
