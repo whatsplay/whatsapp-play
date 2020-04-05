@@ -55,12 +55,7 @@ async def search_and_select_target(page, target, hide_groups=False):
     choosed_target = __get_choosed_target(target_tuple, target_index_choosed)
     await __navigate_to_target(page, choosed_target)
     target_focused_title = await __get_focused_target_title(page, target)
-    if any(choosed_target[0] in i for i in contact_tuple):
-        complete_target_info = await __get_complete_info_on_target(page)
-        __print_complete_target_info(complete_target_info)
-        await __close_contact_info_page(page)
-    else:
-        __print_selected_target_title(target_focused_title)
+    await __display_complete_target_info(page,choosed_target,contact_tuple)
     __check_target_focused_title(page, target, target_focused_title)
     await __wait_for_message_area(page)
     return target_focused_title
@@ -82,12 +77,7 @@ async def search_and_select_target_without_new_chat_button(page,target, hide_gro
     chosen_target = __get_choosed_target(target_tuple, target_index_chosen)
     await __open_selected_chat(chosen_target[1],chats_messages_groups_elements_list)
     target_name = chosen_target[0]
-    if any(chosen_target[0] in i for i in contact_name_index_tuple_list):
-        complete_target_info = await __get_complete_info_on_target(page)
-        __print_complete_target_info(complete_target_info)
-        await __close_contact_info_page(page)
-    else:
-        __print_selected_target_title(target_name)
+    await __display_complete_target_info(page, chosen_target, contact_name_index_tuple_list)
     await __wait_for_message_area(page)
     return target_name
 
@@ -113,6 +103,22 @@ async def __get_number_of_all_contacts(page,contact_name_index_tuple_list, chats
             await __close_contact_info_page(page)
     except Exception as e:
         print(e)
+
+
+async def __display_complete_target_info(page,target_tuple,contact_tuple):
+    complete_target_info = {}
+    try:
+        if any(target_tuple[0] in i for i in contact_tuple):
+            complete_target_info = await __get_complete_info_on_target(page)
+            __print_complete_target_info(complete_target_info)
+            await __close_contact_info_page(page)
+        else:
+            complete_target_info = await __get_complete_info_on_group(page)
+            __print_complete_target_info(complete_target_info)
+            await __close_contact_info_page(page)
+    except Exception as e:
+        print(e)
+
 
 async def __type_in_chat_or_message_search(page,target):
     try:
@@ -200,6 +206,68 @@ async def __get_complete_info_on_target(page):
         print(e)
 
 
+async def __get_complete_info_on_group(page):
+    try:
+        await __open_target_chat_info_page(page)
+        contact_page_elements = await __get_contact_page_elements(page)
+        complete_target_group_info = {}
+        await __get_target_group_name(contact_page_elements[0],complete_target_group_info)
+        await __get_target_group_creation_info(contact_page_elements[0],complete_target_group_info)
+        await __get_target_group_description(contact_page_elements[1],complete_target_group_info)
+        await __get_target_group_members(contact_page_elements[4],complete_target_group_info)
+        return complete_target_group_info
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_name(element, complete_target_info):
+    try:
+        get_inner_text_function = 'e => e.innerText'
+        complete_target_info['Name'] = await element.querySelectorEval\
+            (whatsapp_selectors_dict['contact_info_page_target_group_name_element'],get_inner_text_function)
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_creation_info(element, complete_target_info):
+    try:
+        get_inner_text_function = 'e => e.innerText'
+        complete_target_info['Creation Info'] = await element.querySelectorEval\
+            (whatsapp_selectors_dict['contact_info_page_target_group_creation_info_element'],get_inner_text_function)
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_description(element,complete_target_info):
+    try:
+        get_inner_text_function = 'e => e.innerText'
+        complete_target_info['Description'] = await element.querySelectorEval \
+            (whatsapp_selectors_dict['contact_info_page_target_group_description_element'], get_inner_text_function)
+    except Exception as e:
+        print(e)
+
+
+async def __get_target_group_members(element, complete_target_info):
+    try:
+        children_elements = await element.querySelectorAll(':scope > div')
+        if len(children_elements) <= 2:
+            target_group_members_selector = ':scope > div:last-child > div > div'
+        elif len(children_elements) == 3:
+            target_group_members_selector = ':scope > div:nth-child(2) > div > div'
+        else:
+            target_group_members_selector = whatsapp_selectors_dict['contact_info_page_target_group_member_elements']
+
+        target_group_member_elements = await element.querySelectorAll\
+            (target_group_members_selector)
+
+        group_member_name_selector = ':scope span[title]'
+        get_element_title_function = 'e => e.getAttribute("title")'
+        complete_target_info['Members'] = [await ele.querySelectorEval(group_member_name_selector,get_element_title_function)
+                                         for ele in target_group_member_elements]
+    except Exception as e:
+        print(e)
+
+
 async def __open_target_chat_info_page(page):
     try:
         await page.waitForSelector(
@@ -224,7 +292,6 @@ async def __get_contact_page_elements(page):
         return contact_page_elements
     except Exception as e:
         print(e)
-
 
 
 async def __get_contact_name_info(contact_name_element,complete_target_info):
@@ -276,8 +343,8 @@ async def __close_contact_info_page(page):
 
 def __print_complete_target_info(complete_target_info):
     for key in complete_target_info.keys():
-        if key == "Groups":
-            print("Groups:")
+        if key == "Groups" or key == "Members":
+            print(key + ":")
             print(*complete_target_info[key], sep=",")
         else:
             print(f'{key}: {complete_target_info[key]} ')
