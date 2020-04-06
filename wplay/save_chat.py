@@ -6,12 +6,20 @@ EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
 '''
 
-
+# region IMPORTS
+from pathlib import Path
 from configparser import ConfigParser
 import json
 import os
 import re
 import requests
+
+from wplay.utils.Logger import Logger
+# endregion
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
 
 
 def getGoogleAccountTokenFromAuth():
@@ -196,38 +204,3 @@ def runMain(mode, asset, bID):
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
             getMultipleFiles(drive[1], folder)
-
-
-'''
-def main():
-    args = len(sys.argv)
-    if  args < 2 or str(sys.argv[1]) == '-help' or str(sys.argv[1]) == 'help':
-        print('\nUsage: '+str(sys.argv[0])+' -help|-vers|-info|-list|-sync|-pull file [backupID]\n\nExamples:\n')
-        print('python '+str(sys.argv[0])+' -help (this help screen)')
-        print('python '+str(sys.argv[0])+' -vers (version information)')
-        print('python '+str(sys.argv[0])+' -info (google drive app settings)')
-        print('python '+str(sys.argv[0])+' -list (list all availabe files)')
-        print('python '+str(sys.argv[0])+' -sync (sync all files locally)')
-        print('python '+str(sys.argv[0])+' -pull "Databases/msgstore.db.crypt12" [backupID] (download)\n')
-    elif str(sys.argv[1]) == '-info' or str(sys.argv[1]) == 'info':
-        runMain('info', 'settings', 0)
-    elif str(sys.argv[1]) == '-list' or str(sys.argv[1]) == 'list':
-        runMain('list', 'all', 0)
-    elif str(sys.argv[1]) == '-sync' or str(sys.argv[1]) == 'sync':
-        runMain('sync', 'all', 0)
-    elif str(sys.argv[1]) == '-vers' or str(sys.argv[1]) == 'vers':
-        print('\nWhatsAppGDExtract Version 1.1 Copyright (C) 2016 by TripCode\n')
-    elif args < 3:
-        quit('\nUsage: python '+str(sys.argv[0])+' -help|-vers|-info|-list|-sync|-pull file [backupID]\n')
-    elif str(sys.argv[1]) == '-pull' or str(sys.argv[1]) == 'pull':
-        try:
-            bID = int(sys.argv[3])
-        except (IndexError, ValueError):
-            bID = 0
-        runMain('pull', str(sys.argv[2]), bID)
-    else:
-        quit('\nUsage: python '+str(sys.argv[0])+' -help|-vers|-info|-list|-sync|-pull file [backupID]\n')
-
-if __name__ == "__main__":
-    main()
-'''

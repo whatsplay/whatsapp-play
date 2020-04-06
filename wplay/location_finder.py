@@ -1,7 +1,7 @@
 # the code is not finalised.
 
 
-def locationfinder(name):
+def location_finder(name):
 
     """
     # to find location by ip address
