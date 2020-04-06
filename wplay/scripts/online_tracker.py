@@ -7,13 +7,13 @@ from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import target_data
 from wplay.utils.helpers import data_folder_path
-from wplay.utils import Logger
+from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 
 
-#region LOGGER create
-logger = Logger.setup_logger('logs',logs_path/'logs.log')
-#endregion
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
 
 
 async def tracker(target):
@@ -35,7 +35,7 @@ async def tracker(target):
     last_status : str = 'offline'
     try:
         print(f'Tracking: {target_name}')
-        logger.info("Tracking target")
+        __logger.info("Tracking target")
         status_file.write(f'Tracking: {target_name}\n')
         while True:
             status : str = await target_data.get_last_seen_from_focused_target(page)
@@ -60,7 +60,7 @@ async def tracker(target):
             last_status : str = is_online
             time.sleep(0.5)
     except KeyboardInterrupt:
-        logger.error("User Pressed Ctrl+C")
+        __logger.error("User Pressed Ctrl+C")
     finally:
         status_file.close()
         print(f'\nStatus file saved in: {str(data_folder_path/"tracking_data"/"status_")}{target_name}.txt')

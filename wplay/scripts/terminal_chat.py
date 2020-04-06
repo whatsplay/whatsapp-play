@@ -1,18 +1,20 @@
+from pathlib import Path
+
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
-from wplay.utils import Logger
+from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 
 
-#region LOGGER create
-logger : Logger = Logger.setup_logger('logs',logs_path/'logs.log')
-#endregion
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
 
 
 async def chat(target):
-    logger.info("Chatting with target")
+    __logger.info("Chatting with target")
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
     if target is not None:
