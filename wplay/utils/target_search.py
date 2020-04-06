@@ -78,7 +78,6 @@ async def search_and_select_target(page: Page, target: str, hide_groups: bool=Fa
     if await __try_load_contact_by_number(page, target):
         target_focused_title = await __get_focused_target_title(page, target)
         #await __display_complete_target_info(page,choosed_target,contact_tuple)
-        __check_target_focused_title(target, target_focused_title)
         await __wait_for_message_area(page)
         return target_focused_title
     else:
@@ -626,7 +625,7 @@ def __print_selected_target_title(target_focused_title):
 
 
 def __check_target_focused_title(target, target_focused_title):
-    if int(target):
+    """if int(target):
         def only_numerics(seq):
             seq_type= type(seq)
             return seq_type().join(filter(seq_type.isdigit, seq))
@@ -639,14 +638,14 @@ def __check_target_focused_title(target, target_focused_title):
             must_continue = str(input("Do you want to continue (yes/no)? "))
             accepted_yes = {'yes', 'y'}
             if not must_continue.lower() in accepted_yes:
-                exit()       
-    else:
-        if target_focused_title.lower().find(target.lower()) == -1:
-            print(f"You're focused in the wrong target, {target_focused_title}")
-            must_continue = str(input("Do you want to continue (yes/no)? "))
-            accepted_yes = {'yes', 'y'}
-            if not must_continue.lower() in accepted_yes:
-                exit()  
+                exit()
+    """ 
+    if target_focused_title.lower().find(target.lower()) == -1:
+        print(f"You're focused in the wrong target, {target_focused_title}")
+        must_continue = str(input("Do you want to continue (yes/no)? "))
+        accepted_yes = {'yes', 'y'}
+        if not must_continue.lower() in accepted_yes:
+            exit()  
 
 
 async def __wait_for_message_area(page: Page):
