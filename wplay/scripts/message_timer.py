@@ -1,3 +1,4 @@
+# region IMPORTS
 import time
 import random
 from pathlib import Path
@@ -8,6 +9,7 @@ from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+# endregion
 
 
 # region LOGGER
@@ -15,7 +17,7 @@ __logger = Logger(Path(__file__).name)
 # endregion
 
 
-async def msgTimer(target):
+async def message_timer(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
         try:

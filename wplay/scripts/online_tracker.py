@@ -6,7 +6,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import target_data
-from wplay.utils.helpers import data_folder_path
+from wplay.utils.helpers import tracking_folder_path
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 
@@ -27,9 +27,9 @@ async def tracker(target):
             target_name = await target_search.search_and_select_target_without_new_chat_button(page,target,hide_groups=True)
     else:
         target_name = await target_select.manual_select_target(page, hide_groups = True)
-    Path(data_folder_path / 'tracking_data').mkdir(parents = True, exist_ok = True)
-    status_file : str = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'w').close()
-    status_file : str = open(data_folder_path / 'tracking_data' / f'status_{target_name}.txt', 'a')
+    
+    status_file : str = open(tracking_folder_path / f'status_{target_name}.txt', 'w').close()
+    status_file : str = open(tracking_folder_path / f'status_{target_name}.txt', 'a')
 
     is_sound_enabled : bool = True
     last_status : str = 'offline'
@@ -63,4 +63,4 @@ async def tracker(target):
         __logger.error("User Pressed Ctrl+C")
     finally:
         status_file.close()
-        print(f'\nStatus file saved in: {str(data_folder_path/"tracking_data"/"status_")}{target_name}.txt')
+        print(f'\nStatus file saved in: {str(tracking_folder_path/"status_")}{target_name}.txt')

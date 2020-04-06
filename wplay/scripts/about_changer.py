@@ -15,7 +15,7 @@ load_dotenv()
 newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 
-async def change_about():
+async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     query: str = str(input("What's the news theme? : "))
 

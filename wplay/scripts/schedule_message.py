@@ -1,10 +1,21 @@
+# region IMPORTS
+from datetime import datetime
+from pathlib import Path
+import time
+import sys
+
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
-from datetime import datetime
-import time
-import sys
+from wplay.utils.Logger import Logger
+# endregion
+
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
+
 
 async def schedule_message(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()

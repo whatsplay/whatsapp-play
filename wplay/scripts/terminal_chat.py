@@ -1,3 +1,4 @@
+# region IMPORTS
 from pathlib import Path
 
 from wplay.utils import browser_config
@@ -6,6 +7,7 @@ from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+# endregion
 
 
 # region LOGGER

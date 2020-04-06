@@ -54,6 +54,8 @@ whatsapp_selectors_dict = {
 data_folder_path = Path.home() / 'wplay'
 logs_path = Path.home() / 'wplay' / 'logs'
 user_data_folder_path = Path.home() / 'wplay' / '.userData'
+profile_photos_path = Path.home() / 'wplay' / 'media' / 'profilePhotos'
+tracking_folder_path = Path.home() / 'wplay' / 'trackingData'
 # endregion
 
 # region MENU STYLES
@@ -72,6 +74,9 @@ menu_style = style_from_dict({
 def create_dirs():
     logs_path.mkdir(parents=True, exist_ok=True)
     user_data_folder_path.mkdir(parents=True, exist_ok=True)
+    profile_photos_path.mkdir(parents=True, exist_ok=True)
+    tracking_folder_path.mkdir(parents = True, exist_ok = True)
+
 
 def kill_child_processes(parent_pid, sig=signal.SIGTERM):
     try:

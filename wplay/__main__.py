@@ -130,10 +130,10 @@ async def get_and_match_args(parser):
         await terminal_chat.chat(args.target)
 
     elif args.message_blast:
-        await message_blast.blast(args.target)
+        await message_blast.message_blast(args.target)
 
     elif args.message_timer:
-        await message_timer.msgTimer(args.target)
+        await message_timer.message_timer(args.target)
 
     elif args.save_gdrive_chats:
         if args.target is None:
@@ -145,17 +145,17 @@ async def get_and_match_args(parser):
             bID : int = 0
         save_chat.runMain('pull', str(args.target), bID)
 
-    elif args.schedule:
+    elif args.schedule_message:
         await schedule_message.schedule_message(args.target)
 
     elif args.about_changer:
-        await about_changer.changeAbout()
+        await about_changer.about_changer()
 
     elif args.get_news:
         await get_news.get_news(args.target)
 
     elif args.get_profile_photos:
-        await get_media.get_all_media()
+        await get_media.get_profile_photos()
 
     # elif args.wlocation:
     #     loactionfinder.finder(args.target)

@@ -1,7 +1,18 @@
+# region IMPORTS
 import tkinter
 from tkinter import filedialog
+from pathlib import Path
+
 from telegram.ext import CommandHandler, Updater
 from wplay.utils.helpers import data_folder_path
+from wplay.utils.Logger import Logger
+# endregion
+
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
+
 
 status_file_path = None
 
