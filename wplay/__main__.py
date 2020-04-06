@@ -7,16 +7,16 @@ from pathlib import Path
 
 from pyfiglet import Figlet
 
-from wplay.scripts import online_tracker
-from wplay.scripts import message_blast
-from wplay.scripts import message_timer
-from wplay.scripts import terminal_chat
-from wplay.scripts import save_chat
-from wplay.scripts import telegram_bot
-from wplay.scripts import schedule_message
-from wplay.scripts import about_changer
-from wplay.scripts import get_news
-from wplay.scripts import get_media
+from wplay import online_tracker
+from wplay import message_blast
+from wplay import message_timer
+from wplay import terminal_chat
+from wplay import save_chat
+from wplay import telegram_bot
+from wplay import schedule_message
+from wplay import about_changer
+from wplay import get_news
+from wplay import get_media
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -46,63 +46,63 @@ def get_arg_parser():
 
     group = parser.add_mutually_exclusive_group(required = True)
     group.add_argument(
-        "-c",
+        "-wc",
         "--terminal-chat",
         action = "store_true",
         help = "chatting from command line")
 
     group.add_argument(
-        "-b",
+        "-wb",
         "--message-blast",
         action = "store_true",
         help = "message blast to a person")
 
     group.add_argument(
-        "-ti",
+        "-wti",
         "--message-timer",
         action = "store_true",
         help = "send messages from time to time")
 
     group.add_argument(
-        "-tr",
+        "-wt",
         "--online-tracker",
         action = "store_true",
         help = "track online status of person")
 
     group.add_argument(
-        "-tb",
+        "-wtb",
         "--telegram-bot",
         action = "store_true",
         help = "sends tracking status to telegram bot")
 
     group.add_argument(
-        "-sdc",
-        "--save-gdrive-chats",
+        "-pull",
+        "--pull",
         action = "store_true",
         help = "save all chats from Google Drive, target is necessary")
 
     group.add_argument(
-        "-sch",
+        "-ws",
         "--schedule-message",
         action = "store_true",
         help = "send the message at scheduled time")
 
     group.add_argument(
-        "-ac",
+        "-wa",
         "--about-changer",
         action = "store_true",
         help = "Changes the about section"
     )
 
     group.add_argument(
-        "-gn",
+        "-wgn",
         "--get-news",
         action = "store_true",
         help = "Get news in whatsapp group"
     )
 
     group.add_argument(
-        "-gpp",
+        "-wgp",
         "--get-profile-photos",
         action = "store_true",
         help = "Get profile photo of all your contacts"
