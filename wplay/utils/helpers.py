@@ -1,13 +1,17 @@
 # region IMPORTS
 from pathlib import Path
+
+import signal
+import psutil
 from whaaaaat import style_from_dict, Token
 # endregion
 
 # region WEBSITES
-websites = {'whatsapp': 'https://web.whatsapp.com/'}
+websites = {'whatsapp': 'https://web.whatsapp.com/',
+            'wpp_unknown': 'https://web.whatsapp.com/send?phone='}
 # endregion
 
-# region SELECTOR
+# region SELECTORS
 whatsapp_selectors_dict = {
     'login_area':'#app > div > div > div.landing-header',
 
@@ -50,6 +54,8 @@ whatsapp_selectors_dict = {
 data_folder_path = Path.home() / 'wplay'
 logs_path = Path.home() / 'wplay' / 'logs'
 user_data_folder_path = Path.home() / 'wplay' / '.userData'
+profile_photos_path = Path.home() / 'wplay' / 'media' / 'profilePhotos'
+tracking_folder_path = Path.home() / 'wplay' / 'trackingData'
 # endregion
 
 # region MENU STYLES
@@ -62,4 +68,23 @@ menu_style = style_from_dict({
     Token.Answer: '#5F819D bold',
     Token.Question: '',
 })
+# endregion
+
+# region FUNCTIONS
+def create_dirs():
+    logs_path.mkdir(parents=True, exist_ok=True)
+    user_data_folder_path.mkdir(parents=True, exist_ok=True)
+    profile_photos_path.mkdir(parents=True, exist_ok=True)
+    tracking_folder_path.mkdir(parents = True, exist_ok = True)
+
+
+def kill_child_processes(parent_pid, sig=signal.SIGTERM):
+    try:
+        parent = psutil.Process(parent_pid)
+    except psutil.NoSuchProcess:
+        return
+    children = parent.children(recursive=True)
+    print('Process Killed!')
+    for process in children:
+        process.send_signal(sig)
 # endregion

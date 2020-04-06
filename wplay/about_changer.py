@@ -1,19 +1,24 @@
-from wplay.utils.helpers import whatsapp_selectors_dict
-from wplay.utils import browser_config
-from newsapi.newsapi_client import NewsApiClient
+# region IMPORTS
 import time
 import os
 import sys
+
+from newsapi.newsapi_client import NewsApiClient
 import requests
 from dotenv import load_dotenv
 
-load_dotenv()
+from wplay.utils.helpers import whatsapp_selectors_dict
+from wplay.utils import browser_config
+# endregion
 
+load_dotenv()
 newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
-async def changeAbout():
+
+async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-    query = input("What's the news theme? : ")
+    query: str = str(input("What's the news theme? : "))
+
     await page.waitForSelector(
         whatsapp_selectors_dict['profile_photo_element'],
         visible=True
@@ -34,7 +39,8 @@ async def changeAbout():
         # News get updated every 15 minutes by newsapi.org
         # Added extra minute for buffer period
         # For free account : max limit is 500 request/day
-        time.sleep(16*60)
+        time.sleep(905)
+
 
 def fetch_news(query):
     top_headlines = newsapi.get_top_headlines(q=query, language='en')

@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="wplay",
-    version="8.0.1",
+    version="8.0.2",
     install_requires=["python-telegram-bot >= 11.1.0",
                       "datetime >= 4.3",
                       "playsound >= 1.2.2",
@@ -18,7 +18,9 @@ setup(
                       "requests>=2.22.0",
                       "psutil>=5.7.0",
                       "flake8>=3.7.9",
-                      "transitions>=0.7.2"
+                      "transitions>=0.7.2",
+                      "python-dotenv==0.12.0",
+                      "newsapi-python==0.2.6"
                       ],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
@@ -32,10 +34,13 @@ setup(
     download_url="https://pypi.org/project/wplay/",
     keywords=[
         "whatsapp",
-        "whatsapp-cli",
-        "whatsapp-chat",
-        "message-blast",
-        "message-timer",
+        "whatsapp cli",
+        "whatsapp chat",
+        "message blast",
+        "message timer",
+        "whatsapp terminal",
+        "whatsapp news",
+        "whatsapp schedule",
         "tracker",
         "online tracking",
         "save-chat"

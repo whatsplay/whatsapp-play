@@ -1,8 +1,5 @@
-#TODO all code: logging
-#TODO all code: add type annotations
 #TODO all code: return browser.close and use it instead use exit
 
-#TODO target_search: Add a complete mode and a simple mode to search targets
 #TODO target_search: Add a whaaaaaat menu
 #FIXME target_search: False positive group -> Groups name use the same div as contact status,
         so we need to verify if target name is in title, not in status. But, 
@@ -12,12 +9,3 @@
 
 
 #TODO io: Wait for the last message to be sent before closing the browser
-
-
-#BUG: session_manager: click 1, return, create new session -> the session is not saved
-
-
-
-
-
-
