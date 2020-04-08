@@ -52,10 +52,11 @@ whatsapp_selectors_dict = {
 
 # region PATHS
 data_folder_path = Path.home() / 'wplay'
-logs_path = Path.home() / 'wplay' / 'logs'
-user_data_folder_path = Path.home() / 'wplay' / '.userData'
-profile_photos_path = Path.home() / 'wplay' / 'media' / 'profilePhotos'
-tracking_folder_path = Path.home() / 'wplay' / 'trackingData'
+logs_path = data_folder_path / 'logs'
+log_file_path = logs_path / 'wplay.log'
+user_data_folder_path = data_folder_path / '.userData'
+profile_photos_path = data_folder_path / 'media' / 'profilePhotos'
+tracking_folder_path = data_folder_path / 'trackingData'
 # endregion
 
 # region MENU STYLES

@@ -23,11 +23,6 @@ from wplay.utils.helpers import kill_child_processes
 # endregion
 
 
-# region LOGGER
-__logger = Logger(Path(__file__).name)
-# endregion
-
-
 def print_logo(text_logo):
     figlet = Figlet(font='slant')
     print(figlet.renderText(text_logo))
@@ -169,14 +164,13 @@ async def main():
         await get_and_match_args(parser)
         sys.exit(0)
     except KeyboardInterrupt:
-        __logger.error('User Pressed Ctrl+C')
         sys.exit(0)
 
 
 try:
     asyncio.get_event_loop().run_until_complete(main())
 except KeyboardInterrupt:
-        __logger.error('User Pressed Ctrl+C')
+        pass
 except AssertionError:
     try:
         for task in asyncio.all_tasks():
