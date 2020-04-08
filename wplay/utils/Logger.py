@@ -1,11 +1,15 @@
 # region IMPORTS
 import logging
 from pathlib import Path
-from wplay.utils.helpers import logs_path
+from wplay.utils.helpers import log_file_path, logs_path
 # endregion
 
 
 class Logger:
+    if not (log_file_path).exists():
+        logs_path.mkdir(parents=True, exist_ok=True)
+        open(log_file_path, 'w').close()
+
     def __init__(self, script_name: str, level : int = logging.WARNING):
         self.logger = logging.getLogger(script_name)
         self.level = level
@@ -13,7 +17,7 @@ class Logger:
         
         if not self.logger.handlers:
             # Create handlers
-            file_handler = logging.FileHandler(logs_path/'wplay.log')
+            file_handler = logging.FileHandler(log_file_path)
             console = logging.StreamHandler()
             file_handler.setLevel(self.level)
             console.setLevel(self.level)
