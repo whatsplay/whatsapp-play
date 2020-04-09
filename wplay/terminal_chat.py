@@ -7,6 +7,8 @@ from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+import keyboard
+from colorama import Fore, Style
 # endregion
 
 
@@ -31,22 +33,56 @@ async def chat(target):
 
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
+    print("PRESS 'SPACE BAR' FOR SENDING MESSAGES AND PRESS 'q' FOR EXIT\n")
     while True:
-        message : list[str] = io.ask_user_for_message_breakline_mode()
+        await getMessages(page, target)
 
-        if '...' in message:
-            message.remove('...')
-            await io.send_message(page, message)
-            target = input("\n\nNew Target Name: ")
-            if target is not None:
-                await target_search.search_and_select_target(page, target)
-            else:
-                await target_select.manual_select_target(page)
-            message = io.ask_user_for_message_breakline_mode()
+        try:
+            if keyboard.is_pressed('q'):
+                break
+            if keyboard.is_pressed('space'):
+                message = io.ask_user_for_message_breakline_mode()
+                if '...' in message:
+                    message.remove('...')
+                    await io.send_message(page, message)
+                    target = input("\n\nNew Target Name: ")
+                    if target is not None:
+                        await target_search.search_and_select_target(page, target)
+                    else:
+                        await target_select.manual_select_target(page)
+                    message = io.ask_user_for_message_breakline_mode()       
 
-        #File Share:
-        if '#_FILE' in message:
-            message.remove('#_FILE')
-            await io.send_file(page)
+                #File Share:
+                if '#_FILE' in message:
+                    message.remove('#_FILE')
+                    await io.send_file(page)
+                await io.send_message(page, message)
+        except:
+            pass
 
-        await io.send_message(page, message)
+lastOutgoingMessage = ''
+
+async def getMessages(pg, tg):
+    selector = "#main > div > div > div > div > div > div > div > div"
+    selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
+    try:
+        # Getting all the messages of the chat
+        await pg.waitForSelector(selector)
+        values = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                    .map(element => element.textContent)''')
+        sender = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+                                                    .map(element => element.getAttribute("data-pre-plain-text"))''')
+        lastMessage = values[-1]
+        last_message_sender = sender[-1]
+        last_message_time = sender[-1].split(',')
+        last_message_time = last_message_time[0].replace('[', '')
+        lastMessage = lastMessage.replace(last_message_time, '')
+    except Exception as e:
+        print(e)
+        lastMessage = ""
+    global lastOutgoingMessage
+    if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
+        print(Fore.GREEN + f"{tg}-", end="")
+        print(lastMessage, end="")
+        print(Style.RESET_ALL) 
+    lastOutgoingMessage = lastMessage
