@@ -46,16 +46,7 @@ def GetMessage() -> List[str]:
             message.pop(i)
             break
         i += 1
-    # message=[
-    #     r"*Please Ignore It*",   
-    #     "This is sent due to testing some application.\n",
-    #     "Thanks for the co-operation.",
-    #     ":)"
-    # ]
     return message
-
-
-
 
 
 async def broadcast():
