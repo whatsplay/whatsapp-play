@@ -26,7 +26,7 @@ def ask_user_for_message_breakline_mode() -> List[str]:
     print("Write your message (Enter key to breakline)('.' alone to send):")
     while True:
         message.append(str(input()))
-        if message[i] == '.':
+        if message[i] == '.' :
             message.pop(i)
             break
         elif message[i] == '...' or message[i] == '#_FILE':
