@@ -105,7 +105,7 @@ def get_arg_parser():
     )
 
     group.add_argument(
-        "-brd",
+        "-wbc",
         "--broadcast",
         action = "store_true",
         help = "Broadcast message"
