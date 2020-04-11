@@ -24,13 +24,13 @@ def ProcessNumbers():
     Tk().withdraw()
     filename = askopenfile(
         initialdir = data_folder_path / 'tracking_data',
-        title = 'Choose a text file cintaining the number.',
+        title = 'Choose a text file containing the number.',
         filetypes = [("text files", "*.txt")],
         mode="r"
     )
     numbers = filename.readlines()
-    for i in range(len(numbers)):
-        number = numbers[i].strip("\n+")
+    for i,number in enumerate(numbers):
+        number = number.strip("\n+")
         if len(number)==10 :
             number = "91"+number
         numbers[i]=number
@@ -66,5 +66,7 @@ async def broadcast():
             continue
         await io.send_message(page,message)
     if FailureReport != [] :
-        for r in report:
-            print(r)
+        for i,r in enumerate(FailureReport):
+            print(i,r)
+    else:
+        print("Mesaage is broadcasted to all number succesfully :) \n")
