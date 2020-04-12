@@ -126,7 +126,8 @@ async def search_and_select_target_without_new_chat_button(page: Page, target: s
     contact_name_index_tuple_list = await __get_contacts_matched_with_query(chats_messages_groups_elements_list)
     group_name_index_tuple_list = await __get_groups_matched_with_query(chats_messages_groups_elements_list,hide_groups)
     await __get_number_of_filtered_contacts(page, contact_name_index_tuple_list, chats_messages_groups_elements_list)
-    target_tuple = (contact_name_index_tuple_list,group_name_index_tuple_list)
+    # target_tuple = (contact_name_index_tuple_list,group_name_index_tuple_list)
+    target_tuple = __get_target_tuple(contact_name_index_tuple_list,group_name_index_tuple_list)
     __print_target_tuple(target_tuple)
     target_index_chosen = __ask_user_to_choose_the_filtered_target(target_tuple)
 
@@ -546,6 +547,10 @@ def __check_group_list(target: str, group_list_unchecked):
 # the first index is the contacts and the second is the groups
 def __get_target_tuple(contact_tuple, group_tuple):
     target_tuple = (contact_tuple, group_tuple)
+    if len(target_tuple[0]) is 0 and len(target_tuple[1]) is 0:
+        print('The target does not exist, please enter a valid target name')
+        __logger.error('Invalid target name entered')
+        exit()
     return target_tuple
 
 
