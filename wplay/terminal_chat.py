@@ -29,17 +29,15 @@ async def chat(target):
             await page.reload()
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
-        await target_select.manual_select_target(page)
+        target = await target_select.manual_select_target(page)
 
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
-    print("PRESS 'SPACE BAR' FOR SENDING MESSAGES AND PRESS 'q' FOR EXIT\n")
+    print("PRESS 'SPACE BAR' FOR SENDING MESSAGES\n")
     while True:
         await getMessages(page, target)
 
         try:
-            if keyboard.is_pressed('q'):
-                break
             if keyboard.is_pressed('space'):
                 message = io.ask_user_for_message_breakline_mode()
                 if '...' in message:

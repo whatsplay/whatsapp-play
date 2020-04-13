@@ -20,7 +20,8 @@ setup(
                       "flake8>=3.7.9",
                       "transitions>=0.7.2",
                       "python-dotenv==0.12.0",
-                      "newsapi-python==0.2.6"
+                      "newsapi-python==0.2.6",
+                     "keyboard==0.13.5",
                       ],
     packages=find_packages(),
     description="command line software to play with your WhatsApp",
