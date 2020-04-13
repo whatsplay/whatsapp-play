@@ -7,7 +7,7 @@ on terminal
 import unittest
 import psutil
 import test_func
-from wplay.utils import kill_process
+from wplay.utils.helpers import kill_child_processes
 #endregion
 
 
@@ -18,7 +18,7 @@ class Testkill(unittest.TestCase):
         sproc = test_func.get_test_subprocess()
         test_pid = sproc.pid
         p = psutil.Process(test_pid)
-        kill_process.kill_child_processes(test_pid)
+        kill_child_processes(test_pid)
         p.wait()
         self.assertFalse(psutil.pid_exists(test_pid))
 
