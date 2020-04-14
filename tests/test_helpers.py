@@ -1,7 +1,16 @@
+'''
+To run tests run
+python3 -m unittest discover -s tests
+on terminal
+'''
+#region imports
 import unittest
 from os import path
 from wplay.utils.helpers import log_file_path, logs_path, data_folder_path, user_data_folder_path, profile_photos_path, tracking_folder_path
+#endregion
 
+
+#region class
 class testPath(unittest.TestCase):
 
     def test_paths_exist(self):
@@ -14,3 +23,4 @@ class testPath(unittest.TestCase):
 
 if __name__ == '__main__':
 	unittest.main()
+#endregion
