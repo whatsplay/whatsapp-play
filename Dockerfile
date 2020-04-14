@@ -13,7 +13,11 @@ RUN apk add build-base
 RUN apk add make
 RUN apk add gcc musl-dev libffi-dev openssl-dev
 RUN pip install cryptography==2.9.0
-RUN apk add --no-cache libffi-dev build-base py3-pip python3-dev && pip install cffi
+RUN apk add --no-cache libffi-dev
+RUN apk add build-base 
+RUN apk add py3-pip 
+RUN apk add python3-dev
+RUN pip install cffi==1.14.0
 RUN pip install -r requirements.txt
 
 #ENTRYPOINT echo "Hello, welcome to whatsapp-play"
