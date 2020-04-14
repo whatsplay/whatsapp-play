@@ -25,7 +25,8 @@ newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 async def get_news(target):
     def fetch_news(country_code):
-        headlines = newsapi.get_top_headlines(country=country_code, language='en')
+        headlines = newsapi.get_top_headlines(country=country_code,
+                                              language='en')
         url = headlines['articles'][0]['url']
         title = headlines['articles'][0]['title']
         return title, url
@@ -39,7 +40,7 @@ async def get_news(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
-    
+
     country = input("Enter your country code (ex: us or in): ")
     while True:
         try:
@@ -48,4 +49,4 @@ async def get_news(target):
         except Exception as e:
             print("Unable to get the news", e)
         await io.send_message(page, news_)
-        time.sleep(900) # Sends news in every 15 min
+        time.sleep(900)  # Sends news in every 15 min

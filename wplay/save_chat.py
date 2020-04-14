@@ -1,6 +1,6 @@
 '''
-This code is copied by https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
-
+This code is copied by
+https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
 
 EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
@@ -23,8 +23,13 @@ __logger = Logger(Path(__file__).name)
 
 
 def getGoogleAccountTokenFromAuth():
-    payload : dict = {'Email': gmail, 'Passwd': passw, 'app': client_pkg,
-               'client_sig': client_sig, 'parentAndroidId': devid}
+    payload: dict = {
+            'Email': gmail,
+            'Passwd': passw,
+            'app': client_pkg,
+            'client_sig': client_sig,
+            'parentAndroidId': devid
+            }
     request = requests.post(
         'https://android.clients.google.com/auth', data=payload)
     token = re.search('Token=(.*?)\n', request.text)
@@ -35,7 +40,7 @@ def getGoogleAccountTokenFromAuth():
 
 
 def getGoogleDriveToken(token):
-    payload : dict = {
+    payload: dict = {
         'Token': token,
         'app': pkg,
         'client_sig': sig,
@@ -54,8 +59,8 @@ def getGoogleDriveToken(token):
 
 
 def rawGoogleDriveRequest(bearer, url):
-    headers : dict = {'Authorization': 'Bearer ' + bearer}
-    request : dict = requests.get(url, headers=headers)
+    headers: dict = {'Authorization': 'Bearer ' + bearer}
+    request: dict = requests.get(url, headers=headers)
     return request.text
 
 
@@ -64,7 +69,7 @@ def downloadFileGoogleDrive(bearer, url, local):
         os.makedirs(os.path.dirname(local))
     if os.path.isfile(local):
         os.remove(local)
-    headers : dict = {'Authorization': 'Bearer ' + bearer}
+    headers: dict = {'Authorization': 'Bearer ' + bearer}
     request = requests.get(url, headers=headers, stream=True)
     request.raw.decode_content = True
     if request.status_code == 200:
@@ -79,7 +84,7 @@ def gDriveFileMap():
     data = rawGoogleDriveRequest(
         bearer, 'https://www.googleapis.com/drive/v2/files')
     jres = json.loads(data)
-    backups = [] #  type : list
+    backups = []  # type : list
     for result in jres['items']:
         if result['title'] == 'gdrive_file_map':
             backups.append((result['description'],
@@ -188,7 +193,7 @@ def runMain(mode, asset, bID):
             r = target[2]
         except TypeError:
             quit('Unable to locate: "' + asset + '".')
-        local = 'WhatsApp'+ os.path.sep + f.replace("/", os.path.sep)
+        local = 'WhatsApp' + os.path.sep + f.replace("/", os.path.sep)
         if os.path.isfile(local) and 'database' not in local.lower():
             quit('Skipped: "' + local + '".')
         else:

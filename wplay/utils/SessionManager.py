@@ -101,9 +101,9 @@ class SessionManager(object):
                 'default': True
             }
         ]
-    
+
     def get_answer_menu(self):
-        self.answers_menu = prompt(self.questions_menu, style=menu_style)  
+        self.answers_menu = prompt(self.questions_menu, style=menu_style)
 
     def verify_answers(self):
         # Handle when person choose 'Restore a session'
@@ -120,7 +120,6 @@ class SessionManager(object):
             self.username = self.answers_menu['save']
             self.save_session = True
             return self.__verify_if_session_file_exists()
-            
 
         # Handle when person choose 'Continue without saving'
         elif self.answers_menu['user_options'] == self.user_options['continue']:
@@ -159,7 +158,8 @@ class SessionManager(object):
         done = False
         obj = SessionManager()
         while(not done):
-            if(obj.questions_menu != None): obj.reset_fields()
+            if(obj.questions_menu != None):
+                obj.reset_fields()
             machine = Machine(obj, states, transitions=transitions, initial='start')
             obj.get_user_data_filenames()
             obj.prepare_questions()

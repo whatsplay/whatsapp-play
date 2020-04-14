@@ -7,8 +7,13 @@ from wplay.pyppeteerUtils import pyppeteerConfig as pypConfig
 from wplay.pyppeteerUtils import pyppeteerSearch as pypSearch
 
 async def my_script(target):
-    pages, browser = wait pyp.configure_browser_and_load_whatsapp(pypConfig.websites['whatsapp'])
-    await pypSearch.search_for_target_and_get_ready_for_conversation(pages[0], target)
+    pages, browser = wait pyp.configure_browser_and_load_whatsapp(
+    pypConfig.websites['whatsapp']
+    )
+    await pypSearch.search_for_target_and_get_ready_for_conversation(
+    pages[0],
+    target
+    )
 
     message = pypSearch.ask_user_for_message_breakline_mode()
     await pypSearch.send_message(pages[0], message)
@@ -44,7 +49,7 @@ __logger = Logger(Path(__file__).name)
 async def configure_browser_and_load_whatsapp() -> (Page, Browser):
     """
     Configure browser, configure the first page and open whatsapp website.
-    
+
     Returns:
         Page -- return the first page, with whatsapp open
         Browser -- return the browser object
@@ -98,6 +103,7 @@ def exit_if_wrong_url(page: Page, browser: Browser, url_to_check: str):
 # BUG:(Pyppeteer) The communication with Chromium are disconnected after 20s.
 def __patch_pyppeteer():
     __logger.debug("Patching Pyppeteer.")
+
     class PatchedConnection(connection.Connection):
         def __init__(self, *args: Any, **kwargs: Any) -> None:
             super().__init__(*args, **kwargs)
