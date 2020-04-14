@@ -12,11 +12,11 @@ WORKDIR /whatsapp-play
 RUN apk add build-base
 RUN apk add make
 RUN apk add gcc musl-dev libffi-dev openssl-dev
-RUN pip install cryptography
+RUN pip install cryptography==2.9.0
 RUN apk add --no-cache libffi-dev build-base py3-pip python3-dev && pip install cffi
 RUN pip install -r requirements.txt
 
-ENTRYPOINT echo "Hello, welcome to whatsapp-play"
+#ENTRYPOINT echo "Hello, welcome to whatsapp-play"
 ENTRYPOINT ["python3 -m wplay -h"]
 
 CMD [ "python"]
