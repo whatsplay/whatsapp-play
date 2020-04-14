@@ -1,4 +1,4 @@
-#Region IMPORTS
+# region IMPORTS
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 from pathlib import Path
@@ -10,7 +10,7 @@ from wplay.utils import io
 from typing import List
 from wplay.utils.helpers import data_folder_path
 from wplay.utils.Logger import Logger
-#End Region
+# endregion
 
 # region LOGGER
 __logger = Logger(Path(__file__).name)
@@ -21,40 +21,29 @@ class InvalidNumber(Exception):
 
 
 def ProcessNumbers():
+    __logger.info("Processing numbers.")
+    print("Choose a text file containing full numbers with country code, one number per line.")
     Tk().withdraw()
     filename = askopenfile(
-        initialdir = data_folder_path / 'tracking_data',
-        title = 'Choose a text file containing the number.',
+        initialdir = data_folder_path,
+        title = 'Choose a text file with numbers.',
         filetypes = [("text files", "*.txt")],
         mode="r"
     )
     numbers = filename.readlines()
-    for i,number in enumerate(numbers):
-        number = number.strip("\n+")
-        if len(number)==10 :
-            number = "91"+number
+    for i in range(len(numbers)):
+        number = numbers[i].strip("\n+")
         numbers[i]=number
     return numbers
-
-def GetMessage() -> List[str]:
-    message = list()
-    i = 0
-    print("Write your message (Enter key to breakline)('.' alone to complete your message):")
-    while True:
-        message.append(str(input()))
-        if message[i] == '.':
-            message.pop(i)
-            break
-        i += 1
-    return message
 
 
 async def broadcast():
     __logger.info("Broadcast message.")
-    numbers = ProcessNumbers()
-    message : list[str] = GetMessage()
-    FailureReport = []
+    FailureReport = list()
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    numbers = ProcessNumbers()
+    message : List[str] = io.ask_user_for_message_breakline_mode()
+
     for number in numbers:
         try :
             if not await number_valid(page,number):
@@ -65,8 +54,12 @@ async def broadcast():
             FailureReport.append(report)
             continue
         await io.send_message(page,message)
-    if FailureReport != [] :
+
+    if FailureReport != []:
         for i,r in enumerate(FailureReport):
             print(i,r)
+        for r in report:
+            __logger.error(r)
     else:
-        print("Mesaage is broadcasted to all number succesfully :) \n")
+        __logger.info("Messages broadcasted successfully!")
+        print("Messages broadcasted successfully!")
