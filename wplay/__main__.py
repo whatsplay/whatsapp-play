@@ -11,6 +11,7 @@ from wplay import online_tracker
 from wplay import message_blast
 from wplay import message_timer
 from wplay import terminal_chat
+from wplay import broadcast_message
 from wplay import save_chat
 from wplay import telegram_bot
 from wplay import schedule_message
@@ -101,6 +102,13 @@ def get_arg_parser():
         action="store_true",
         help="Get profile photo of all your contacts")
 
+    group.add_argument(
+        "-wbc",
+        "--broadcast",
+        action = "store_true",
+        help = "Broadcast message"
+    )
+
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
@@ -121,6 +129,9 @@ async def get_and_match_args(parser):
 
     elif args.terminal_chat:
         await terminal_chat.chat(args.target)
+
+    elif args.broadcast:
+        await broadcast_message.broadcast()
 
     elif args.message_blast:
         await message_blast.message_blast(args.target)
