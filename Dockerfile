@@ -1,8 +1,7 @@
-'''
-To build docker image from this file run
-docker build .
-on terminal
-'''
+#To build docker image from this file run
+#docker build .
+#on terminal
+
 FROM python:3.6-alpine
 #LABEL MAINTAINER
 
