@@ -30,84 +30,82 @@ def print_logo(text_logo):
 
 # parse positional and optional arguments
 def get_arg_parser():
-    parser = argparse.ArgumentParser(description = 'WhatsApp-play')
+    parser = argparse.ArgumentParser(description='WhatsApp-play')
     parser.add_argument(
         "target",
         metavar="TARGET",
         type=str,
         default=None,
         nargs="?",
-        help="contact or group name, optional , target can be selected manually except for saving chat")
+        help="contact or group name, optional,
+              target can be selected manually except for saving chat")
 
-    group = parser.add_mutually_exclusive_group(required = True)
+    group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
         "-wc",
         "--terminal-chat",
-        action = "store_true",
-        help = "chatting from command line")
+        action="store_true",
+        help="chatting from command line")
 
     group.add_argument(
         "-wb",
         "--message-blast",
-        action = "store_true",
-        help = "message blast to a person")
+        action="store_true",
+        help="message blast to a person")
 
     group.add_argument(
         "-wti",
         "--message-timer",
-        action = "store_true",
-        help = "send messages from time to time")
+        action="store_true",
+        help="send messages from time to time")
 
     group.add_argument(
         "-wt",
         "--online-tracker",
-        action = "store_true",
-        help = "track online status of person")
+        action="store_true",
+        help="track online status of person")
 
     group.add_argument(
         "-wtb",
         "--telegram-bot",
-        action = "store_true",
-        help = "sends tracking status to telegram bot")
+        action="store_true",
+        help="sends tracking status to telegram bot")
 
     group.add_argument(
         "-pull",
         "--pull",
-        action = "store_true",
-        help = "save all chats from Google Drive, target is necessary")
+        action="store_true",
+        help="save all chats from Google Drive, target is necessary")
 
     group.add_argument(
         "-ws",
         "--schedule-message",
-        action = "store_true",
-        help = "send the message at scheduled time")
+        action="store_true",
+        help="send the message at scheduled time")
 
     group.add_argument(
         "-wa",
         "--about-changer",
-        action = "store_true",
-        help = "Changes the about section"
-    )
+        action="store_true",
+        help="Changes the about section")
 
     group.add_argument(
         "-wgn",
         "--get-news",
-        action = "store_true",
-        help = "Get news in whatsapp group"
-    )
+        action="store_true",
+        help="Get news in whatsapp group")
 
     group.add_argument(
         "-wgp",
         "--get-profile-photos",
-        action = "store_true",
-        help = "Get profile photo of all your contacts"
-    )
+        action="store_true",
+        help="Get profile photo of all your contacts")
 
     # group.add_argument(
     #     "-wl",
     #     "--wlocation",
-    #     action = "store_true",
-    #     help = "finds the location of the person")
+    #     action="store_true",
+    #     help="finds the location of the person")
 
     return parser
 
@@ -135,9 +133,9 @@ async def get_and_match_args(parser):
             parser.print_help()
             parser.exit()
         try:
-            bID : int = int(sys.argv[3])
+            bID: int = int(sys.argv[3])
         except (IndexError, ValueError):
-            bID : int = 0
+            bID: int = 0
         save_chat.runMain('pull', str(args.target), bID)
 
     elif args.schedule_message:
@@ -170,7 +168,7 @@ async def main():
 try:
     asyncio.get_event_loop().run_until_complete(main())
 except KeyboardInterrupt:
-        pass
+    pass
 except AssertionError:
     try:
         for task in asyncio.all_tasks():
