@@ -30,6 +30,7 @@ from wplay.utils.helpers import whatsapp_selectors_dict, websites
 from wplay.utils.browser_config import load_website
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+import asyncio
 # endregion
 
 
@@ -143,10 +144,18 @@ async def search_and_select_target_without_new_chat_button(page: Page, target: s
 
 
 # region SEARCH AND SELECT TARGET
+async def accept_dialog(dialog):
+    await dialog.accept()
+
 async def __try_load_contact_by_number(page: Page, target: str) -> bool:
     try:
         if int(target):
             __logger.debug("Loading contact by number.")
+
+            page.on(
+                'dialog',
+                lambda dialog: asyncio.ensure_future(accept_dialog(dialog))
+            )
             await load_website(page, f"{websites['wpp_unknown']}{target}")
             return True
     except Exception as e:
@@ -547,7 +556,7 @@ def __check_group_list(target: str, group_list_unchecked):
 def __get_target_tuple(contact_tuple, group_tuple):
     target_tuple = (contact_tuple, group_tuple)
     # check to see if the target exits in the user's address book
-    if len(target_tuple[0]) is 0 and len(target_tuple[1]) is 0:
+    if len(target_tuple[0]) == 0 and len(target_tuple[1]) == 0:
         print('The target does not exist, please enter a valid target name')
         __logger.error('Invalid target name entered')
         exit()
