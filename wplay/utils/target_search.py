@@ -145,7 +145,11 @@ async def search_and_select_target_without_new_chat_button(page: Page, target: s
 
 # region SEARCH AND SELECT TARGET
 async def accept_dialog(dialog):
-    await dialog.accept()
+    try:
+        await dialog.accept()
+    except:
+        pass
+
 
 async def __try_load_contact_by_number(page: Page, target: str) -> bool:
     try:
