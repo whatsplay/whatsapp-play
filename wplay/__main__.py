@@ -50,7 +50,7 @@ def get_arg_parser():
         help="chatting from command line")
 
     group.add_argument(
-        "-ws",
+        "-wms",
         "--message-service",
         action="store_true",
         help="send messages from a JSON file")
