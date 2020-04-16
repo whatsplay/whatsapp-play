@@ -52,15 +52,12 @@ class MessageStack():
 
     def get_message(
             self,
-            from_file_path: Path = helpers.messages_json_path,
-            move_to_file_path: Path = helpers.open_messages_json_path) -> Iterator[dict]:
+            from_file_path: Path = helpers.messages_json_path) -> Iterator[dict]:
         """
-        Yield a message from a file and move the message to another file. 
-        Normally you move from messages_path to open_messages_path.
+        Yield a message from a file. 
 
         Arguments:
             from_file_path {Path} -- open_messages_path or messages_path from helpers
-            move_to_file_path {Path} -- open_messages_json_path or messages_json_path from helpers
 
         Exception:
             raise StopIteration, json.JSONDecodeError, KeyError if file is empty, or the iteration stopped or the key isn't finded.
@@ -75,8 +72,7 @@ class MessageStack():
 
     def get_all_messages(
             self,
-            from_file_path: Path = helpers.messages_json_path,
-            move_to_file_path: Path = helpers.open_messages_json_path) -> List[dict]:
+            from_file_path: Path = helpers.messages_json_path) -> List[dict]:
         self.__ensure_valid_json(from_file_path)
         with open(from_file_path) as json_file:
             data = json.load(json_file)
