@@ -38,8 +38,8 @@ def get_arg_parser():
         type=str,
         default=None,
         nargs="?",
-        help="contact or group name, optional,
-              target can be selected manually except for saving chat")
+        help="""contact or group name, optional,
+              target can be selected manually except for saving chat""")
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
