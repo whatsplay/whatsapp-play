@@ -58,6 +58,9 @@ test_log_file_path = logs_path / 'testwplay.log'
 user_data_folder_path = data_folder_path / '.userData'
 profile_photos_path = data_folder_path / 'media' / 'profilePhotos'
 tracking_folder_path = data_folder_path / 'trackingData'
+messages_json_folder_path = data_folder_path / 'messagesJSON' / 'system'
+messages_json_path = data_folder_path / 'messagesJSON' / 'messages.json'
+open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' /'openMessages.json'
 # endregion
 
 # region MENU STYLES
@@ -79,6 +82,7 @@ def create_dirs():
     user_data_folder_path.mkdir(parents=True, exist_ok=True)
     profile_photos_path.mkdir(parents=True, exist_ok=True)
     tracking_folder_path.mkdir(parents = True, exist_ok = True)
+    messages_json_folder_path.mkdir(parents = True, exist_ok = True)
 
 
 def kill_child_processes(parent_pid, sig=signal.SIGTERM):
