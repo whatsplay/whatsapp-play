@@ -4,8 +4,7 @@ from tkinter.filedialog import askopenfile
 from pathlib import Path
 
 from wplay.utils import browser_config
-from wplay.utils.target_search import search_and_select_target as find_target
-from wplay.utils.target_search import __try_load_contact_by_number as number_valid
+from wplay.utils.target_search import search_target_by_number
 from wplay.utils import io
 from typing import List
 from wplay.utils.helpers import data_folder_path
@@ -45,21 +44,8 @@ async def broadcast():
     message : List[str] = io.ask_user_for_message_breakline_mode()
 
     for number in numbers:
-        try :
-            if not await number_valid(page,number):
-                raise InvalidNumber
-            await find_target(page, number)
-        except InvalidNumber as e:
-            report = number + "\t" + e.message + "\n"
-            FailureReport.append(report)
-            continue
-        await io.send_message(page,message)
+        if await search_target_by_number(page, number):
+            await io.send_message(page,message)
 
-    if FailureReport != []:
-        for i,r in enumerate(FailureReport):
-            print(i,r)
-        for r in report:
-            __logger.error(r)
-    else:
-        __logger.info("Messages broadcasted successfully!")
-        print("Messages broadcasted successfully!")
+    __logger.info("Messages broadcasted successfully!")
+    print("Messages broadcasted successfully!")

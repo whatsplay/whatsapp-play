@@ -5,7 +5,7 @@ import time
 import json
 
 from wplay.utils import browser_config
-from wplay.utils import target_search
+from wplay.utils.target_search import search_target_by_number
 from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils import helpers
@@ -16,7 +16,8 @@ from wplay.utils.MessageStack import MessageStack
 
 
 # region LOGGER
-__logger = Logger(Path(__file__).name)
+import logging
+__logger = Logger(Path(__file__).name, logging.DEBUG)
 # endregion
 
 
@@ -65,15 +66,8 @@ async def message_service():
                     current_msg['uuid'])
 
                 try:
-                    try:
-                        await target_search.search_and_select_target(page, current_msg['number'])
-                    except Exception as e:
-                        __logger.debug("Error searching the target, ensure that is a full number with country code. Message Deleted")
-                        message_stack.remove_message(
-                            current_msg['uuid'], helpers.open_messages_json_path)
-                    
-                    await io.send_message(page, current_msg['message'])
-
+                    if await search_target_by_number(page, current_msg['number']):
+                        await io.send_message(page, current_msg['message'])
                     message_stack.remove_message(
                         current_msg['uuid'], helpers.open_messages_json_path)
                 except ValueError:
@@ -85,7 +79,6 @@ async def message_service():
                     __logger.error(f'Error handling and sending the message: {str(e)}')
                     MessageStack().move_message(helpers.open_messages_json_path,
                                                 helpers.messages_json_path, current_msg['uuid'])
-
             except (StopIteration, json.JSONDecodeError):
                 # if there are no messages to catch we will have this 'Warning', will try again after a time
                 time.sleep(1)
