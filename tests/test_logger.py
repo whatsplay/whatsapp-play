@@ -8,7 +8,6 @@ import unittest
 from os import path
 from wplay.utils.Logger import Logger
 from pathlib import Path
-from wplay.utils.helpers import test_log_file_path
 #endregion
 
 
@@ -24,7 +23,7 @@ class CaptureLogsExample(unittest.TestCase):
         """Verify logs using built-in self.assertLogs()."""
         logger.error("Testing logg class")
         self.assertTrue(logger, 'test_logger.py - ERROR - Testing logg class')
-    
+        
 if __name__ == '__main__':
 	unittest.main()
 #endregion
