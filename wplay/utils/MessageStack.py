@@ -11,7 +11,9 @@ class MessageStack():
     def __init__(self):
         self.logger = Logger(Path(__file__).name)
         self.__create_json_file(helpers.messages_json_path)
+        self.__ensure_valid_json(helpers.messages_json_path)
         self.__create_json_file(helpers.open_messages_json_path)
+        self.__ensure_valid_json(helpers.open_messages_json_path)
 
     def __create_json_file(self, file_path: Path):
         if not file_path.is_file():
