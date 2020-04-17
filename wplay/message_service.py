@@ -29,12 +29,12 @@ inside the file "messages.json" located at user/wplay/messagesJSON folder.
         {
             "uuid": "33bf7c667f8011ea96971c3947562893",
             "number": "5562999999999",
-            "message": "Hello World"
+            "message": "*Bold Hello World*"
         },
         {
             "uuid": "46ca6d284f8058ee89354e2987862869",
             "number": "5562888888888",
-            "message": "Hello!!!"
+            "message": ["Hello!!!","Multi-line"]
         }
     ]
 }
@@ -43,6 +43,8 @@ inside the file "messages.json" located at user/wplay/messagesJSON folder.
 
 async def message_service():
     __logger.info("Message Service On.")
+    print("Message Service is ON, press CTRL+C to stop.")
+    print("Listening for messages in file 'messages.json' inside user/wplay/messagesJSON folder.")
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
     # Initialize a instance of MessageStack
