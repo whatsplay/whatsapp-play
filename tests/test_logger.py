@@ -20,14 +20,11 @@ logger = Logger(Path(__file__).name)
 #region class for Logger function
 class CaptureLogsExample(unittest.TestCase):
 
-    def test_log_file_exists(self):
-        self.assertTrue(path.exists(test_log_file_path))
-
     def test_assert_logs(self):
         """Verify logs using built-in self.assertLogs()."""
         logger.error("Testing logg class")
         self.assertTrue(logger, 'test_logger.py - ERROR - Testing logg class')
-
+    
 if __name__ == '__main__':
 	unittest.main()
 #endregion
