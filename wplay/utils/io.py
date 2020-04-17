@@ -53,6 +53,9 @@ async def send_file(page):
     __logger.info("Sending File")
     await page.click(whatsapp_selectors_dict['attach_file'])
     await page.click(whatsapp_selectors_dict['choose_file'])
-    await page.waitForSelector(whatsapp_selectors_dict['send_file'],timeout=30000)
+    await page.waitForSelector(
+            whatsapp_selectors_dict['send_file'],
+            timeout=30000
+            )
     await page.click(whatsapp_selectors_dict['send_file'])
 # endregion

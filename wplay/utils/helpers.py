@@ -13,19 +13,19 @@ websites = {'whatsapp': 'https://web.whatsapp.com/',
 
 # region SELECTORS
 whatsapp_selectors_dict = {
-    'login_area':'#app > div > div > div.landing-header',
+    'login_area': '#app > div > div > div.landing-header',
 
     'new_chat_button': '#side > header div[role="button"] span[data-icon="chat"]',
     'search_contact_input_new_chat': '#app > div > div > div > div > span > div > span > div > div > div > label > div > div',
     'contact_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span > span[title][dir]',
     'group_list_elements_filtered_new_chat': '#app > div > div span > div > span > div div > div div > div div > span[title][dir]',
 
-    'search_contact_input':'#side > div > div > label > div > div',
-    'chat_list_elements_filtered':'#pane-side > div > div > div > div > div > div > div > div > div > span > span[title][dir]',
+    'search_contact_input': '#side > div > div > label > div > div',
+    'chat_list_elements_filtered': '#pane-side > div > div > div > div > div > div > div > div > div > span > span[title][dir]',
 
     'target_focused_title': '#main > header div > div > span[title]',
     'message_area': '#main > footer div.selectable-text[contenteditable]',
-    'last_seen':'#main > header > div > div > span[title]',
+    'last_seen': '#main > header > div > div > span[title]',
     'target_chat_header': '#main > header',
     'contact_info_page_elements': '#app > div > div > div:nth-child(2) > div:last-of-type > span > div > span > div > div > div:first-child > div',
     'contact_info_page_group_element_heading': '#app > div > div > div:nth-child(2) > div:last-of-type > '
@@ -37,9 +37,9 @@ whatsapp_selectors_dict = {
     'chats_groups_messages_elements': '#side > div:last-child > div > div > div > div',
     'contact_element': 'span > span > span[class^="matched-text"]',
     'group_element': 'div:last-child > div:first-child > div:first-child > div > span > span[class^="matched-text"]',
-    'attach_file' : '#main > header > div > div > div:nth-child(2) > div',
-    'choose_file' : '#main > header > div > div > div > span > div > div > ul > li:nth-child(3) > button',
-    'send_file' : '#app > div > div > div > div > span > div > span > div > div > div > span > div > div > span',
+    'attach_file': '#main > header > div > div > div:nth-child(2) > div',
+    'choose_file': '#main > header > div > div > div > span > div > div > ul > li:nth-child(3) > button',
+    'send_file': '#app > div > div > div > div > span > div > span > div > div > div > span > div > div > span',
     'profile_photo_element': '#side > header > div > div > img',
     'about_edit_button_element': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > span > div > span',
     'about_text_area': '#app > div > div > div > div > span > div > div > div > div:nth-child(4) > div > div > div > div',
@@ -70,6 +70,7 @@ menu_style = style_from_dict({
     Token.Question: '',
 })
 # endregion
+
 
 # region FUNCTIONS
 def create_dirs():

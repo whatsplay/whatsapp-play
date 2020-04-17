@@ -10,11 +10,11 @@ class Logger:
         logs_path.mkdir(parents=True, exist_ok=True)
         open(log_file_path, 'w').close()
 
-    def __init__(self, script_name: str, level : int = logging.WARNING):
+    def __init__(self, script_name: str, level: int = logging.WARNING):
         self.logger = logging.getLogger(script_name)
         self.level = level
         self.logger.setLevel(self.level)
-        
+
         if not self.logger.handlers:
             # Create handlers
             file_handler = logging.FileHandler(log_file_path)
@@ -23,7 +23,9 @@ class Logger:
             console.setLevel(self.level)
 
             # create formatter and add it to the handlers
-            formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+            formatter = logging.Formatter(
+                    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+                    )
             console.setFormatter(formatter)
             file_handler.setFormatter(formatter)
 

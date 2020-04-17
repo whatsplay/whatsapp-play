@@ -19,7 +19,7 @@ async def get_last_seen_from_focused_target(page: Page):
     __logger.info("Getting target's status information")
     # await page.waitForSelector(whatsapp_selectors_dict['status'], visible = True)
     try:
-        status : str = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["last_seen"]}").getAttribute("title")')
+        status: str = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["last_seen"]}").getAttribute("title")')
         return status
     except:
         return '#status not found'
