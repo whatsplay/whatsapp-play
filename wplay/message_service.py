@@ -42,11 +42,10 @@ inside the file "messages.json" located at user/wplay/messagesJSON folder.
 
 
 async def message_service():
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
     __logger.info("Message Service On.")
     print("Message Service is ON, press CTRL+C to stop.")
     print("Listening for messages in file 'messages.json' inside user/wplay/messagesJSON folder.")
-    page, _ = await browser_config.configure_browser_and_load_whatsapp()
-
     # Initialize a instance of MessageStack
     message_stack = MessageStack()
     # Move all messages from open_messages.json to messages.json when the program starts
