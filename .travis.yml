@@ -1,0 +1,17 @@
+language: python
+
+sudo: false
+
+python:
+  - 3.6
+  - pypy3
+
+install:
+  - pip install -r tests/requirements.txt
+  - python setup.py install
+script:
+  - make reinstall
+  - make test
+  # - pytest tests/test.py --cov=codecov
+after_success:
+  - codecov
