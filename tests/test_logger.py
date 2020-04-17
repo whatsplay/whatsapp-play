@@ -5,7 +5,6 @@ on terminal
 '''
 #region imports
 import unittest
-from os import path
 from wplay.utils.Logger import Logger
 from pathlib import Path
 #endregion
