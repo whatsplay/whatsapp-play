@@ -54,6 +54,7 @@ whatsapp_selectors_dict = {
 data_folder_path = Path.home() / 'wplay'
 logs_path = data_folder_path / 'logs'
 log_file_path = logs_path / 'wplay.log'
+test_log_file_path = logs_path / 'testwplay.log'
 user_data_folder_path = data_folder_path / '.userData'
 profile_photos_path = data_folder_path / 'media' / 'profilePhotos'
 tracking_folder_path = data_folder_path / 'trackingData'
