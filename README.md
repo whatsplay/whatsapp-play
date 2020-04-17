@@ -16,6 +16,8 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line.
 
+***message_service*** It's a substitute for the API, allow you to communicate your programs to wplay. You modify our file messages.json with the number and message and the service will read the JSON and send the message. Check [Wiki Usage](https://github.com/rpotter12/whatsapp-play/wiki/Usage#whatsapp-service) for details.
+
 ***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
 ***telegram_bot*** sends the tracking status to our telegram bot.

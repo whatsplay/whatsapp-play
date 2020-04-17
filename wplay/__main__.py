@@ -18,6 +18,7 @@ from wplay import schedule_message
 from wplay import about_changer
 from wplay import get_news
 from wplay import get_media
+from wplay import message_service
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -47,6 +48,12 @@ def get_arg_parser():
         "--terminal-chat",
         action="store_true",
         help="chatting from command line")
+
+    group.add_argument(
+        "-wms",
+        "--message-service",
+        action="store_true",
+        help="send messages from a JSON file")
 
     group.add_argument(
         "-wb",
@@ -123,6 +130,9 @@ async def get_and_match_args(parser):
     args = parser.parse_args()
     if args.online_tracker:
         await online_tracker.tracker(args.target)
+
+    elif args.message_service:
+        await message_service.message_service()
 
     elif args.telegram_bot:
         telegram_bot.telegram_status(args.target)

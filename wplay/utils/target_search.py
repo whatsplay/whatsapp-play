@@ -20,6 +20,8 @@ async def my_script(target):
 
 
 # region IMPORTS
+import asyncio
+import time
 from pathlib import Path
 
 from pyppeteer.errors import ElementHandleError
@@ -53,17 +55,27 @@ async def search_and_select_target_all_ways(page: Page, target: str, hide_groups
         target_focused_title {str} -- Return the target focused title
     """
     try:
-        await search_and_select_target(page, target)
+        if not await search_target_by_number(page, target):
+            await search_and_select_target(page, target)
     except Exception as e:
         __logger.error(f"Error searching target: {str(e)}. Trying the second way to search.")
         await page.reload()
         await search_and_select_target_without_new_chat_button(page, target)
 
 
+async def search_target_by_number(page: Page, target: str):
+    if await __try_load_contact_by_number(page, target):
+        #target_focused_title = await __get_focused_target_title(page, target)
+        # await __display_complete_target_info(page,choosed_target,contact_tuple)
+        await __wait_for_message_area(page)
+        return True
+    else:
+        return False
+
+
 async def search_and_select_target(page: Page, target: str, hide_groups: bool = False):
     """
     This function search for targets using the whatsapp new chat button.
-    Here we can also search a target by number!
     When this function print the list of target found it doesn't print the phone number,
     the phone is printed only after you choose the target.
 
@@ -75,34 +87,29 @@ async def search_and_select_target(page: Page, target: str, hide_groups: bool = 
     Returns:
         target_focused_title {str} -- Return the target focused title
     """
-    if await __try_load_contact_by_number(page, target):
-        target_focused_title = await __get_focused_target_title(page, target)
-        # await __display_complete_target_info(page,choosed_target,contact_tuple)
-        await __wait_for_message_area(page)
-        return target_focused_title
-    else:
-        await __open_new_chat(page)
-        await __type_in_new_chat_search_bar(page, target)
-        contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
-        group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
-        contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
-        group_titles_unchecked = await __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked)
-        contact_list_unchecked = __zip_contact_titles_and_elements_unchecked(
-            contact_titles_unchecked, contact_list_elements_unchecked)
-        group_list_unchecked = __zip_group_titles_and_elements_unchecked(
-            group_titles_unchecked, group_list_elements_unchecked)
-        contact_tuple = __check_contact_list(target, contact_list_unchecked)
-        group_tuple = __check_group_list(target, group_list_unchecked)
-        target_tuple = __get_target_tuple(contact_tuple, group_tuple)
-        __print_target_tuple(target_tuple)
-        target_index_choosed = __ask_user_to_choose_the_filtered_target(target_tuple)
-        choosed_target = __get_choosed_target(target_tuple, target_index_choosed)
-        await __navigate_to_target(page, choosed_target)
-        target_focused_title = await __get_focused_target_title(page, target)
-        await __display_complete_target_info(page, choosed_target, contact_tuple)
-        __check_target_focused_title(target, target_focused_title)
-        await __wait_for_message_area(page)
-        return target_focused_title
+
+    await __open_new_chat(page)
+    await __type_in_new_chat_search_bar(page, target)
+    contact_list_elements_unchecked = await __get_contacts_elements_filtered(page, target)
+    group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
+    contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
+    group_titles_unchecked = await __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked)
+    contact_list_unchecked = __zip_contact_titles_and_elements_unchecked(
+        contact_titles_unchecked, contact_list_elements_unchecked)
+    group_list_unchecked = __zip_group_titles_and_elements_unchecked(
+        group_titles_unchecked, group_list_elements_unchecked)
+    contact_tuple = __check_contact_list(target, contact_list_unchecked)
+    group_tuple = __check_group_list(target, group_list_unchecked)
+    target_tuple = __get_target_tuple(contact_tuple, group_tuple)
+    __print_target_tuple(target_tuple)
+    target_index_choosed = __ask_user_to_choose_the_filtered_target(target_tuple)
+    choosed_target = __get_choosed_target(target_tuple, target_index_choosed)
+    await __navigate_to_target(page, choosed_target)
+    target_focused_title = await __get_focused_target_title(page, target)
+    await __display_complete_target_info(page, choosed_target, contact_tuple)
+    __check_target_focused_title(target, target_focused_title)
+    await __wait_for_message_area(page)
+    return target_focused_title
 
 
 async def search_and_select_target_without_new_chat_button(page: Page, target: str, hide_groups: bool = False):
@@ -143,11 +150,29 @@ async def search_and_select_target_without_new_chat_button(page: Page, target: s
 
 
 # region SEARCH AND SELECT TARGET
+async def __accept_dialog(dialog):
+    try:
+        await dialog.accept()
+    except:
+        pass
+
+
 async def __try_load_contact_by_number(page: Page, target: str) -> bool:
     try:
         if int(target):
             __logger.debug("Loading contact by number.")
+
+            page.on(
+                'dialog',
+                lambda dialog: asyncio.ensure_future(__accept_dialog(dialog))
+            )
             await load_website(page, f"{websites['wpp_unknown']}{target}")
+            time.sleep(2)
+            if (await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["invalid_number_ok_button"]}") != null')):
+                await page.click(whatsapp_selectors_dict["invalid_number_ok_button"])
+                __logger.debug(f"Invalid number: {target}")
+                print(f"Invalid Number: {target}")
+                return False
             return True
     except Exception as e:
         __logger.error(f"Error loading contact by number: {str(e)}")
@@ -547,7 +572,7 @@ def __check_group_list(target: str, group_list_unchecked):
 def __get_target_tuple(contact_tuple, group_tuple):
     target_tuple = (contact_tuple, group_tuple)
     # check to see if the target exits in the user's address book
-    if len(target_tuple[0]) is 0 and len(target_tuple[1]) is 0:
+    if len(target_tuple[0]) == 0 and len(target_tuple[1]) == 0:
         print('The target does not exist, please enter a valid target name')
         __logger.error('Invalid target name entered')
         exit()

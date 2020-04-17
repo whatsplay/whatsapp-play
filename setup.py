@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="wplay",
-    version="8.0.3",
+    version="8.1.0",
     install_requires=["python-telegram-bot >= 11.1.0",
                       "datetime >= 4.3",
                       "playsound >= 1.2.2",
@@ -35,6 +35,8 @@ setup(
     keywords=[
         "whatsapp",
         "whatsapp cli",
+        "whatsapp api",
+        "whatsapp service"
         "whatsapp chat",
         "message blast",
         "message timer",
