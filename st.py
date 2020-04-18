@@ -1,5 +1,5 @@
 import os
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "small-talk-hypdyq-853774a52200.json"
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = "small-talk-hypdyq-4dfbaf463994.json"
 
 import dialogflow_v2 as dialogflow
 dialogflow_session_client = dialogflow.SessionsClient()
