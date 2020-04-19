@@ -13,9 +13,9 @@ install:
   - pip install coverage
 
 script:
-  - python3 -m unittest discover -s tests
+#  - python3 -m unittest discover -s tests
   - coverage run -m unittest discover -s tests
 
 after_success:
-  - codecov
+#  - codecov
   - bash <(curl -s https://codecov.io/bash)
