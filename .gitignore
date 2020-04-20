@@ -2,6 +2,7 @@
 .userData
 tracking_data
 data
+telegram_token.pkl
 
 # Byte-compiled / optimized / DLL files
 wplay.egg-info/

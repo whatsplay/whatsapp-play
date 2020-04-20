@@ -2,6 +2,7 @@
 import tkinter
 from tkinter import filedialog
 from pathlib import Path
+import pickle
 
 from telegram.ext import CommandHandler, Updater
 from wplay.utils.helpers import data_folder_path
@@ -62,7 +63,24 @@ def telegram_status(name):
     status_file_path = ask_where_are_the_status_file()
     # Add bot token
     global TOKEN
-    TOKEN = input("enter token: ")
+    new_token = False
+    token_file_path = "wplay/telegram_token.pkl"
+    if Path(token_file_path).exists():
+        user_choice = input(
+            "Do you want to use last saved token (Y) or enter new token (N): "
+        )
+        if user_choice in "Yy":
+            with open(token_file_path, "rb") as token_file:
+                TOKEN = pickle.load(token_file)
+        else:
+            new_token = True
+    else:
+        new_token = True
+    if new_token:
+        TOKEN = input("Enter token: ")
+        with open(token_file_path, "wb") as token_file:
+            pickle.dump(TOKEN, token_file)
+
     # Added all the essential command handlers
     updater = Updater(TOKEN)
     dp = updater.dispatcher
