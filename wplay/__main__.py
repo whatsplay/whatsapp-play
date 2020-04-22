@@ -19,6 +19,7 @@ from wplay import about_changer
 from wplay import get_news
 from wplay import get_media
 from wplay import message_service
+from wplay import location_finder
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -113,14 +114,13 @@ def get_arg_parser():
         "-wbc",
         "--broadcast",
         action = "store_true",
-        help = "Broadcast message"
-    )
+        help = "Broadcast message")
 
-    # group.add_argument(
-    #     "-wl",
-    #     "--wlocation",
-    #     action="store_true",
-    #     help="finds the location of the person")
+    group.add_argument(
+        "-wl",
+        "--wlocation",
+        action="store_true",
+        help="finds the location of the person")
 
     return parser
 
@@ -171,8 +171,8 @@ async def get_and_match_args(parser):
     elif args.get_profile_photos:
         await get_media.get_profile_photos()
 
-    # elif args.wlocation:
-    #     loactionfinder.finder(args.target)
+    elif args.location_finder:
+        await loaction_finder.location_finder(args.target)
 
 
 async def main():
