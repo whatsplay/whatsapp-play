@@ -103,4 +103,3 @@ async def target_info():
     token = str(input("Enter your ipinfo token: "))
     ip_string = 'curl ipinfo.io/'+ip_address+'?token='+token+''
     os.system(ip_string)
-    """
