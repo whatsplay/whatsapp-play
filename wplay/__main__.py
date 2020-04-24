@@ -19,7 +19,7 @@ from wplay import about_changer
 from wplay import get_news
 from wplay import get_media
 from wplay import message_service
-from wplay import location_finder
+from wplay import target_info
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -117,10 +117,10 @@ def get_arg_parser():
         help = "Broadcast message")
 
     group.add_argument(
-        "-wl",
-        "--location-finder",
+        "-wtf",
+        "--target-info",
         action="store_true",
-        help="finds the location of the person")
+        help="finds the information about target's contact")
 
     return parser
 
@@ -161,8 +161,8 @@ async def get_and_match_args(parser):
     elif args.get_profile_photos:
         await get_media.get_profile_photos()
 
-    elif args.location_finder:
-        await location_finder.location_finder()
+    elif args.target_info:
+        await target_info.target_info()
 
     elif args.save_gdrive_chats:
         if args.target is None:

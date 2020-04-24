@@ -26,7 +26,7 @@ def localScan(InputNumber, print_results=True):
     try:
         PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
     except Exception as e:
-        throw(e)
+        print(e)
     else:
         if not phonenumbers.is_valid_number(PhoneNumberObject):
             return False
@@ -92,9 +92,9 @@ def scanNumber(InputNumber):
     print("Scan finished.")
 
 
-async def location_finder():
+async def target_info():
     __logger.info("Broadcast message.")
-    phone_number = input("Enter full number with country code.")
+    phone_number = input("Enter full number with country code e.g:'+91888888888':")
     scanNumber(phone_number)
     """
     # to find location by ip address
