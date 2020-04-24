@@ -4,9 +4,6 @@ from phonenumbers import carrier
 from phonenumbers import geocoder
 from phonenumbers import timezone
 import re
-import requests
-import json
-import sys
 from pathlib import Path
 from wplay.utils.Logger import Logger
 #end IMPORTS
@@ -15,58 +12,77 @@ from wplay.utils.Logger import Logger
 __logger = Logger(Path(__file__).name)
 # endregion
 
-number = '' # Full number format
-localNumber = '' # Local number format
-internationalNumber = '' # International numberformat
-numberCountryCode = '' # Dial code; e.g:"+33"
-numberCountry = '' # Country; e.g:France
+
 
 def formatNumber(InputNumber):
     return re.sub("(?:\+)?(?:[^[0-9]*)", "", InputNumber)
 
-def localScan(InputNumber):
-    global number
-    global localNumber
-    global internationalNumber
-    global numberCountryCode
-    global numberCountry
+def localScan(InputNumber, print_results=True):
+    print("Running local scan...")
 
-    print('Running local scan...')
     FormattedPhoneNumber = "+" + formatNumber(InputNumber)
-    PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
 
-    if not phonenumbers.is_valid_number(PhoneNumberObject):
-        return False
-
-    number = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
-    numberCountryCode = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
-
-    countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/{}'.format(numberCountryCode.replace('+', ''))).content)
-    numberCountry = countryRequest[0]['alpha2Code']
-
-    localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
-    internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
-
-    print('International format: {}'.format(internationalNumber))
-    print('Local format: 0{}'.format(localNumber))
-    print('Country code: {}'.format(numberCountryCode))
-    print('Location: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
-    print('Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
-    print('Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
-    for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
-        print('Timezone: {}'.format(timezoneResult))
-
-    if phonenumbers.is_possible_number(PhoneNumberObject):
-        print('The number is valid and possible.')
+    try:
+        PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
+    except Exception as e:
+        throw(e)
     else:
-        print('The number is valid but might not be possible.')
+        if not phonenumbers.is_valid_number(PhoneNumberObject):
+            return False
 
+        number = phonenumbers.format_number(
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164
+        ).replace("+", "")
+        numberCountryCode = phonenumbers.format_number(
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL
+        ).split(" ")[0]
+        numberCountry = phonenumbers.region_code_for_country_code(
+            int(numberCountryCode)
+        )
+
+        localNumber = phonenumbers.format_number(
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164
+        ).replace(numberCountryCode, "")
+        internationalNumber = phonenumbers.format_number(
+            PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL
+        )
+
+        country = geocoder.country_name_for_number(PhoneNumberObject, "en")
+        location = geocoder.description_for_number(PhoneNumberObject, "en")
+        carrierName = carrier.name_for_number(PhoneNumberObject, "en")
+
+        if print_results:
+            print("International format: {}".format(internationalNumber))
+            print("Local format: {}".format(localNumber))
+            print("Country found: {} ({})".format(country, numberCountryCode))
+            print("City/Area: {}".format(location))
+            print("Carrier: {}".format(carrierName))
+            for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
+                print("Timezone: {}".format(timezoneResult))
+
+            if phonenumbers.is_possible_number(PhoneNumberObject):
+                print("The number is valid and possible.")
+            else:
+                print("The number is valid but might not be possible.")
+
+    numberObj = {}
+    numberObj["input"] = InputNumber
+    numberObj["default"] = number
+    numberObj["local"] = localNumber
+    numberObj["international"] = internationalNumber
+    numberObj["country"] = country
+    numberObj["countryCode"] = numberCountryCode
+    numberObj["countryIsoCode"] = numberCountry
+    numberObj["location"] = location
+    numberObj["carrier"] = carrierName
+
+    return numberObj
 
 
 def scanNumber(InputNumber):
     print("[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
 
-    localScan(InputNumber)
+    number = localScan(InputNumber)
 
     if not number:
         print(("Error: number {} is not valid. Skipping.".format(formatNumber(InputNumber))))
