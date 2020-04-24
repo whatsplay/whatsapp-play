@@ -38,10 +38,7 @@ def localScan(InputNumber):
     global numberCountry
 
     print(code_info + 'Running local scan...')
-
     FormattedPhoneNumber = "+" + formatNumber(InputNumber)
-
-    
     PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
 
     if not phonenumbers.is_valid_number(PhoneNumberObject):
