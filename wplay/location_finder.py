@@ -68,12 +68,6 @@ def scanNumber(InputNumber):
 
     localScan(InputNumber)
 
-    global number
-    global localNumber
-    global internationalNumber
-    global numberCountryCode
-    global numberCountry
-
     if not number:
         print(("Error: number {} is not valid. Skipping.".format(formatNumber(InputNumber))))
         sys.exit()
@@ -84,8 +78,8 @@ def scanNumber(InputNumber):
 
 async def location_finder():
     __logger.info("Broadcast message.")
-    number=input("Enter full number with country code.")
-    scanNumber(number)
+    phone_number=input("Enter full number with country code.")
+    scanNumber(phone_number)
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')
