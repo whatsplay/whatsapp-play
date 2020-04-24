@@ -44,7 +44,7 @@ def localScan(InputNumber):
     try:
         PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
     except:
-        return False
+        pass
     else:
         if not phonenumbers.is_valid_number(PhoneNumberObject):
             return False
