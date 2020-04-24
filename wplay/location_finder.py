@@ -41,36 +41,34 @@ def localScan(InputNumber):
 
     FormattedPhoneNumber = "+" + formatNumber(InputNumber)
 
-    try:
-        PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
-    except:
-        pass
+    
+    PhoneNumberObject = phonenumbers.parse(FormattedPhoneNumber, None)
+
+    if not phonenumbers.is_valid_number(PhoneNumberObject):
+        return False
+
+    number = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
+    numberCountryCode = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
+
+    countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/{}'.format(numberCountryCode.replace('+', ''))).content)
+    numberCountry = countryRequest[0]['alpha2Code']
+
+    localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
+    internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
+
+    print(code_result + 'International format: {}'.format(internationalNumber))
+    print(code_result + 'Local format: 0{}'.format(localNumber))
+    print(code_result + 'Country code: {}'.format(numberCountryCode))
+    print(code_result + 'Location: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
+    print(code_result + 'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
+    print(code_result + 'Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
+    for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
+        print(code_result + 'Timezone: {}'.format(timezoneResult))
+
+    if phonenumbers.is_possible_number(PhoneNumberObject):
+        print(code_info + 'The number is valid and possible.')
     else:
-        if not phonenumbers.is_valid_number(PhoneNumberObject):
-            return False
-
-        number = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace('+', '')
-        numberCountryCode = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(' ')[0]
-
-        countryRequest = json.loads(requests.request('GET', 'https://restcountries.eu/rest/v2/callingcode/{}'.format(numberCountryCode.replace('+', ''))).content)
-        numberCountry = countryRequest[0]['alpha2Code']
-
-        localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, '')
-        internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
-
-        print(code_result + 'International format: {}'.format(internationalNumber))
-        print(code_result + 'Local format: 0{}'.format(localNumber))
-        print(code_result + 'Country code: {}'.format(numberCountryCode))
-        print(code_result + 'Location: {}'.format(geocoder.description_for_number(PhoneNumberObject, "en")))
-        print(code_result + 'Carrier: {}'.format(carrier.name_for_number(PhoneNumberObject, 'en')))
-        print(code_result + 'Area: {}'.format(geocoder.description_for_number(PhoneNumberObject, 'en')))
-        for timezoneResult in timezone.time_zones_for_number(PhoneNumberObject):
-            print(code_result + 'Timezone: {}'.format(timezoneResult))
-
-        if phonenumbers.is_possible_number(PhoneNumberObject):
-            print(code_info + 'The number is valid and possible.')
-        else:
-            print(code_warning + 'The number is valid but might not be possible.')
+        print(code_warning + 'The number is valid but might not be possible.')
 
 
 
