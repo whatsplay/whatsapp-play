@@ -118,7 +118,7 @@ def get_arg_parser():
 
     group.add_argument(
         "-wl",
-        "--wlocation",
+        "--location-finder",
         action="store_true",
         help="finds the location of the person")
 
@@ -148,17 +148,7 @@ async def get_and_match_args(parser):
 
     elif args.message_timer:
         await message_timer.message_timer(args.target)
-
-    elif args.save_gdrive_chats:
-        if args.target is None:
-            parser.print_help()
-            parser.exit()
-        try:
-            bID: int = int(sys.argv[3])
-        except (IndexError, ValueError):
-            bID: int = 0
-        save_chat.runMain('pull', str(args.target), bID)
-
+   
     elif args.schedule_message:
         await schedule_message.schedule_message(args.target)
 
@@ -172,8 +162,17 @@ async def get_and_match_args(parser):
         await get_media.get_profile_photos()
 
     elif args.location_finder:
-        await loaction_finder.location_finder(args.target)
-
+        await location_finder.location_finder()
+        
+    elif args.save_gdrive_chats:
+        if args.target is None:
+            parser.print_help()
+            parser.exit()
+        try:
+            bID: int = int(sys.argv[3])
+        except (IndexError, ValueError):
+            bID: int = 0
+        save_chat.runMain('pull', str(args.target), bID)
 
 async def main():
     print_logo("wplay")
