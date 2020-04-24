@@ -4,18 +4,19 @@ from phonenumbers import carrier
 from phonenumbers import geocoder
 from phonenumbers import timezone
 import re
+import sys
 from pathlib import Path
 from wplay.utils.Logger import Logger
-#end IMPORTS
+# end IMPORTS
 
 # region LOGGER
 __logger = Logger(Path(__file__).name)
 # endregion
 
 
-
 def formatNumber(InputNumber):
-    return re.sub("(?:\+)?(?:[^[0-9]*)", "", InputNumber)
+    return re.sub(r"(?:\+)?(?:[^[0-9]*)", "", InputNumber)
+
 
 def localScan(InputNumber, print_results=True):
     print("Running local scan...")
@@ -91,10 +92,9 @@ def scanNumber(InputNumber):
     print("Scan finished.")
 
 
-
 async def location_finder():
     __logger.info("Broadcast message.")
-    phone_number=input("Enter full number with country code.")
+    phone_number = input("Enter full number with country code.")
     scanNumber(phone_number)
     """
     # to find location by ip address
