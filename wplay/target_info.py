@@ -93,9 +93,6 @@ def scanNumber(InputNumber):
 
 
 async def target_info():
-    __logger.info("Writing target's information")
-    phone_number = input("Enter full number with country code e.g:'+91888888888':")
-    scanNumber(phone_number)
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')
@@ -103,3 +100,6 @@ async def target_info():
     token = str(input("Enter your ipinfo token: "))
     ip_string = 'curl ipinfo.io/'+ip_address+'?token='+token+''
     os.system(ip_string)"""
+    __logger.info("Writing target's information")
+    phone_number = input("Enter full number with country code e.g:'+91888888888':")
+    scanNumber(phone_number)
