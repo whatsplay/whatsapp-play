@@ -19,6 +19,7 @@ from wplay import about_changer
 from wplay import get_news
 from wplay import get_media
 from wplay import message_service
+from wplay import target_info
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -113,14 +114,13 @@ def get_arg_parser():
         "-wbc",
         "--broadcast",
         action = "store_true",
-        help = "Broadcast message"
-    )
+        help = "Broadcast message")
 
-    # group.add_argument(
-    #     "-wl",
-    #     "--wlocation",
-    #     action="store_true",
-    #     help="finds the location of the person")
+    group.add_argument(
+        "-wtf",
+        "--target-info",
+        action="store_true",
+        help="finds the information about target's contact")
 
     return parser
 
@@ -149,16 +149,6 @@ async def get_and_match_args(parser):
     elif args.message_timer:
         await message_timer.message_timer(args.target)
 
-    elif args.save_gdrive_chats:
-        if args.target is None:
-            parser.print_help()
-            parser.exit()
-        try:
-            bID: int = int(sys.argv[3])
-        except (IndexError, ValueError):
-            bID: int = 0
-        save_chat.runMain('pull', str(args.target), bID)
-
     elif args.schedule_message:
         await schedule_message.schedule_message(args.target)
 
@@ -171,9 +161,18 @@ async def get_and_match_args(parser):
     elif args.get_profile_photos:
         await get_media.get_profile_photos()
 
-    # elif args.wlocation:
-    #     loactionfinder.finder(args.target)
+    elif args.target_info:
+        await target_info.target_info()
 
+    elif args.save_gdrive_chats:
+        if args.target is None:
+            parser.print_help()
+            parser.exit()
+        try:
+            bID: int = int(sys.argv[3])
+        except (IndexError, ValueError):
+            bID: int = 0
+        save_chat.runMain('pull', str(args.target), bID)
 
 async def main():
     print_logo("wplay")
