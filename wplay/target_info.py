@@ -93,7 +93,7 @@ def scanNumber(InputNumber):
 
 
 async def target_info():
-    __logger.info("Broadcast message.")
+    __logger.info("Writing target's information")
     phone_number = input("Enter full number with country code e.g:'+91888888888':")
     scanNumber(phone_number)
     """
@@ -102,4 +102,4 @@ async def target_info():
     ip_address = '*'
     token = str(input("Enter your ipinfo token: "))
     ip_string = 'curl ipinfo.io/'+ip_address+'?token='+token+''
-    os.system(ip_string)
+    os.system(ip_string)"""
