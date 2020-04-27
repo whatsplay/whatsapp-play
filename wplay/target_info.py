@@ -101,23 +101,19 @@ def target_contact_number(num):
 
 async def target_info(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
     if target is not None:
         try:
-            target_name = await target_search.search_and_select_target(
-                    page,
-                    target,
-                    hide_groups=True
-                    )
+            await target_search.search_and_select_target(page, target)
         except Exception as e:
             print(e)
             await page.reload()
-            target_name = await target_search.search_and_select_target_without_new_chat_button(
+            await target_search.search_and_select_target_without_new_chat_button(
                     page,
-                    target,
-                    hide_groups=True
+                    target
                     )
     else:
-        target_name = await target_select.manual_select_target(page, hide_groups=True)
+        await target_select.manual_select_target(page)
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')
