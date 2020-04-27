@@ -162,7 +162,7 @@ async def get_and_match_args(parser):
         await get_media.get_profile_photos()
 
     elif args.target_info:
-        await target_info.target_info()
+        await target_info.target_info(args.target)
 
     elif args.save_gdrive_chats:
         if args.target is None:

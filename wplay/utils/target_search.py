@@ -32,6 +32,7 @@ from wplay.utils.helpers import whatsapp_selectors_dict, websites
 from wplay.utils.browser_config import load_website
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+from wplay import target_info
 # endregion
 
 
@@ -395,6 +396,7 @@ async def __get_contact_about_and_phone(contact_name_element, complete_target_in
     try:
         complete_target_info['About'] = await contact_name_element.querySelectorEval('div:nth-child(2) > div > div > span > span', 'element => element.getAttribute("title")')
         complete_target_info['Mobile'] = await contact_name_element.querySelectorEval('div:last-of-type > div > div > span > span', 'element => element.innerText')
+        target_info.target_contact_number(complete_target_info['Mobile'])
     except Exception as e:
         print(e)
 
