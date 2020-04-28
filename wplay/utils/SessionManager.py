@@ -158,7 +158,7 @@ class SessionManager(object):
         done = False
         obj = SessionManager()
         while(not done):
-            if(obj.questions_menu != None):
+            if obj.questions_menu is not None:
                 obj.reset_fields()
             machine = Machine(obj, states, transitions=transitions, initial='start')
             obj.get_user_data_filenames()

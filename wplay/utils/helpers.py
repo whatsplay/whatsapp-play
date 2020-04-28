@@ -47,7 +47,7 @@ whatsapp_selectors_dict = {
     'contact_info_page_target_group_creation_info_element': ':scope > div:last-child > span',
     'contact_info_page_target_group_description_element': ':scope > div:last-child span:first-of-type',
     'contact_info_page_target_group_member_elements': ':scope > div:nth-child(4) > div > div',
-    'invalid_number_ok_button':'#app > div > span> div > span > div > div > div > div > div > div > div'
+    'invalid_number_ok_button': '#app > div > span> div > span > div > div > div > div > div > div > div'
 }
 # endregion
 
@@ -61,7 +61,7 @@ profile_photos_path = data_folder_path / 'media' / 'profilePhotos'
 tracking_folder_path = data_folder_path / 'trackingData'
 messages_json_folder_path = data_folder_path / 'messagesJSON' / 'system'
 messages_json_path = data_folder_path / 'messagesJSON' / 'messages.json'
-open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' /'openMessages.json'
+open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' / 'openMessages.json'
 # endregion
 
 # region MENU STYLES
@@ -82,8 +82,8 @@ def create_dirs():
     logs_path.mkdir(parents=True, exist_ok=True)
     user_data_folder_path.mkdir(parents=True, exist_ok=True)
     profile_photos_path.mkdir(parents=True, exist_ok=True)
-    tracking_folder_path.mkdir(parents = True, exist_ok = True)
-    messages_json_folder_path.mkdir(parents = True, exist_ok = True)
+    tracking_folder_path.mkdir(parents=True, exist_ok=True)
+    messages_json_folder_path.mkdir(parents=True, exist_ok=True)
 
 
 def kill_child_processes(parent_pid, sig=signal.SIGTERM):

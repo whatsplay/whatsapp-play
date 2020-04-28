@@ -66,7 +66,7 @@ async def search_and_select_target_all_ways(page: Page, target: str, hide_groups
 
 async def search_target_by_number(page: Page, target: str):
     if await __try_load_contact_by_number(page, target):
-        #target_focused_title = await __get_focused_target_title(page, target)
+        # target_focused_title = await __get_focused_target_title(page, target)
         # await __display_complete_target_info(page,choosed_target,contact_tuple)
         await __wait_for_message_area(page)
         return True
@@ -241,7 +241,7 @@ async def __get_contacts_matched_with_query(chats_groups_messages_elements_list:
     get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
     for idx, element in enumerate(chats_groups_messages_elements_list):
         try:
-            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function)
+            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'], get_contact_node_title_function)
             if contact_name is not None:
                 contacts_to_choose_from.append((contact_name,idx))
         except ElementHandleError:
@@ -424,8 +424,8 @@ async def __close_contact_info_page(page: Page):
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_info_page_close_button'],
-            visible = True,
-            timeout = 5000
+            visible=True,
+            timeout=5000
         )
         await page.click(whatsapp_selectors_dict['contact_info_page_close_button'])
     except Exception as e:

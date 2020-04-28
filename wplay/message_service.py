@@ -9,7 +9,7 @@ from wplay.utils.target_search import search_target_by_number
 from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils import helpers
-from wplay.utils import  verify_internet
+from wplay.utils import verify_internet
 from wplay.utils.Logger import Logger
 from wplay.utils.MessageStack import MessageStack
 # endregion
@@ -89,4 +89,3 @@ async def message_service():
         # Move messages from open_messages.json to messages.json that wasn't sended.
         message_stack.move_all_messages(
             helpers.open_messages_json_path, helpers.messages_json_path)
-        
