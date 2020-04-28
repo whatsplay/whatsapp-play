@@ -38,6 +38,8 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***get_profile_photos*** is a script to download profile photos of all the contacts in your whatsapp contact list.
 
+***target_info*** is a script to get information about target's contact number like location(Country&city/Area),Carrier and Timezone.
+
 ---
 
 ## Installation

@@ -1,4 +1,7 @@
 # region IMPORTS
+from wplay.utils import browser_config
+from wplay.utils import target_search
+from wplay.utils import target_select
 import phonenumbers
 from phonenumbers import carrier
 from phonenumbers import geocoder
@@ -8,6 +11,7 @@ import sys
 from pathlib import Path
 from wplay.utils.Logger import Logger
 # end IMPORTS
+
 
 # region LOGGER
 __logger = Logger(Path(__file__).name)
@@ -82,7 +86,6 @@ def localScan(InputNumber, print_results=True):
 
 def scanNumber(InputNumber):
     print("[!] ---- Fetching informations for {} ---- [!]".format(formatNumber(InputNumber)))
-
     number = localScan(InputNumber)
 
     if not number:
@@ -92,7 +95,25 @@ def scanNumber(InputNumber):
     print("Scan finished.")
 
 
-async def target_info():
+def target_contact_number(num):
+    target_contact_number.phone_number = num
+
+
+async def target_info(target):
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
+    if target is not None:
+        try:
+            await target_search.search_and_select_target(page, target)
+        except Exception as e:
+            print(e)
+            await page.reload()
+            await target_search.search_and_select_target_without_new_chat_button(
+                    page,
+                    target
+                    )
+    else:
+        await target_select.manual_select_target(page)
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')
@@ -101,5 +122,4 @@ async def target_info():
     ip_string = 'curl ipinfo.io/'+ip_address+'?token='+token+''
     os.system(ip_string)"""
     __logger.info("Writing target's information")
-    phone_number = input("Enter full number with country code e.g:'+91888888888':")
-    scanNumber(phone_number)
+    scanNumber(target_contact_number.phone_number)
