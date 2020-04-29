@@ -109,8 +109,8 @@ async def download_media(target):
             f = open(media_path / f'{count}.jpg', 'wb')
             f.write(await viewSource.buffer())
             f.close()
-        except:
-            print("Error saving image")
+        except Exception as e:
+            print("Error saving image", e)
 
     for video in media_arr['vid']:
         try:
@@ -119,8 +119,8 @@ async def download_media(target):
             f = open(media_path / f'{count}.mp4', 'wb')
             f.write(await viewSource.buffer())
             f.close()
-        except:
-            print("Error saving image")
+        except Exception as e:
+            print("Error saving video", e)
 
     print("Saved the media to the 'media' dir")
     time.sleep(10)
