@@ -62,6 +62,7 @@ tracking_folder_path = data_folder_path / 'trackingData'
 messages_json_folder_path = data_folder_path / 'messagesJSON' / 'system'
 messages_json_path = data_folder_path / 'messagesJSON' / 'messages.json'
 open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' /'openMessages.json'
+media_path = data_folder_path / 'media' / 'media'
 # endregion
 
 # region MENU STYLES
@@ -82,6 +83,7 @@ def create_dirs():
     logs_path.mkdir(parents=True, exist_ok=True)
     user_data_folder_path.mkdir(parents=True, exist_ok=True)
     profile_photos_path.mkdir(parents=True, exist_ok=True)
+    media_path.mkdir(parents=True, exist_ok=True)
     tracking_folder_path.mkdir(parents = True, exist_ok = True)
     messages_json_folder_path.mkdir(parents = True, exist_ok = True)
 
