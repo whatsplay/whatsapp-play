@@ -6,6 +6,7 @@ from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils.helpers import media_path
 from wplay.utils.Logger import Logger
+from wplay.utils.helpers import whatsapp_selectors_dict
 import time
 # endregion
 
@@ -32,29 +33,24 @@ async def download_media(target):
         await target_select.manual_select_target(page)
 
     # Selectors
-    target_name_selector = "#main > header > div > div > div > span"
-    media_text = "#app > div > div > div > div > span > div > span > div > div > div > div > div > div > div > div > span"
-    media_images = "#app > div > div > div > div > span > div > span > div > div > span > div > div > div > div > div > div"
-    left_arrow_button = "#app > div > span > div > div > div > div > div > span"
-    media_url_img = "#app > div > span:nth-child(3) > div > div > div > div > div > div > div > div > img"
-    media_url_vid = "#app > div > span:nth-child(3) > div > div > div > div > div > div > div > div > video"
+
    
     count = int(input("Count of media you want to download: "))
 
     # Click on the photo element of the target
-    await page.waitForSelector(target_name_selector, visible=True)
-    await page.evaluate(f'''document.querySelector('{target_name_selector}').click()''')
+    await page.waitForSelector(whatsapp_selectors_dict['target_name_selector'], visible=True)
+    await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['target_name_selector']}').click()''')
 
     time.sleep(1)
 
     # Click on the `Media, Link and Docs` text
-    await page.waitForSelector(media_text)
-    await page.click(media_text)
+    await page.waitForSelector(whatsapp_selectors_dict['media_text'])
+    await page.click(whatsapp_selectors_dict['media_text'])
 
     # Click on the most recent media element
     while True:
         try:
-            await page.evaluate(f'''document.querySelector('{media_images}').click()''')
+            await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['media_images']}').click()''')
             break
         except:
             pass
@@ -69,9 +65,9 @@ async def download_media(target):
                 countTry = 0 # Threshold of how many times to try looking for media
                 while True:
                     if countTry > 500:
-                        await page.waitForSelector(left_arrow_button)
+                        await page.waitForSelector(whatsapp)
 
-                    img = await page.evaluate(f'''() => [...document.querySelectorAll('{media_url_img}')]
+                    img = await page.evaluate(f'''() => [...document.querySelectorAll('{whatsapp_selectors_dict['media_url_img']}')]
                                                         .map(element => element.src)''')
                     if img and len(img) == 2:
                         img = img[-1]
@@ -84,7 +80,7 @@ async def download_media(target):
                 # If media is a video or gif
                 countTry = 0
                 while True:
-                    vid = await page.evaluate(f'''() => [...document.querySelectorAll('{media_url_vid}')]
+                    vid = await page.evaluate(f'''() => [...document.querySelectorAll('{whatsapp_selectors_dict['media_url_vid']}')]
                                                         .map(element => element.src)''')
                     if vid:
                         vid = vid[-1]
@@ -92,9 +88,9 @@ async def download_media(target):
                         break
             
             # Go to next media element
+            await page.waitForSelector(whatsapp_selectors_dict['left_arrow_button'])
+            await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['left_arrow_button']}').click()''')
             time.sleep(0.5)
-            await page.waitForSelector(left_arrow_button)
-            await page.evaluate(f'''document.querySelector('{left_arrow_button}').click()''')
         
         except Exception as e:
             print(e)
@@ -105,6 +101,7 @@ async def download_media(target):
     for image in media_arr['img']:
         try:
             count += 1
+            print(image)
             viewSource = await newPage.goto(image)
             f = open(media_path / f'{count}.jpg', 'wb')
             f.write(await viewSource.buffer())
