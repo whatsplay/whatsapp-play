@@ -31,7 +31,7 @@ class MessageStack():
             with open(file_path) as json_file:
                 data = json.load(json_file)
                 if 'messages' not in data:
-                    self.__write_json(valid_data, file_path)                
+                    self.__write_json(valid_data, file_path)
         except json.JSONDecodeError:
             # Empty or Invalid Json
             self.__write_json(valid_data, file_path)
@@ -57,7 +57,7 @@ class MessageStack():
             self,
             from_file_path: Path = helpers.messages_json_path) -> Iterator[dict]:
         """
-        Yield a message from a file. 
+        Yield a message from a file.
 
         Arguments:
             from_file_path {Path} -- open_messages_path or messages_path from helpers

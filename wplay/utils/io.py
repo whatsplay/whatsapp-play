@@ -38,10 +38,7 @@ def ask_user_for_message_breakline_mode() -> List[str]:
 async def send_message(page: Page, message: Union[List[str], str]):
     __logger.debug("Sending message")
     for i in range(len(message)):
-        await page.type(
-            whatsapp_selectors_dict['message_area'],
-            message[i]
-        )
+        await page.type(whatsapp_selectors_dict['message_area'], message[i])
         if isinstance(message, list):
             await page.keyboard.down('Shift')
             await page.keyboard.press('Enter')
@@ -53,9 +50,6 @@ async def send_file(page):
     __logger.info("Sending File")
     await page.click(whatsapp_selectors_dict['attach_file'])
     await page.click(whatsapp_selectors_dict['choose_file'])
-    await page.waitForSelector(
-            whatsapp_selectors_dict['send_file'],
-            timeout=30000
-            )
+    await page.waitForSelector(whatsapp_selectors_dict['send_file'], timeout=30000)
     await page.click(whatsapp_selectors_dict['send_file'])
 # endregion
