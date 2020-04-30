@@ -35,22 +35,12 @@ def localScan(InputNumber, print_results=True):
         if not phonenumbers.is_valid_number(PhoneNumberObject):
             return False
 
-        number = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164
-        ).replace("+", "")
-        numberCountryCode = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL
-        ).split(" ")[0]
-        numberCountry = phonenumbers.region_code_for_country_code(
-            int(numberCountryCode)
-        )
+        number = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace("+", "")
+        numberCountryCode = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL).split(" ")[0]
+        numberCountry = phonenumbers.region_code_for_country_code(int(numberCountryCode))
 
-        localNumber = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164
-        ).replace(numberCountryCode, "")
-        internationalNumber = phonenumbers.format_number(
-            PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL
-        )
+        localNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.E164).replace(numberCountryCode, "")
+        internationalNumber = phonenumbers.format_number(PhoneNumberObject, phonenumbers.PhoneNumberFormat.INTERNATIONAL)
 
         country = geocoder.country_name_for_number(PhoneNumberObject, "en")
         location = geocoder.description_for_number(PhoneNumberObject, "en")
@@ -108,10 +98,7 @@ async def target_info(target):
         except Exception as e:
             print(e)
             await page.reload()
-            await target_search.search_and_select_target_without_new_chat_button(
-                    page,
-                    target
-                    )
+            await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
     """
@@ -120,6 +107,7 @@ async def target_info(target):
     ip_address = '*'
     token = str(input("Enter your ipinfo token: "))
     ip_string = 'curl ipinfo.io/'+ip_address+'?token='+token+''
-    os.system(ip_string)"""
+    os.system(ip_string)
+    """
     __logger.info("Writing target's information")
     scanNumber(target_contact_number.phone_number)

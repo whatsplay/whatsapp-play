@@ -26,12 +26,11 @@ async def get_profile_photos():
             selector = f"#pane-side > div:nth-child(1) > div > div > div:nth-child({i}) > div > div > div > div > img"
             try:
                 await page.waitForSelector(selector, timeout=2000)
-                image_url = await page.evaluate(
-                        f'document.querySelector("{selector}").getAttribute("src")')
+                image_url = await page.evaluate(f'document.querySelector("{selector}").getAttribute("src")')
                 print(f"{c}:{i}-{image_url}")
                 if image_url not in images_list:
                     images_list.append(image_url)
-            except:
+            except Exception as e:
                 print("No profile image found")
         await page.evaluate("document.querySelector('#pane-side').scrollBy(0, 500)")
 
@@ -41,7 +40,7 @@ async def get_profile_photos():
             f = open(profile_photos_path / f'{count}.jpg', 'wb')
             f.write(await viewSource.buffer())
             f.close()
-        except:
+        except Exception as e:
             print("Error saving image")
 
     print("Saved all the images to media_folder.")

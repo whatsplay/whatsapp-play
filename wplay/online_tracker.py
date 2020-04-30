@@ -20,19 +20,11 @@ async def tracker(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
         try:
-            target_name = await target_search.search_and_select_target(
-                    page,
-                    target,
-                    hide_groups=True
-                    )
+            target_name = await target_search.search_and_select_target(page, target, hide_groups=True)
         except Exception as e:
             print(e)
             await page.reload()
-            target_name = await target_search.search_and_select_target_without_new_chat_button(
-                    page,
-                    target,
-                    hide_groups=True
-                    )
+            target_name = await target_search.search_and_select_target_without_new_chat_button(page, target, hide_groups=True)
     else:
         target_name = await target_select.manual_select_target(page, hide_groups=True)
 
@@ -57,7 +49,7 @@ async def tracker(target):
                     try:
                         if is_sound_enabled:
                             playsound('plucky.wav')
-                    except:
+                    except Exception as e:
                         print("Error: Couldn't play the sound.")
                         is_sound_enabled: bool = False
                 print(

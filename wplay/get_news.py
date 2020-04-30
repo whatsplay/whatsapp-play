@@ -25,8 +25,7 @@ newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 async def get_news(target):
     def fetch_news(country_code):
-        headlines = newsapi.get_top_headlines(country=country_code,
-                                              language='en')
+        headlines = newsapi.get_top_headlines(country=country_code, language='en')
         url = headlines['articles'][0]['url']
         title = headlines['articles'][0]['title']
         return title, url

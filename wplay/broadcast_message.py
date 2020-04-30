@@ -25,11 +25,11 @@ def ProcessNumbers():
     print("Choose a text file containing full numbers with country code, one number per line.")
     Tk().withdraw()
     filename = askopenfile(
-        initialdir=data_folder_path,
-        title='Choose a text file with numbers.',
-        filetypes=[("text files", "*.txt")],
-        mode="r"
-    )
+            initialdir=data_folder_path,
+            title='Choose a text file with numbers.',
+            filetypes=[("text files", "*.txt")],
+            mode="r"
+            )
     numbers = filename.readlines()
     for i in range(len(numbers)):
         number = numbers[i].strip("\n+")

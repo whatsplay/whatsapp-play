@@ -23,8 +23,7 @@ async def message_blast(target: str):
     else:
         await target_select.manual_select_target(page)
     message: List[str] = io.ask_user_for_message_breakline_mode()
-    number_of_messages: int = int(
-            input("Enter the number of messages to blast: "))
+    number_of_messages: int = int(input("Enter the number of messages to blast: "))
     __logger.debug("Blasting messages")
     for _ in range(number_of_messages):
         await io.send_message(page, message)
