@@ -32,9 +32,6 @@ async def download_media(target):
     else:
         await target_select.manual_select_target(page)
 
-    # Selectors
-
-   
     count = int(input("Count of media you want to download: "))
 
     # Click on the photo element of the target
@@ -53,7 +50,7 @@ async def download_media(target):
             await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['media_images']}').click()''')
             break
         except Exception as e:
-            print("")
+            print("", end='')
 
     media_arr = {'img': [], 'vid': []}
 
@@ -65,7 +62,7 @@ async def download_media(target):
                 countTry = 0 # Threshold of how many times to try looking for media
                 while True:
                     if countTry > 500:
-                        await page.waitForSelector(whatsapp)
+                        await page.waitForSelector(whatsapp_selectors_dict['left_arrow_button'])
 
                     img = await page.evaluate(f'''() => [...document.querySelectorAll('{whatsapp_selectors_dict['media_url_img']}')]
                                                         .map(element => element.src)''')
@@ -86,7 +83,7 @@ async def download_media(target):
                         vid = vid[-1]
                         media_arr['vid'].append(vid)
                         break
-            
+
             # Go to next media element
             await page.waitForSelector(whatsapp_selectors_dict['left_arrow_button'])
             await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['left_arrow_button']}').click()''')
