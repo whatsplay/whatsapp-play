@@ -52,8 +52,8 @@ async def download_media(target):
         try:
             await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['media_images']}').click()''')
             break
-        except:
-            pass
+        except Exception as e:
+            print("")
 
     media_arr = {'img': [], 'vid': []}
 
@@ -76,7 +76,7 @@ async def download_media(target):
                         break
                     countTry += 1
                     time.sleep(0.3)
-            except:
+            except Exception as e:
                 # If media is a video or gif
                 countTry = 0
                 while True:
@@ -91,7 +91,7 @@ async def download_media(target):
             await page.waitForSelector(whatsapp_selectors_dict['left_arrow_button'])
             await page.evaluate(f'''document.querySelector('{whatsapp_selectors_dict['left_arrow_button']}').click()''')
             time.sleep(0.5)
-        
+
         except Exception as e:
             print(e)
 
