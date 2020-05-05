@@ -7,6 +7,7 @@ from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
+from colorama import Fore, Style
 # endregion
 
 
@@ -30,13 +31,14 @@ async def chat(target):
                     target
                     )
     else:
-        await target_select.manual_select_target(page)
+        target = await target_select.manual_select_target(page)
 
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
     while True:
+        await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
-
+        
         if '...' in message:
             message.remove('...')
             await io.send_message(page, message)
@@ -46,10 +48,45 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
+        if 'switch' in message:
+            await getMessages(page, target)
 
         # File Share:
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
-
+        
         await io.send_message(page, message)
+# import threading
+
+# def printit():
+#     threading.Timer(5.0, printit).start()
+#     print ("Hello, World!")
+# printit() 
+
+lastOutgoingMessage = ''
+
+async def getMessages(pg, tg):
+    selector = "#main > div > div > div > div > div > div > div > div"
+    selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
+    try:
+        # Getting all the messages of the chat
+        await pg.waitForSelector(selector)
+        values = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                    .map(element => element.textContent)''')
+        sender = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+                                                    .map(element => element.getAttribute("data-pre-plain-text"))''')
+        lastMessage = values[-1]
+        last_message_sender = sender[-1]
+        last_message_time = sender[-1].split(',')
+        last_message_time = last_message_time[0].replace('[', '')
+        lastMessage = lastMessage.replace(last_message_time, '')
+    except Exception as e:
+        print(e)
+        lastMessage = ""
+    global lastOutgoingMessage
+    if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
+        print(Fore.GREEN + f"{tg}-", end="")
+        print(lastMessage, end="")
+        print(Style.RESET_ALL) 
+    lastOutgoingMessage = lastMessage 
