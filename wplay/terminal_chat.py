@@ -49,7 +49,7 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
-        if 'switch' in msg or 'Switch' in msg or 'SWITCH' in msg :
+        if 'switch' in message or 'Switch' in message or 'SWITCH' in message :
             await getMessages(page, target)
 
         # File Share:
