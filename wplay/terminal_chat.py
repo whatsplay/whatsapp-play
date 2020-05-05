@@ -57,8 +57,6 @@ async def chat(target):
         await io.send_message(page, message)
 
 
-lastOutgoingMessage = ''
-
 async def getMessages(pg, tg):
     selector = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
@@ -77,7 +75,7 @@ async def getMessages(pg, tg):
     except Exception as e:
         print(e)
         lastMessage = ""
-    global lastOutgoingMessage
+    lastOutgoingMessage = ''
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
