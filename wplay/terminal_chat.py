@@ -31,7 +31,7 @@ async def chat(target):
         target = await target_select.manual_select_target(page)
 
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
-    print("TYPE 'switch' TO VIEW LAST RECEIVED MESSAGE \n")
+    print("\033[91m {}\033[00m".format("TYPE 'switch' TO VIEW LAST RECEIVED MESSAGE \n"))
 
     while True:
         await getMessages(page, target)
