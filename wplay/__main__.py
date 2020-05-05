@@ -18,6 +18,7 @@ from wplay import schedule_message
 from wplay import about_changer
 from wplay import get_news
 from wplay import get_media
+from wplay import download_media
 from wplay import message_service
 from wplay import target_info
 from wplay.utils.Logger import Logger
@@ -122,6 +123,12 @@ def get_arg_parser():
         action="store_true",
         help="finds the information about target's contact")
 
+    group.add_argument(
+        "-wd",
+        "--download-media",
+        action="store_true",
+        help="Download the media of the target's contact")
+
     return parser
 
 
@@ -163,6 +170,9 @@ async def get_and_match_args(parser):
 
     elif args.target_info:
         await target_info.target_info(args.target)
+
+    elif args.download_media:
+        await download_media.download_media(args.target)
 
     elif args.save_gdrive_chats:
         if args.target is None:
