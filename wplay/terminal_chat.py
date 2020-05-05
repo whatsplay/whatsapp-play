@@ -36,7 +36,7 @@ async def chat(target):
     while True:
         await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
-        
+
         if '...' in message:
             message.remove('...')
             await io.send_message(page, message)
@@ -53,7 +53,7 @@ async def chat(target):
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
-        
+
         await io.send_message(page, message)
 
 
@@ -79,5 +79,5 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
-        print(Style.RESET_ALL) 
-    lastOutgoingMessage = lastMessage 
+        print(Style.RESET_ALL)
+    lastOutgoingMessage = lastMessage
