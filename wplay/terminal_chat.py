@@ -75,5 +75,5 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
-        print(Style.RESET_ALL) 
-    lastOutgoingMessage = lastMessage 
+        print(Style.RESET_ALL)
+    lastOutgoingMessage = lastMessage
