@@ -46,16 +46,13 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
-        if 'switch' in message or 'Switch' in message or 'SWITCH' in message :
-            await getMessages(page, target)
 
         # File Share:
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
-
+        await getMessages(page, target)
         await io.send_message(page, message)
-
 
 async def getMessages(pg, tg):
     selector = "#main > div > div > div > div > div > div > div > div"
