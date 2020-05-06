@@ -31,7 +31,6 @@ async def chat(target):
         target = await target_select.manual_select_target(page)
 
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
-    print("\033[91m {}\033[00m".format("TYPE 'switch' TO VIEW LAST RECEIVED MESSAGE \n"))
 
     while True:
         await getMessages(page, target)
@@ -76,5 +75,5 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
-        print(Style.RESET_ALL)
-    lastOutgoingMessage = lastMessage
+        print(Style.RESET_ALL) 
+    lastOutgoingMessage = lastMessage 
