@@ -8,6 +8,7 @@ from wplay.utils import io
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
+from wplay import chatbot
 # endregion
 
 
@@ -75,5 +76,8 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
+        if lastMessage[0] == '/':
+            bot_msg=chatbot.Bot(last_Message = lastMessage)
+            await io.send_message(pg, bot_msg)
         print(Style.RESET_ALL)
     lastOutgoingMessage = lastMessage
