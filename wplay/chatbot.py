@@ -9,17 +9,20 @@ def Bot(last_Message):
                 "howareyou?": say_fine,
             }
     simple_menu_keys = simple_menu.keys()
+
     try:
         command_args = last_Message[1:].split(" ", 1)
         print("Command args: {cmd}".format(cmd=command_args))
+
         if len(command_args) == 1 and command_args[0] in simple_menu_keys:
             return simple_menu[command_args[0]]()
         else:
             return "Wrong command. Send me /help to see a list of valid commands"
+
     except KeyError as e:
             print("Key Error Exception: {err}".format(err=str(e)))
-            
-            
+
+
 def say_hi():
     print("Saying hi")
     return "Wplay chatbot says hi! Hope you are having a nice day..."
