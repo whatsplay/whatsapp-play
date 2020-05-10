@@ -46,8 +46,7 @@ whatsapp_selectors_dict = {
     'contact_info_page_target_group_creation_info_element': ':scope > div:last-child > span',
     'contact_info_page_target_group_description_element': ':scope > div:last-child span:first-of-type',
     'contact_info_page_target_group_member_elements': ':scope > div:nth-child(4) > div > div',
-    'invalid_number_ok_button': '#app > div > span> div > span > div > div > div > div > div > div > div'
-    'invalid_number_ok_button':'#app > div > span> div > span > div > div > div > div > div > div > div',
+    'invalid_number_ok_button': '#app > div > span> div > span > div > div > div > div > div > div > div',
     'target_name_selector': "#main > header > div > div > div > span",
     'media_text': "#app > div > div > div > div > span > div > span > div > div > div > div > div > div > div > div > span",
     'media_images': "#app > div > div > div > div > span > div > span > div > div > span > div > div > div > div > div > div",
