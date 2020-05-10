@@ -114,8 +114,8 @@ def get_arg_parser():
     group.add_argument(
         "-wbc",
         "--broadcast",
-        action = "store_true",
-        help = "Broadcast message")
+        action="store_true",
+        help="Broadcast message")
 
     group.add_argument(
         "-wtf",
@@ -183,6 +183,7 @@ async def get_and_match_args(parser):
         except (IndexError, ValueError):
             bID: int = 0
         save_chat.runMain('pull', str(args.target), bID)
+
 
 async def main():
     print_logo("wplay")

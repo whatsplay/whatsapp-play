@@ -4,9 +4,9 @@
             
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
-[![PyPi](https://img.shields.io/pypi/v/wplay)](https://img.shields.io/pypi/v/wplay)
+[![PyPi](https://img.shields.io/pypi/v/wplay)](https://pypi.org/project/wplay/)
 ![CircleCI](https://circleci.com/gh/rpotter12/whatsapp-play/tree/master.svg?style=svg&circle-token=2b67dd21e60a01fdd36a670629574479aeb2f5c4)
-[![Docker](https://img.shields.io/docker/cloud/build/rpotter12/whatsapp-play)](https://img.shields.io/docker/cloud/build/rpotter12/whatsapp-play)
+[![Docker](https://img.shields.io/docker/cloud/build/rpotter12/whatsapp-play)](https://hub.docker.com/repository/docker/rpotter12/whatsapp-play/general)
 [![Build Status](https://travis-ci.org/rpotter12/whatsapp-play.svg?branch=master)](https://travis-ci.org/rpotter12/whatsapp-play)
 [![codecov](https://codecov.io/gh/rpotter12/whatsapp-play/branch/master/graph/badge.svg)](https://codecov.io/gh/rpotter12/whatsapp-play)
 [![twitter](https://img.shields.io/twitter/url/https/github.com/rpotter12/whatsapp-play.svg?style=social)](https://twitter.com/rpotter121998)
@@ -16,11 +16,11 @@
 
 It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. This CLI software does not require any API key for the execution.
 
-***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line.
+***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
+
+***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line. Whatsapp-play can also act as a bot when a particular command is sent to it.
 
 ***message_service*** It's a substitute for the API, allow you to communicate your programs to wplay. You modify our file messages.json with the number and message and the service will read the JSON and send the message. Check [Wiki Usage](https://github.com/rpotter12/whatsapp-play/wiki/Usage#whatsapp-service) for details.
-
-***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
 ***telegram_bot*** sends the tracking status to our telegram bot.
 
@@ -46,7 +46,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ### Install whatsapp-play from PyPI: <br />
 Windows: `python -m pip install wplay` <br />
-Unix/Linux: `python3 -m pip install wplay` <br />
+Unix/Linux/Mac: `python3 -m pip install wplay` <br />
 **Installation Video:** [Simple Installation Link](https://youtu.be/HS6ksu6rCxQ)
 
 ### Alternate way - Run whatsapp-play from source code: <br />

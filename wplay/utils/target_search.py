@@ -66,7 +66,7 @@ async def search_and_select_target_all_ways(page: Page, target: str, hide_groups
 
 async def search_target_by_number(page: Page, target: str):
     if await __try_load_contact_by_number(page, target):
-        #target_focused_title = await __get_focused_target_title(page, target)
+        # target_focused_title = await __get_focused_target_title(page, target)
         # await __display_complete_target_info(page,choosed_target,contact_tuple)
         await __wait_for_message_area(page)
         return True
@@ -95,10 +95,8 @@ async def search_and_select_target(page: Page, target: str, hide_groups: bool = 
     group_list_elements_unchecked = await __get_groups_elements_filtered(page, target, hide_groups)
     contact_titles_unchecked = await __get_contacts_titles_from_elements_unchecked(page, contact_list_elements_unchecked)
     group_titles_unchecked = await __get_groups_titles_from_elements_unchecked(page, group_list_elements_unchecked)
-    contact_list_unchecked = __zip_contact_titles_and_elements_unchecked(
-        contact_titles_unchecked, contact_list_elements_unchecked)
-    group_list_unchecked = __zip_group_titles_and_elements_unchecked(
-        group_titles_unchecked, group_list_elements_unchecked)
+    contact_list_unchecked = __zip_contact_titles_and_elements_unchecked(contact_titles_unchecked, contact_list_elements_unchecked)
+    group_list_unchecked = __zip_group_titles_and_elements_unchecked(group_titles_unchecked, group_list_elements_unchecked)
     contact_tuple = __check_contact_list(target, contact_list_unchecked)
     group_tuple = __check_group_list(target, group_list_unchecked)
     target_tuple = __get_target_tuple(contact_tuple, group_tuple)
@@ -228,8 +226,7 @@ async def __type_in_chat_or_message_search(page, target):
 async def __get_chats_messages_groups_elements(page: Page):
     chats_messages_groups_elements_list = []  # type : list[int]
     try:
-        chats_messages_groups_elements_list = await page.querySelectorAll\
-            (whatsapp_selectors_dict['chats_groups_messages_elements'])
+        chats_messages_groups_elements_list = await page.querySelectorAll(whatsapp_selectors_dict['chats_groups_messages_elements'])
         return chats_messages_groups_elements_list
     except Exception as e:
         print(e)
@@ -241,9 +238,9 @@ async def __get_contacts_matched_with_query(chats_groups_messages_elements_list:
     get_contact_node_title_function = 'node => node.parentNode.getAttribute("title")'
     for idx, element in enumerate(chats_groups_messages_elements_list):
         try:
-            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'],get_contact_node_title_function)
+            contact_name = await element.querySelectorEval(whatsapp_selectors_dict['contact_element'], get_contact_node_title_function)
             if contact_name is not None:
-                contacts_to_choose_from.append((contact_name,idx))
+                contacts_to_choose_from.append((contact_name, idx))
         except ElementHandleError:
             # if it is not a contact element, move to the next one
             continue
@@ -313,8 +310,7 @@ async def __get_complete_info_on_group(page):
 async def __get_target_group_name(element, complete_target_info):
     try:
         get_inner_text_function = 'e => e.innerText'
-        complete_target_info['Name'] = await element.querySelectorEval\
-            (whatsapp_selectors_dict['contact_info_page_target_group_name_element'],get_inner_text_function)
+        complete_target_info['Name'] = await element.querySelectorEval(whatsapp_selectors_dict['contact_info_page_target_group_name_element'],get_inner_text_function)
     except Exception as e:
         print(e)
 
@@ -347,8 +343,7 @@ async def __get_target_group_members(element, complete_target_info):
         else:
             target_group_members_selector = whatsapp_selectors_dict['contact_info_page_target_group_member_elements']
 
-        target_group_member_elements = await element.querySelectorAll\
-            (target_group_members_selector)
+        target_group_member_elements = await element.querySelectorAll(target_group_members_selector)
 
         group_member_name_selector = ':scope span[title]'
         get_element_title_function = 'e => e.getAttribute("title")'
@@ -424,8 +419,8 @@ async def __close_contact_info_page(page: Page):
     try:
         await page.waitForSelector(
             whatsapp_selectors_dict['contact_info_page_close_button'],
-            visible = True,
-            timeout = 5000
+            visible=True,
+            timeout=5000
         )
         await page.click(whatsapp_selectors_dict['contact_info_page_close_button'])
     except Exception as e:
@@ -471,9 +466,7 @@ async def __get_contacts_elements_filtered(page: Page, target: str):
             timeout=3000
         )
 
-        contact_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['contact_list_elements_filtered_new_chat']
-        )
+        contact_list_elements_unchecked = await page.querySelectorAll(whatsapp_selectors_dict['contact_list_elements_filtered_new_chat'])
     except:
         print(f'No contact named by "{target}"!')
         __logger.info('Target not found')
@@ -493,9 +486,7 @@ async def __get_groups_elements_filtered(page: Page, target: str, hide_groups: b
             timeout=3000
         )
 
-        group_list_elements_unchecked = await page.querySelectorAll(
-            whatsapp_selectors_dict['group_list_elements_filtered_new_chat']
-        )
+        group_list_elements_unchecked = await page.querySelectorAll(whatsapp_selectors_dict['group_list_elements_filtered_new_chat'])
     except:
         print(f'No group named by "{target}"!')
         __logger.info('Target not found in groups')
@@ -505,8 +496,7 @@ async def __get_groups_elements_filtered(page: Page, target: str, hide_groups: b
 async def __get_contacts_titles_from_elements_unchecked(page: Page, contact_list_elements_unchecked: list):
     contact_titles_unchecked = []
     for i in range(len(contact_list_elements_unchecked)):
-        contact_titles_unchecked\
-            .append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
+        contact_titles_unchecked.append(await page.evaluate(f'document.querySelectorAll("{whatsapp_selectors_dict["contact_list_elements_filtered_new_chat"]}")[{i}].getAttribute("title")'))
     return contact_titles_unchecked
 
 

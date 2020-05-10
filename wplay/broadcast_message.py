@@ -15,6 +15,7 @@ from wplay.utils.Logger import Logger
 __logger = Logger(Path(__file__).name)
 # endregion
 
+
 class InvalidNumber(Exception):
     message = "Either Number is invalid or no account exist for the number or the number was kept in wrong format :(\n"
 
@@ -24,15 +25,15 @@ def ProcessNumbers():
     print("Choose a text file containing full numbers with country code, one number per line.")
     Tk().withdraw()
     filename = askopenfile(
-        initialdir = data_folder_path,
-        title = 'Choose a text file with numbers.',
-        filetypes = [("text files", "*.txt")],
-        mode="r"
-    )
+            initialdir=data_folder_path,
+            title='Choose a text file with numbers.',
+            filetypes=[("text files", "*.txt")],
+            mode="r"
+            )
     numbers = filename.readlines()
     for i in range(len(numbers)):
         number = numbers[i].strip("\n+")
-        numbers[i]=number
+        numbers[i] = number
     return numbers
 
 
@@ -41,11 +42,11 @@ async def broadcast():
     FailureReport = list()
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     numbers = ProcessNumbers()
-    message : List[str] = io.ask_user_for_message_breakline_mode()
+    message: List[str] = io.ask_user_for_message_breakline_mode()
 
     for number in numbers:
         if await search_target_by_number(page, number):
-            await io.send_message(page,message)
+            await io.send_message(page, message)
 
     __logger.info("Messages broadcasted successfully!")
     print("Messages broadcasted successfully!")

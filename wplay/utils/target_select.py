@@ -38,11 +38,7 @@ async def __open_new_chat(page: Page):
 
 async def __get_focused_target_title(page: Page):
     try:
-        await page.waitForSelector(
-                whatsapp_selectors_dict['target_focused_title'],
-                visible=True,
-                timeout=0
-                )
+        await page.waitForSelector(whatsapp_selectors_dict['target_focused_title'], visible=True, timeout=0)
         target_focused_title = await page.evaluate(f'document.querySelector("{whatsapp_selectors_dict["target_focused_title"]}").getAttribute("title")')
     except Exception as e:
         print(f'No target selected! Error: {str(e)}')

@@ -9,7 +9,7 @@ from wplay.utils.target_search import search_target_by_number
 from wplay.utils import target_select
 from wplay.utils import io
 from wplay.utils import helpers
-from wplay.utils import  verify_internet
+from wplay.utils import verify_internet
 from wplay.utils.Logger import Logger
 from wplay.utils.MessageStack import MessageStack
 # endregion
@@ -50,8 +50,7 @@ async def message_service():
     # Initialize a instance of MessageStack
     message_stack = MessageStack()
     # Move all messages from open_messages.json to messages.json when the program starts
-    message_stack.move_all_messages(
-        helpers.open_messages_json_path, helpers.messages_json_path)
+    message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)
 
     while True:
         if verify_internet.internet_avalaible():
@@ -60,25 +59,20 @@ async def message_service():
                 current_msg = next(message_stack.get_message())
 
                 # Move message from messages.json to open_messages.json
-                message_stack.move_message(
-                    helpers.messages_json_path,
-                    helpers.open_messages_json_path,
-                    current_msg['uuid'])
+                message_stack.move_message(helpers.messages_json_path, helpers.open_messages_json_path, current_msg['uuid'])
 
                 try:
                     if await search_target_by_number(page, current_msg['number']):
                         await io.send_message(page, current_msg['message'])
-                    message_stack.remove_message(
-                        current_msg['uuid'], helpers.open_messages_json_path)
+                    message_stack.remove_message(current_msg['uuid'], helpers.open_messages_json_path)
                 except ValueError:
                     __logger.debug("Wrong JSON Formatting. Message Deleted.")
-                    message_stack.remove_message(
-                        current_msg['uuid'], helpers.open_messages_json_path)
+                    message_stack.remove_message(current_msg['uuid'], helpers.open_messages_json_path)
                 except Exception as e:
-                    # If any error occurs that is not because of wrong data, the message will be moved back to messages.json
+                    # If any error occurs that is not because of wrong data,
+                    # the message will be moved back to messages.json
                     __logger.error(f'Error handling and sending the message: {str(e)}')
-                    MessageStack().move_message(helpers.open_messages_json_path,
-                                                helpers.messages_json_path, current_msg['uuid'])
+                    MessageStack().move_message(helpers.open_messages_json_path, helpers.messages_json_path, current_msg['uuid'])
             except (StopIteration, json.JSONDecodeError):
                 # if there are no messages to catch we will have this 'Warning', will try again after a time
                 time.sleep(1)
@@ -87,6 +81,4 @@ async def message_service():
             time.sleep(15)
 
         # Move messages from open_messages.json to messages.json that wasn't sended.
-        message_stack.move_all_messages(
-            helpers.open_messages_json_path, helpers.messages_json_path)
-        
+        message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)

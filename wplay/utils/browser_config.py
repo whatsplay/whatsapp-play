@@ -124,11 +124,7 @@ def __patch_pyppeteer():
 async def __config_browser(username: str = None, save_session: bool = False):
     __logger.debug('Configuring Browser.')
     if username is not None and username.strip() != '' and save_session:
-        return await launch(
-            headless=False,
-            autoClose=False,
-            userDataDir=user_data_folder_path / username
-        )
+        return await launch(headless=False, autoClose=False, userDataDir=user_data_folder_path / username)
     else:
         return await launch(headless=False, autoClose=False)
 

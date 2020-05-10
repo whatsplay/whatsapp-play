@@ -52,7 +52,7 @@ def send_status(bot, update):
         file_data = f.readlines()
         text: Union[str, bytes] = file_data[len(file_data) - 1]
         bot.send_message(chat_id=chat_id, text=text)
-    except:
+    except Exception as e:
         bot.send_message(chat_id=chat_id, text='oops! An error occurred')
 
 
@@ -66,9 +66,7 @@ def telegram_status(name):
     new_token = False
     token_file_path = "wplay/telegram_token.pkl"
     if Path(token_file_path).exists():
-        user_choice = input(
-            "Do you want to use last saved token (Y) or enter new token (N): "
-        )
+        user_choice = input("Do you want to use last saved token (Y) or enter new token (N): ")
         if user_choice in "Yy":
             with open(token_file_path, "rb") as token_file:
                 TOKEN = pickle.load(token_file)

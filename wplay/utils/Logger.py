@@ -28,9 +28,7 @@ class Logger:
             console.setLevel(self.level)
 
             # create formatter and add it to the handlers
-            formatter = logging.Formatter(
-                    '%(name)s - %(levelname)s - %(message)s'
-                    )
+            formatter = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
             console.setFormatter(formatter)
             file_handler.setFormatter(formatter)
 

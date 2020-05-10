@@ -19,20 +19,15 @@ async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     query: str = str(input("What's the news theme? : "))
 
-    await page.waitForSelector(
-        whatsapp_selectors_dict['profile_photo_element'],
-        visible=True
-    )
+    await page.waitForSelector(whatsapp_selectors_dict['profile_photo_element'], visible=True)
     await page.click(whatsapp_selectors_dict['profile_photo_element'])
     news = ''
     while True:
         current_news = str(fetch_news(query))
         print(current_news)
         if news != current_news:
-            await page.waitForSelector(
-                    whatsapp_selectors_dict['about_edit_button_element'])
-            await page.click(
-                    whatsapp_selectors_dict['about_edit_button_element'])
+            await page.waitForSelector(whatsapp_selectors_dict['about_edit_button_element'])
+            await page.click(whatsapp_selectors_dict['about_edit_button_element'])
             for _ in range(140):
                 await page.keyboard.press('Backspace')
             news = current_news

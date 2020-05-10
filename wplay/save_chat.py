@@ -23,15 +23,8 @@ __logger = Logger(Path(__file__).name)
 
 
 def getGoogleAccountTokenFromAuth():
-    payload: dict = {
-            'Email': gmail,
-            'Passwd': passw,
-            'app': client_pkg,
-            'client_sig': client_sig,
-            'parentAndroidId': devid
-            }
-    request = requests.post(
-        'https://android.clients.google.com/auth', data=payload)
+    payload: dict = {'Email': gmail, 'Passwd': passw, 'app': client_pkg, 'client_sig': client_sig, 'parentAndroidId': devid}
+    request = requests.post('https://android.clients.google.com/auth', data=payload)
     token = re.search('Token=(.*?)\n', request.text)
     if token:
         return token.group(1)
@@ -49,8 +42,7 @@ def getGoogleDriveToken(token):
         'service': 'oauth2:https://www.googleapis.com/auth/drive.appdata https://www.googleapis.com/auth/drive.file',
         'has_permission': '1'
     }
-    request = requests.post(
-        'https://android.clients.google.com/auth', data=payload)
+    request = requests.post('https://android.clients.google.com/auth', data=payload)
     token = re.search('Auth=(.*?)\n', request.text)
     if token:
         return token.group(1)
@@ -81,16 +73,12 @@ def downloadFileGoogleDrive(bearer, url, local):
 
 def gDriveFileMap():
     global bearer
-    data = rawGoogleDriveRequest(
-        bearer, 'https://www.googleapis.com/drive/v2/files')
+    data = rawGoogleDriveRequest(bearer, 'https://www.googleapis.com/drive/v2/files')
     jres = json.loads(data)
     backups = []  # type : list
     for result in jres['items']:
         if result['title'] == 'gdrive_file_map':
-            backups.append((result['description'],
-                            rawGoogleDriveRequest(
-                                bearer,
-                                result['downloadUrl'])))
+            backups.append((result['description'], rawGoogleDriveRequest(bearer, result['downloadUrl'])))
     if len(backups) == 0:
         quit('Unable to locate google drive file map for: ' + pkg)
     return backups
@@ -157,10 +145,7 @@ def getMultipleFiles(data, folder):
             if os.path.isfile(local) and 'database' not in local.lower():
                 quit('Skipped: "' + local + '".')
             else:
-                downloadFileGoogleDrive(
-                    bearer,
-                    'https://www.googleapis.com/drive/v2/files/' + entries['r'] + '?alt=media',
-                    local)
+                downloadFileGoogleDrive(bearer, 'https://www.googleapis.com/drive/v2/files/' + entries['r'] + '?alt=media', local)
                 localFileLog(entries['m'])
 
 
@@ -197,10 +182,7 @@ def runMain(mode, asset, bID):
         if os.path.isfile(local) and 'database' not in local.lower():
             quit('Skipped: "' + local + '".')
         else:
-            downloadFileGoogleDrive(
-                bearer,
-                'https://www.googleapis.com/drive/v2/files/' + r + '?alt=media',
-                local)
+            downloadFileGoogleDrive(bearer, 'https://www.googleapis.com/drive/v2/files/' + r + '?alt=media', local)
             localFileLog(m)
     elif mode == 'sync':
         for i, drive in enumerate(drives):

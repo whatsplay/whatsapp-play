@@ -7,6 +7,7 @@ from wplay.utils import helpers
 from wplay.utils.Logger import Logger
 # endregion
 
+
 class MessageStack():
     def __init__(self):
         self.logger = Logger(Path(__file__).name)
@@ -22,15 +23,15 @@ class MessageStack():
 
     def __write_json(self, data: dict, file_path: Path):
         with open(file_path, "w") as json_file:
-            json.dump(data, json_file, indent=4) 
+            json.dump(data, json_file, indent=4)
 
     def __ensure_valid_json(self, file_path: Path):
-        valid_data = {"messages":list()}
+        valid_data = {"messages": list()}
         try:
             with open(file_path) as json_file:
                 data = json.load(json_file)
-                if not 'messages' in data:
-                    self.__write_json(valid_data, file_path)                
+                if 'messages' not in data:
+                    self.__write_json(valid_data, file_path)
         except json.JSONDecodeError:
             # Empty or Invalid Json
             self.__write_json(valid_data, file_path)
@@ -48,7 +49,7 @@ class MessageStack():
         with open(file_path) as json_file:
             json_data = json.load(json_file)
         json_data['messages'].append(message)
-        
+
         self.__write_json(json_data, file_path)
         self.logger.info(f'Message appended to {file_path.name}')
 
@@ -56,7 +57,7 @@ class MessageStack():
             self,
             from_file_path: Path = helpers.messages_json_path) -> Iterator[dict]:
         """
-        Yield a message from a file. 
+        Yield a message from a file.
 
         Arguments:
             from_file_path {Path} -- open_messages_path or messages_path from helpers
