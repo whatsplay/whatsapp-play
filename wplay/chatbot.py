@@ -1,5 +1,8 @@
 from googlesearch import search
-def Bot(last_Message):
+from pyppeteer import launch
+from wplay.utils.helpers import chatbot_image_folder_path
+
+async def Bot(last_Message):
     print('\n Bot activated')
     first_last_Message= "".join(last_Message.split())
     simple_menu = {                                 # function requires no extra arguments
@@ -25,6 +28,12 @@ def Bot(last_Message):
                 result.append(j)
             print("Sending links for query")
             return result
+
+        elif command_arg[0] == "image":
+            query = "".join(command_arg[1])
+            await takeScreenshot(query)
+            print("Taking screenshot of google image for query")
+            return "Sending you screenshot"
 
         else:
             return "Wrong command. Send me /help to see a list of valid commands"
@@ -59,4 +68,11 @@ def _help_commands():
                "/good night, " \
                "/how are you?"
 
-
+async def takeScreenshot(qry):
+    browser = await launch()
+    page = await browser.newPage()
+    await page.goto('https://www.google.com/search?q={}&source=lnms&tbm=isch'.format(qry))
+    image_path = str(chatbot_image_folder_path / '{}.png'.format(qry))
+    await page.screenshot({'path': image_path})
+    await browser.close()
+    
