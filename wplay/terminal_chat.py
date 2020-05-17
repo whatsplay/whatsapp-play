@@ -1,5 +1,6 @@
 # region IMPORTS
 from pathlib import Path
+import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
@@ -18,6 +19,7 @@ __logger = Logger(Path(__file__).name)
 
 
 async def chat(target):
+    initial_minimize = True
     __logger.info("Chatting with target")
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
@@ -34,6 +36,13 @@ async def chat(target):
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
     while True:
+        #Minimizing the Window after Target Select
+        if (initial_minimize==True):
+            print("Browser Minimized")
+            Minimize = win32gui.GetForegroundWindow()
+            win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+            initial_minimize = False
+
         await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
