@@ -76,8 +76,12 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
-        if lastMessage[0] == '/':
-            bot_msg=chatbot.Bot(last_Message = lastMessage)
+        if '/image' in lastMessage:
+            bot_msg=await chatbot.Bot(last_Message = lastMessage)
+            await io.send_message(pg, bot_msg)
+            await io.send_file(pg)
+        elif lastMessage[0] == '/':
+            bot_msg=await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
         print(Style.RESET_ALL)
     lastOutgoingMessage = lastMessage

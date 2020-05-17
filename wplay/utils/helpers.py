@@ -68,6 +68,7 @@ messages_json_folder_path = data_folder_path / 'messagesJSON' / 'system'
 messages_json_path = data_folder_path / 'messagesJSON' / 'messages.json'
 open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' / 'openMessages.json'
 media_path = data_folder_path / 'media' / 'media'
+chatbot_image_folder_path = data_folder_path / 'ChatbotImage'
 # endregion
 
 # region MENU STYLES
@@ -93,6 +94,7 @@ def create_dirs():
     media_path.mkdir(parents=True, exist_ok=True)
     tracking_folder_path.mkdir(parents = True, exist_ok = True)
     messages_json_folder_path.mkdir(parents = True, exist_ok = True)
+    chatbot_image_folder_path.mkdir(parents= True, exist_ok=True)
 
 
 def kill_child_processes(parent_pid, sig=signal.SIGTERM):
