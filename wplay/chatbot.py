@@ -37,13 +37,14 @@ async def Bot(last_Message):
 
         elif command_arg[0] == "maps":
             query = "".join(command_arg[1])
-            map_parameters_list = query.replace(" ", "") 
+            map_parameters_list = query.replace(" ", "")
             map_parameters = map_parameters_list.split(',')
             base_url = "https://www.google.com/maps/dir/?api=1&"
             custom_url = base_url + "origin={ori}&destination={dest}&travelmode={t_mode}".format(
             ori=map_parameters[0],
             dest=map_parameters[1],
             t_mode=map_parameters[2])
+            print("Sending link for google maps")
             return custom_url
 
         else:
