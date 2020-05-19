@@ -19,7 +19,7 @@ __logger = Logger(Path(__file__).name)
 '''
 Visit https://newsapi.org/ to get your own API key.
 '''
-newsapi = NewsApiClient(api_key="YOUR API KEY") 
+newsapi = NewsApiClient(api_key="YOUR API KEY")
 
 async def get_news(target):
     def fetch_news(country_code):
