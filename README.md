@@ -28,7 +28,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***message_timer*** is a message timer script. It sends messages to your WhatsApp contact from time to time. The number of messages and type of messages is decided by you. It's possible to send messages at random interval and the message type is chosen randomly.
 
-***save_chat*** is a script to save all the chat which we backup on our google drive.Edit the 'auth' section in "settings.cfg".Google account login credentials (username and password) and Google services device id.Search Google Play for "device id" for plenty of apps that can reveal this information and enter your device id in deid in 'auth'
+***save_chat*** is a script to save all the chat which we backup on our google drive.Edit the 'auth' section in "settings.cfg".Google account login credentials (username and password) and Google services device id.Search Google Play for "device id" for plenty of apps that can reveal this information and enter your device id in devid in 'auth'
 section.
 
 ***schedule_message*** is a script to send message at a schedule time.
