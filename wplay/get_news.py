@@ -20,8 +20,7 @@ __logger = Logger(Path(__file__).name)
 
 
 load_dotenv()
-newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
-
+newsapi = NewsApiClient(api_key="XXXXXXXXXXXXXXXXXXXXXXX")
 
 async def get_news(target):
     def fetch_news(country_code):
@@ -42,10 +41,11 @@ async def get_news(target):
 
     country = input("Enter your country code (ex: us or in): ")
     while True:
-        try:
-            news, source = fetch_news(country)
-            news_ = f"*{news}* \n Full News :  {source}"
-        except Exception as e:
-            print("Unable to get the news", e)
+        #try:
+        news, source = fetch_news(country)
+        news_ = f"*{news}* \n Full News :  {source}"
         await io.send_message(page, news_)
+        # except Exception as e:
+        #     print("Unable to get the news", e)
+        #await io.send_message(page, news_)
         time.sleep(900)  # Sends news in every 15 min
