@@ -62,6 +62,7 @@ async def chat(target):
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
+
         await getMessages(page, target)
         await io.send_message(page, message)
 
