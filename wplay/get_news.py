@@ -2,6 +2,7 @@
 from pathlib import Path
 import time
 import os
+import win32gui, win32con
 
 from dotenv import load_dotenv
 from newsapi.newsapi_client import NewsApiClient
@@ -39,6 +40,11 @@ async def get_news(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
 
     country = input("Enter your country code (ex: us or in): ")
     while True:

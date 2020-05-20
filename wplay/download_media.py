@@ -1,5 +1,6 @@
 # region Imports
 from pathlib import Path
+import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
@@ -31,6 +32,11 @@ async def download_media(target):
                     )
     else:
         await target_select.manual_select_target(page)
+
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
 
     count = int(input("Count of media you want to download: "))
 

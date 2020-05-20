@@ -1,6 +1,7 @@
 # region Imports
 import time
 from pathlib import Path
+import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils.Logger import Logger
@@ -15,6 +16,15 @@ __logger = Logger(Path(__file__).name)
 
 async def get_profile_photos():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
+    #Waiting time for Login
+    time.sleep(8)
+    
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+
     total_contacts = int(input("Please provide total whatsapp contacts: "))
     loop = round(total_contacts/7)
     images_list = []
