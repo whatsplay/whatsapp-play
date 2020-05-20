@@ -10,6 +10,10 @@ from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import browser_config
 # endregion
 
+'''
+Visit https://newsapi.org/ to get your own API key.
+'''
+
 newsapi = NewsApiClient(api_key = "YOUR API KEY")
 
 
