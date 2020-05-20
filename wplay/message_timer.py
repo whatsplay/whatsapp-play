@@ -1,6 +1,7 @@
 # region IMPORTS
 import time
 import random
+import win32gui, win32con
 from pathlib import Path
 
 from wplay.utils import browser_config
@@ -28,6 +29,12 @@ async def message_timer(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+
     # Region INPUTS
     __logger.info("Input message information for message timer")
     message_type_numbers: int = int(input("How many types of messages will you send? "))

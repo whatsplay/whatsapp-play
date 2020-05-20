@@ -3,6 +3,7 @@ from pathlib import Path
 import threading
 import time
 import json
+import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils.target_search import search_target_by_number
@@ -44,10 +45,17 @@ inside the file "messages.json" located at user/wplay/messagesJSON folder.
 
 async def message_service():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+
     __logger.info("Message Service On.")
     print("Message Service is ON, press CTRL+C to stop.")
     print("Listening for messages in file 'messages.json' inside user/wplay/messagesJSON folder.")
     # Initialize a instance of MessageStack
+
     message_stack = MessageStack()
     # Move all messages from open_messages.json to messages.json when the program starts
     message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)
@@ -79,6 +87,6 @@ async def message_service():
         else:
             __logger.debug('Internet is not available, trying again after 15 seconds.')
             time.sleep(15)
-
+        
         # Move messages from open_messages.json to messages.json that wasn't sended.
         message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)

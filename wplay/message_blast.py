@@ -1,6 +1,7 @@
 # region IMPORTS
 from pathlib import Path
 from typing import List
+import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
@@ -22,6 +23,12 @@ async def message_blast(target: str):
         await target_search.search_and_select_target_all_ways(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+
     message: List[str] = io.ask_user_for_message_breakline_mode()
     number_of_messages: int = int(input("Enter the number of messages to blast: "))
     __logger.debug("Blasting messages")
