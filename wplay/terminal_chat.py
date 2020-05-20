@@ -47,6 +47,15 @@ async def chat(target):
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
 
+        if '#_FWD' in message:
+            target = input("\n\nFoward to Target Name: ")
+            if target is not None:
+                await target_search.search_and_select_target(page, target)
+            else:
+                await target_select.manual_select_target(page)
+            await io.send_message(page, getMessages.foward_message)
+            message = io.ask_user_for_message_breakline_mode()
+
         # File Share:
         if '#_FILE' in message:
             message.remove('#_FILE')
@@ -76,6 +85,8 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
+        print(Style.RESET_ALL)
+        getMessages.foward_message = lastMessage
         if '/image' in lastMessage:
             bot_msg=await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
@@ -83,5 +94,4 @@ async def getMessages(pg, tg):
         elif lastMessage[0] == '/':
             bot_msg=await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
-        print(Style.RESET_ALL)
     lastOutgoingMessage = lastMessage
