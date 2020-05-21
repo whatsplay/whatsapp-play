@@ -3,9 +3,9 @@ from pathlib import Path
 
 from pyppeteer.page import Page
 
+from wplay.utils import target_search
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import whatsapp_selectors_dict
-from wplay.utils import target_search
 # endregion
 
 
