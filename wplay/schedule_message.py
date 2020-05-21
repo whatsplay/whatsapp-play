@@ -29,7 +29,6 @@ async def schedule_message(target):
     print("Browser Minimized")
     Minimize = win32gui.GetForegroundWindow()
     win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
-    
     time_ = input("Enter the schedule time in HH:MM:SS format-> ")
     hour, minute, second = time_.split(':')
     current_time = datetime.now()

@@ -107,7 +107,6 @@ async def target_info(target):
     print("Browser Minimized")
     Minimize = win32gui.GetForegroundWindow()
     win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
-    
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')

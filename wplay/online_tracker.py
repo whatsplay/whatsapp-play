@@ -36,7 +36,6 @@ async def tracker(target):
     print("Browser Minimized")
     Minimize = win32gui.GetForegroundWindow()
     win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
-    
     # opens status file of the target person
     status_file: str = open(tracking_folder_path / f'status_{target_name}.txt', 'w').close()
     status_file: str = open(tracking_folder_path / f'status_{target_name}.txt', 'a')
