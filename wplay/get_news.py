@@ -4,7 +4,6 @@ import time
 import os
 import win32gui, win32con
 
-from dotenv import load_dotenv
 from newsapi.newsapi_client import NewsApiClient
 
 from wplay.utils import browser_config
@@ -19,10 +18,10 @@ from wplay.utils.Logger import Logger
 __logger = Logger(Path(__file__).name)
 # endregion
 
-
-load_dotenv()
-newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
-
+'''
+Visit https://newsapi.org/ to get your own API key.
+'''
+newsapi = NewsApiClient(api_key="YOUR API KEY")
 
 async def get_news(target):
     def fetch_news(country_code):
@@ -51,7 +50,7 @@ async def get_news(target):
         try:
             news, source = fetch_news(country)
             news_ = f"*{news}* \n Full News :  {source}"
+            await io.send_message(page, news_)
         except Exception as e:
             print("Unable to get the news", e)
-        await io.send_message(page, news_)
-        time.sleep(900)  # Sends news in every 15 min
+        time.sleep(120)  # Sends news in every 2 min
