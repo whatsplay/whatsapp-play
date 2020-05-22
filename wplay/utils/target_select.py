@@ -3,6 +3,7 @@ from pathlib import Path
 
 from pyppeteer.page import Page
 
+from wplay.utils import target_search
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import whatsapp_selectors_dict
 # endregion
@@ -15,6 +16,8 @@ async def manual_select_target(page: Page, hide_groups: bool = False):
     target_focused_title = await __get_focused_target_title(page)
     await __wait_for_message_area(page)
     __print_selected_target_title(target_focused_title)
+    complete_target_info =  await target_search.__get_complete_info_on_target(page)
+    target_search.__print_complete_target_info(complete_target_info)
     return target_focused_title
 # endregion
 
