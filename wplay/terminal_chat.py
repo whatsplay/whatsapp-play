@@ -5,6 +5,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay.chat_intermediator import intermediary
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
@@ -50,11 +51,7 @@ async def chat(target):
 
         #Be an Intermediator
         if '#_FWD' in message:
-            target = input("\n\nFoward to Target Name: ")
-            if target is not None:
-                await target_search.search_and_select_target(page, target)
-            else:
-                await target_select.manual_select_target(page)
+            await target_search.search_and_select_target(page, intermediary.rec)
             await io.send_message(page, getMessages.foward_message)
             message = io.ask_user_for_message_breakline_mode()
 
