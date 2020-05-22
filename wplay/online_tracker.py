@@ -1,5 +1,4 @@
 import time
-import win32gui, win32con
 from pathlib import Path
 from datetime import datetime
 from playsound import playsound
