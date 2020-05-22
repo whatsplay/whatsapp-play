@@ -1,7 +1,6 @@
 # region IMPORTS
 from pathlib import Path
 import time
-import win32gui, win32con
 
 from newsapi.newsapi_client import NewsApiClient
 
@@ -39,10 +38,7 @@ async def get_news(target):
     else:
         await target_select.manual_select_target(page)
 
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+    browser_config.minimize()
     country = input("Enter your country code (ex: us or in): ")
     while True:
         try:

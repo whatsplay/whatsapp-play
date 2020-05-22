@@ -2,8 +2,6 @@
 from tkinter import Tk
 from tkinter.filedialog import askopenfile
 from pathlib import Path
-import time
-import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils.target_search import search_target_by_number
@@ -24,15 +22,7 @@ class InvalidNumber(Exception):
 
 def ProcessNumbers():
     __logger.info("Processing numbers.")
-
-    #Waiting time for Login
-    time.sleep(8)
-
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
-
+    browser_config.minimize_delay()
     print("Choose a text file containing full numbers with country code, one number per line.")
     Tk().withdraw()
     filename = askopenfile(

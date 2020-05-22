@@ -1,6 +1,5 @@
 # region IMPORTS
 from pathlib import Path
-import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
@@ -38,9 +37,7 @@ async def chat(target):
     while True:
         #Minimizing the Window after Target Select
         if (initial_minimize==True):
-            print("Browser Minimized")
-            Minimize = win32gui.GetForegroundWindow()
-            win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+            browser_config.minimize()
             initial_minimize = False
 
         await getMessages(page, target)

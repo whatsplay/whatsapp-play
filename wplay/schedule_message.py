@@ -3,7 +3,6 @@ from datetime import datetime
 from pathlib import Path
 import time
 import sys
-import win32gui, win32con
 
 from wplay.utils import browser_config
 from wplay.utils import target_search
@@ -25,10 +24,7 @@ async def schedule_message(target):
     else:
         await target_select.manual_select_target(page)
 
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+    browser_config.minimize()
     time_ = input("Enter the schedule time in HH:MM:SS format-> ")
     hour, minute, second = time_.split(':')
     current_time = datetime.now()

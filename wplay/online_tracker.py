@@ -32,10 +32,7 @@ async def tracker(target):
     else: # if target is none then it allow user to select target manually from browser
         target_name = await target_select.manual_select_target(page, hide_groups=True)
 
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+    browser_config.minimize()
     # opens status file of the target person
     status_file: str = open(tracking_folder_path / f'status_{target_name}.txt', 'w').close()
     status_file: str = open(tracking_folder_path / f'status_{target_name}.txt', 'a')

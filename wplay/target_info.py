@@ -8,7 +8,6 @@ from phonenumbers import geocoder
 from phonenumbers import timezone
 import re
 import sys
-import win32gui, win32con
 from pathlib import Path
 from wplay.utils.Logger import Logger
 # end IMPORTS
@@ -103,10 +102,7 @@ async def target_info(target):
     else:
         await target_select.manual_select_target(page)
 
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+    browser_config.minimize()
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')

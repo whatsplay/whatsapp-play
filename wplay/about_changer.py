@@ -2,7 +2,6 @@
 import time
 import os
 import sys
-import win32gui, win32con
 
 from newsapi.newsapi_client import NewsApiClient
 import requests
@@ -18,12 +17,7 @@ newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
 
 async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
-    #Waiting time for Login
-    time.sleep(8)
-    #Minimizing the Window after Target Select
-    print("Browser Minimized")
-    Minimize = win32gui.GetForegroundWindow()
-    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+    browser_config.minimize_delay()
     query: str = str(input("What's the news theme? : "))
 
     await page.waitForSelector(whatsapp_selectors_dict['profile_photo_element'], visible=True)
