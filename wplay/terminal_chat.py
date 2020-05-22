@@ -35,8 +35,7 @@ async def chat(target):
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
 
     while True:
-        #Minimizing the Window after Target Select
-        if (initial_minimize==True):
+        if (initial_minimize):
             browser_config.minimize()
             initial_minimize = False
 
@@ -79,15 +78,15 @@ async def getMessages(pg, tg):
         print(e)
         lastMessage = ""
     lastOutgoingMessage = ''
-    if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
+    if tg.lower() in last_message_sender.lower() and lastOutgoingMessage != lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
         if '/image' in lastMessage:
-            bot_msg=await chatbot.Bot(last_Message = lastMessage)
+            bot_msg = await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
             await io.send_file(pg)
         elif lastMessage[0] == '/':
-            bot_msg=await chatbot.Bot(last_Message = lastMessage)
+            bot_msg = await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
         print(Style.RESET_ALL)
     lastOutgoingMessage = lastMessage
