@@ -191,10 +191,22 @@ def runMain(mode, asset, bID):
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
             getMultipleFiles(drive[1], folder)'''
+
+# region IMPORTS
+from pathlib import Path
+
 from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils.helpers import save_chat_folder_path
+from wplay.utils.Logger import Logger
+# endregion
+
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
+
 
 async def save_chat(target):
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
@@ -213,6 +225,7 @@ async def save_chat(target):
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
     # Getting all the messages of the chat
     try:
+        __logger.info("Saving chats with target")
         await page.waitForSelector(selector)
         values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
                                                     .map(element => element.textContent)''')
