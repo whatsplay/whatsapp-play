@@ -223,6 +223,7 @@ async def save_chat(target):
 
     selector = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
+
     # Getting all the messages of the chat
     try:
         __logger.info("Saving chats with target")
@@ -231,14 +232,18 @@ async def save_chat(target):
                                                     .map(element => element.textContent)''')
         sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
                                                     .map(element => element.getAttribute("data-pre-plain-text"))''')
+
         final_values = [x[:-8] for x in values]
         new_list = [a + b for a, b in zip(sender, final_values)]
+
         # opens chat file of the target person
         with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
             for s in new_list:
                 output.write("%s\n" % s)
+
     except Exception as e:
         print(e)
+
     finally:
         # save the chat and close the file
         output.close()
