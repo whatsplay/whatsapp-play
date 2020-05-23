@@ -236,6 +236,9 @@ async def save_chat(target):
         with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
             for s in new_list:
                 output.write("%s\n" % s)
-        output.close()
     except Exception as e:
         print(e)
+    finally:
+        # save the chat and close the file
+        output.close()
+        print(f'\nChat file saved in: {str(save_chat_folder_path/"chat_")}{target_name}.txt')
