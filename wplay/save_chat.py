@@ -208,29 +208,21 @@ async def save_chat(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         target = await target_select.manual_select_target(page)
-    # opens status file of the target person
-    #chat_file: str = open(save_chat_folder_path / f'chat_{target}.txt', 'w').close()
-    #chat_file: str = open(save_chat_folder_path / f'status_{target}.txt', 'a')
 
     selector = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
     # Getting all the messages of the chat
-    await page.waitForSelector(selector)
-    values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
-                                                .map(element => element.textContent)''')
-    sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
-                                                .map(element => element.getAttribute("data-pre-plain-text"))''')
-    final_values = [x[:-8] for x in values]
-    new_list = [a + b for a, b in zip(sender, final_values)]
-    #print(*new_list, sep = "\n")
-    #chat_file: str = open(save_chat_folder_path / f'chat_{target}.txt', 'w').close()
-    with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
-        for s in new_list:
-            output.write("%s\n" % s)
-    output.close()
-    # for lines in new_list:
-    #     chat_file.write('\n'.join(str(line) for line in lines))
-    #     chat_file.write('\n')
-    # chat_file.close()
-    # with open("file.txt", "w") as output:
-    # output.write(str(values))
+    try:
+        await page.waitForSelector(selector)
+        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                    .map(element => element.textContent)''')
+        sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+                                                    .map(element => element.getAttribute("data-pre-plain-text"))''')
+        final_values = [x[:-8] for x in values]
+        new_list = [a + b for a, b in zip(sender, final_values)]
+        with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
+            for s in new_list:
+                output.write("%s\n" % s)
+        output.close()
+    except Exception as e:
+        print(e)
