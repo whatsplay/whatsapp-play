@@ -176,6 +176,7 @@ async def get_and_match_args(parser):
 
     elif args.save_chat:
         await save_chat.save_chat(args.target)
+
         '''
         if args.target is None:
              parser.print_help()
@@ -184,7 +185,8 @@ async def get_and_match_args(parser):
              bID: int = int(sys.argv[3])
          except (IndexError, ValueError):
              bID: int = 0
-         save_chat.runMain('pull', str(args.target), bID)'''
+         save_chat.runMain('pull', str(args.target), bID)
+        '''
 
 
 async def main():
