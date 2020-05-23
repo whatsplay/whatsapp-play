@@ -83,7 +83,7 @@ def get_arg_parser():
 
     group.add_argument(
         "-pull",
-        "--pull",
+        "--save-chat",
         action="store_true",
         help="save all chats from Google Drive, target is necessary")
 
@@ -174,15 +174,16 @@ async def get_and_match_args(parser):
     elif args.download_media:
         await download_media.download_media(args.target)
 
-    elif args.save_gdrive_chats:
-        if args.target is None:
-            parser.print_help()
-            parser.exit()
-        try:
-            bID: int = int(sys.argv[3])
-        except (IndexError, ValueError):
-            bID: int = 0
-        save_chat.runMain('pull', str(args.target), bID)
+    elif args.save_chat:
+        await save_chat.save_chat(args.target)
+        # if args.target is None:
+        #     parser.print_help()
+        #     parser.exit()
+        # try:
+        #     bID: int = int(sys.argv[3])
+        # except (IndexError, ValueError):
+        #     bID: int = 0
+        # save_chat.runMain('pull', str(args.target), bID)
 
 
 async def main():

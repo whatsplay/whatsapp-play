@@ -5,7 +5,7 @@ https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
 EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
 '''
-
+'''
 # region IMPORTS
 from pathlib import Path
 from configparser import ConfigParser
@@ -190,4 +190,47 @@ def runMain(mode, asset, bID):
             if len(drives) > 1:
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
-            getMultipleFiles(drive[1], folder)
+            getMultipleFiles(drive[1], folder)'''
+from wplay.utils import browser_config
+from wplay.utils import target_search
+from wplay.utils import target_select
+from wplay.utils.helpers import save_chat_folder_path
+
+async def save_chat(target):
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
+    if target is not None:
+        try:
+            await target_search.search_and_select_target(page, target)
+        except Exception as e:
+            print(e)
+            await page.reload()
+            await target_search.search_and_select_target_without_new_chat_button(page, target)
+    else:
+        target = await target_select.manual_select_target(page)
+    # opens status file of the target person
+    #chat_file: str = open(save_chat_folder_path / f'chat_{target}.txt', 'w').close()
+    #chat_file: str = open(save_chat_folder_path / f'status_{target}.txt', 'a')
+
+    selector = "#main > div > div > div > div > div > div > div > div"
+    selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
+    # Getting all the messages of the chat
+    await page.waitForSelector(selector)
+    values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                .map(element => element.textContent)''')
+    sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+                                                .map(element => element.getAttribute("data-pre-plain-text"))''')
+    final_values = [x[:-8] for x in values]
+    new_list = [a + b for a, b in zip(sender, final_values)]
+    print(*new_list, sep = "\n")
+    #chat_file: str = open(save_chat_folder_path / f'chat_{target}.txt', 'w').close()
+    with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
+        for s in new_list:
+        output.write("%s\n" % s)
+    output.close()
+    # for lines in new_list:
+    #     chat_file.write('\n'.join(str(line) for line in lines))
+    #     chat_file.write('\n')
+    # chat_file.close()
+    # with open("file.txt", "w") as output:
+    # output.write(str(values))
