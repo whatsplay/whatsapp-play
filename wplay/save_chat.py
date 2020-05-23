@@ -222,11 +222,11 @@ async def save_chat(target):
                                                 .map(element => element.getAttribute("data-pre-plain-text"))''')
     final_values = [x[:-8] for x in values]
     new_list = [a + b for a, b in zip(sender, final_values)]
-    print(*new_list, sep = "\n")
+    #print(*new_list, sep = "\n")
     #chat_file: str = open(save_chat_folder_path / f'chat_{target}.txt', 'w').close()
     with open(save_chat_folder_path / f'chat_{target}.txt', 'w') as output:
         for s in new_list:
-        output.write("%s\n" % s)
+            output.write("%s\n" % s)
     output.close()
     # for lines in new_list:
     #     chat_file.write('\n'.join(str(line) for line in lines))
