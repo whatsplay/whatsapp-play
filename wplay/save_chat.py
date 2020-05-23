@@ -242,4 +242,4 @@ async def save_chat(target):
     finally:
         # save the chat and close the file
         output.close()
-        print(f'\nChat file saved in: {str(save_chat_folder_path/"chat_")}{target_name}.txt')
+        print(f'\nChat file saved in: {str(save_chat_folder_path/"chat_")}{target}.txt')
