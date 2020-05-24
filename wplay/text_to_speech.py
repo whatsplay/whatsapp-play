@@ -27,5 +27,5 @@ async def text_to_speech(target):
     except Exception as e:
         print(e)
 
-    # finally:
-    #     print(f'\nAudio file saved in: {str(audio_file_folder_path/)}{target}.mp3')
+    finally:
+        print('\nAudio file saved in: {}/ {}.mp3'.format(audio_file_folder_path, target))

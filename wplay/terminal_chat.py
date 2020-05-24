@@ -32,7 +32,7 @@ async def chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
-    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
+    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n.\nType '#_AUD' to convert text to speech and send audio file.\n"))
 
     while True:
         await getMessages(page, target)
