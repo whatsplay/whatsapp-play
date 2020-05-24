@@ -5,14 +5,15 @@ import sys
 
 from newsapi.newsapi_client import NewsApiClient
 import requests
-from dotenv import load_dotenv
 
 from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import browser_config
 # endregion
 
-load_dotenv()
-newsapi = NewsApiClient(api_key=os.getenv("NEWS_API_KEY"))
+
+print("Visit https://newsapi.org/ to get your own API key")
+key = input("Enter you API KEY : ")
+newsapi = NewsApiClient(api_key = '{}'.format(key))
 
 
 async def about_changer():
