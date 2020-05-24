@@ -246,4 +246,4 @@ def runMain(mode, asset, bID):
             if len(drives) > 1:
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
-            getMultipleFiles(drive[1], folder)
+            getMultipleFiles(drive[1], folder)'''

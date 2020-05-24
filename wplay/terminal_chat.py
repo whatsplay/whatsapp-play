@@ -5,6 +5,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay import text_to_speech
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
@@ -46,6 +47,10 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
+
+        if '#_AUD' in message:
+            await text_to_speech.text_to_speech(target)
+            await io.send_file(page)
 
         # File Share:
         if '#_FILE' in message:
