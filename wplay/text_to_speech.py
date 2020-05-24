@@ -1,11 +1,21 @@
-from gtts import gTTS
-import os
-from wplay.utils.helpers import audio_file_folder_path
+# region IMPORTS
+from pathlib import Path
 
+from wplay.utils.helpers import audio_file_folder_path
+from wplay.utils.Logger import Logger
+
+from gtts import gTTS
+# endregion
+
+
+# region LOGGER
+__logger = Logger(Path(__file__).name)
+# endregion
 
 async def text_to_speech(target):
 
     try:
+        __logger.info("Converting text to speech audio file")
         # The text that you want to convert to audio
         text = input("\n\nWrite the text you want to convert to audio file: ")
 
