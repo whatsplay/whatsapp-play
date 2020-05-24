@@ -48,7 +48,7 @@ async def chat(target):
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
 
-        if '#_AUD' in message:
+        if '#_TTS' in message:
             await text_to_speech.text_to_speech(target)
             await io.send_file(page)
 
