@@ -30,7 +30,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***message_timer*** is a message timer script. It sends messages to your WhatsApp contact from time to time. The number of messages and type of messages is decided by you. It's possible to send messages at random interval and the message type is chosen randomly.
 
-***save_chat*** is a script to save all the chat which we backup on our google drive.
+***save_chat*** is a script to save the chat of the particular target.
 
 ***schedule_message*** is a script to send message at a schedule time.
 
