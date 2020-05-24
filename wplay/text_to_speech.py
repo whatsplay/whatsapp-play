@@ -28,7 +28,7 @@ async def text_to_speech(target):
 
         # Language in which you want to convert
         language = input("\n\nEnter the language you want to convert to audio file: ")
-        
+
         # Passing the text and language to the engine,
         myobj = gTTS(text=text, lang=language, slow=False)
         # Saving the converted audio in a mp3 file named
