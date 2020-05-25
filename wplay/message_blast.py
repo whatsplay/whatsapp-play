@@ -22,6 +22,8 @@ async def message_blast(target: str):
         await target_search.search_and_select_target_all_ways(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    browser_config.minimize()
     message: List[str] = io.ask_user_for_message_breakline_mode()
     number_of_messages: int = int(input("Enter the number of messages to blast: "))
     __logger.debug("Blasting messages")

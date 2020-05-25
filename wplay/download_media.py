@@ -31,7 +31,7 @@ async def download_media(target):
                     )
     else:
         await target_select.manual_select_target(page)
-
+    browser_config.minimize()
     count = int(input("Count of media you want to download: "))
 
     # Click on the photo element of the target

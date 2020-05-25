@@ -18,6 +18,7 @@ newsapi = NewsApiClient(api_key = '{}'.format(key))
 
 async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    browser_config.minimize_delay()
     query: str = str(input("What's the news theme? : "))
 
     await page.waitForSelector(whatsapp_selectors_dict['profile_photo_element'], visible=True)

@@ -28,6 +28,8 @@ async def my_script(target):
 # region IMPORTS
 from typing import Any, List
 from pathlib import Path
+import win32gui, win32con
+import time
 
 import websockets.client
 from pyppeteer import launch, connection, launcher
@@ -137,6 +139,21 @@ async def __set_view_port(page: Page):
     await page.setViewport({'width': 1280, 'height': 800})
 # endregion
 
+def minimize_delay():
+    #Waiting time for Login
+    time.sleep(8)
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+#endregion
+
+def minimize():
+    #Minimizing the Window after Target Select
+    print("Browser Minimized")
+    Minimize = win32gui.GetForegroundWindow()
+    win32gui.ShowWindow(Minimize, win32con.SW_MINIMIZE)
+#endregion
 
 # region CODE THAT MIGHT BE USEFUL SOMEDAY
 '''

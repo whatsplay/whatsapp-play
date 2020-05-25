@@ -101,6 +101,8 @@ async def target_info(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    browser_config.minimize()
     """
     # to find location by ip address
     print('Get you ipinfo token from https://ipinfo.io/account')

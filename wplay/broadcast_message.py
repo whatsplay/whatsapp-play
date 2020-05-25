@@ -22,6 +22,7 @@ class InvalidNumber(Exception):
 
 def ProcessNumbers():
     __logger.info("Processing numbers.")
+    browser_config.minimize_delay()
     print("Choose a text file containing full numbers with country code, one number per line.")
     Tk().withdraw()
     filename = askopenfile(

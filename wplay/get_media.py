@@ -15,6 +15,7 @@ __logger = Logger(Path(__file__).name)
 
 async def get_profile_photos():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    browser_config.minimize_delay()
     total_contacts = int(input("Please provide total whatsapp contacts: "))
     loop = round(total_contacts/7)
     images_list = []

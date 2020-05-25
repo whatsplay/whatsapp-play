@@ -23,6 +23,8 @@ async def schedule_message(target):
         await target_search.search_and_select_target(page, target)
     else:
         await target_select.manual_select_target(page)
+
+    browser_config.minimize()
     time_ = input("Enter the schedule time in HH:MM:SS format-> ")
     hour, minute, second = time_.split(':')
     current_time = datetime.now()

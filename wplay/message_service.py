@@ -44,10 +44,12 @@ inside the file "messages.json" located at user/wplay/messagesJSON folder.
 
 async def message_service():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    browser_config.minimize()
     __logger.info("Message Service On.")
     print("Message Service is ON, press CTRL+C to stop.")
     print("Listening for messages in file 'messages.json' inside user/wplay/messagesJSON folder.")
     # Initialize a instance of MessageStack
+
     message_stack = MessageStack()
     # Move all messages from open_messages.json to messages.json when the program starts
     message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)
@@ -79,6 +81,5 @@ async def message_service():
         else:
             __logger.debug('Internet is not available, trying again after 15 seconds.')
             time.sleep(15)
-
         # Move messages from open_messages.json to messages.json that wasn't sended.
         message_stack.move_all_messages(helpers.open_messages_json_path, helpers.messages_json_path)

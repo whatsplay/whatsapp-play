@@ -38,6 +38,7 @@ async def get_news(target):
     else:
         await target_select.manual_select_target(page)
 
+    browser_config.minimize()
     country = input("Enter your country code (ex: us or in): ")
     while True:
         try:
