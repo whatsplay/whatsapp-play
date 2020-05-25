@@ -34,7 +34,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***schedule_message*** is a script to send message at a schedule time.
 
-***about_changer*** is a script to change the about section of your profile. User can select personal quote, news, quotes, etc.
+***about_changer*** is a script to change the about section of your profile according to lastest headlines. Visit <https://newsapi.org/> to get your own API key and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY").
 
 ***get_news*** is a script to get all types of news in your whatsapp group.Visit <https://newsapi.org/> to get your own API key and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY")
 
