@@ -10,7 +10,7 @@ __logger = Logger(Path(__file__).name)
 # endregion
 
 
-async def intermediary(sender, receiver):
+async def intermediary(target):
     __logger.info("Being and Intermediator")
-    intermediary.rec = receiver
-    await terminal_chat.chat(sender)
+    intermediary.rec = target[1]
+    await terminal_chat.chat(target[0])

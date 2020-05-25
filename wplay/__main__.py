@@ -41,12 +41,9 @@ def get_arg_parser():
         metavar="TARGET",
         type=str,
         default=None,
-        nargs="?",
+        nargs="+",
         help="""contact or group name, optional,
               target can be selected manually except for saving chat""")
-
-    parser.add_argument('-s', '--sender', help='contact or group name')
-    parser.add_argument('-r', '--receiver', help='contact or group name')
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
@@ -158,7 +155,7 @@ async def get_and_match_args(parser):
         await terminal_chat.chat(args.target)
 
     elif args.chat_intermediator:
-        await chat_intermediator.intermediary(args.sender, args.receiver)
+        await chat_intermediator.intermediary(args.target)
 
     elif args.broadcast:
         await broadcast_message.broadcast()
