@@ -5,6 +5,7 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay import text_to_speech
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
@@ -31,7 +32,7 @@ async def chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
-    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
+    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\nType '#_TTS' to convert text to speech and send audio file.\n"))
 
     while True:
         await getMessages(page, target)
@@ -46,6 +47,11 @@ async def chat(target):
             else:
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
+
+        #Text to speech
+        if '#_TTS' in message:
+            await text_to_speech.text_to_speech(target)
+            await io.send_file(page)
 
         # File Share:
         if '#_FILE' in message:

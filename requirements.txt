@@ -10,6 +10,7 @@ decorator>=4.4.2
 flake8>=3.8.2
 future>=0.18.2
 google>=2.0.3
+gTTS==2.1.1
 idna>=2.9
 importlib-metadata>=1.6.0
 mccabe>=0.6.1
