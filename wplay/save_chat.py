@@ -54,8 +54,8 @@ async def save_chat(target):
         # save the chat and close the file
         output.close()
         print(f'\nChat file saved in: {str(save_chat_folder_path/"chat_")}{target}.txt')
-'''
-This code is copied by
+
+'''This code is copied by
 https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
 
 EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
@@ -244,4 +244,5 @@ def runMain(mode, asset, bID):
             if len(drives) > 1:
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
-            getMultipleFiles(drive[1], folder)'''
+            getMultipleFiles(drive[1], folder)
+'''
