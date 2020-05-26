@@ -29,7 +29,7 @@ def ask_user_for_message_breakline_mode() -> List[str]:
         if message[i] == '.':
             message.pop(i)
             break
-        elif message[i] == '...' or message[i] == '#_FILE' or message[i] == '#_FWD':
+        elif message[i] == '...' or message[i] == '#_FILE' or message[i] == '#_TTS' or message[i] == '#_FWD':
             break
         i += 1
     return message
