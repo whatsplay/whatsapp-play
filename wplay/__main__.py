@@ -56,7 +56,7 @@ def get_arg_parser():
         "-wi",
         "--chat-intermediator",
         action="store_true",
-        help="Be an Intermediator from command line use -wi -s <sender> -r <receiver>")
+        help='Be an Intermediator from command line use -wi "sender" "receiver" ')
 
     group.add_argument(
         "-wms",

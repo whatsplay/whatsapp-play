@@ -5,11 +5,8 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
-<<<<<<< HEAD
 from wplay.chat_intermediator import intermediary
-=======
 from wplay import text_to_speech
->>>>>>> upstream/master
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
