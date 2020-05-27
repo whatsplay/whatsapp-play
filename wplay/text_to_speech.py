@@ -6,8 +6,8 @@ from wplay.utils.Logger import Logger
 
 from gtts import gTTS
 from tkinter import *
-from tkinter.ttk import * 
-from tkinter.filedialog import askopenfile 
+from tkinter.ttk import *
+from tkinter.filedialog import askopenfile
 # endregion
 
 
@@ -46,10 +46,10 @@ async def text_to_speech(target):
 
         else :
             __logger.info("Converting text file to speech audio file")
-            root = Tk() 
+            root = Tk()
             root.geometry('200x100')
-            btn = Button(root, text ='Open', command = lambda: open_file()) 
-            btn.pack(side = TOP, pady = 10) 
+            btn = Button(root, text ='Open', command = open_file())
+            btn.pack(side = TOP, pady = 10)
             pathlabel = Label(root)
             pathlabel.pack()
             mainloop()
