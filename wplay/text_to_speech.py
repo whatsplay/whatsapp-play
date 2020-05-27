@@ -22,7 +22,7 @@ def open_file():
 async def text_to_speech(target):
 
     try:
-        option = input("Choose(1/2) \n1.Convert text to speech \n 2.To Convert a text file into spech\n")
+        option = input("Choose(1/2) \n1.Convert text to speech \n2.To Convert a text file into spech\n")
 
         list_laguages=['bn: Bengali', 'de: German', 'en: English','es: Spanish','fr: French','gu: Gujarati','hi: Hindi',
             'it: Italian','ja: Japanese','kn: Kannada','ko: Korean','ml: Malayalam','mr: Marathi','pt-br: Portuguese (Brazil)','ru: Russian',
@@ -53,7 +53,7 @@ async def text_to_speech(target):
             pathlabel = Label(root)
             pathlabel.pack()
             mainloop()
-            print(open_file.path)
+            print('\nYou choose file {}'.format(open_file.path))
             file = open(open_file.path, "r").read().replace("\n", " ")
             speech = gTTS(text = str(file), lang = language, slow = False)
             speech.save(audio_file_folder_path / "{}.mp3".format(target))
