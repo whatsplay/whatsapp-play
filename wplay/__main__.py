@@ -188,17 +188,6 @@ async def get_and_match_args(parser):
         await save_chat.save_chat(args.target)
 
 
-        # if args.target is None:
-        #      parser.print_help()
-        #      parser.exit()
-        #  try:
-        #      bID: int = int(sys.argv[3])
-        #  except (IndexError, ValueError):
-        #      bID: int = 0
-        #  save_chat.runMain('pull', str(args.target), bID)
-
-
-
 async def main():
     print_logo("wplay")
     create_dirs()
