@@ -34,7 +34,7 @@ async def text_to_speech(target):
         # Language in which you want to convert
         language = input("\n\nEnter the language you want to convert to audio file: ")
 
-        if option == '1:
+        if option == '1':
             __logger.info("Converting text to speech audio file")
             # The text that you want to convert to audio
             text = input("\n\nWrite the text you want to convert to audio file: ")
