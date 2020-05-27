@@ -7,9 +7,7 @@ from wplay.utils.Logger import Logger
 from gtts import gTTS
 from tkinter import *
 from tkinter.ttk import * 
-
 from tkinter.filedialog import askopenfile 
-
 # endregion
 
 
@@ -24,7 +22,7 @@ def open_file():
 async def text_to_speech(target):
 
     try:
-        option = input("Choose 1.Convert text to speech \n 2.To Convert a text file into spech\n")
+        option = input("Choose(1/2) \n1.Convert text to speech \n 2.To Convert a text file into spech\n")
 
         list_laguages=['bn: Bengali', 'de: German', 'en: English','es: Spanish','fr: French','gu: Gujarati','hi: Hindi',
             'it: Italian','ja: Japanese','kn: Kannada','ko: Korean','ml: Malayalam','mr: Marathi','pt-br: Portuguese (Brazil)','ru: Russian',
@@ -47,7 +45,6 @@ async def text_to_speech(target):
             myobj.save( audio_file_folder_path / "{}.mp3".format(target))
 
         else :
-            
             __logger.info("Converting text file to speech audio file")
             root = Tk() 
             root.geometry('200x100')
@@ -57,7 +54,6 @@ async def text_to_speech(target):
             pathlabel.pack()
             mainloop()
             print(open_file.path)
-            # The text that you want to convert to audio
             file = open(open_file.path, "r").read().replace("\n", " ")
             speech = gTTS(text = str(file), lang = language, slow = False)
             speech.save(audio_file_folder_path / "{}.mp3".format(target))
