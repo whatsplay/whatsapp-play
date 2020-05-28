@@ -60,8 +60,7 @@ https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
 
 EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
-'''
-'''
+
 # region IMPORTS
 from pathlib import Path
 from configparser import ConfigParser
