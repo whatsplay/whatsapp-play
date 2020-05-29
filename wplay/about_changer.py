@@ -10,14 +10,15 @@ from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import browser_config
 # endregion
 
-
-print("Visit https://newsapi.org/ to get your own API key")
-key = input("Enter you API KEY : ")
-newsapi = NewsApiClient(api_key = '{}'.format(key))
+async def get_api_key():
+    print("Visit https://newsapi.org/ to get your own API key")
+    key = input("Enter you API KEY : ")
+    get_api_key.newsapi = NewsApiClient(api_key = '{}'.format(key))
 
 
 async def about_changer():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    await get_api_key()
     query: str = str(input("What's the news theme? : "))
 
     await page.waitForSelector(whatsapp_selectors_dict['profile_photo_element'], visible=True)
@@ -41,5 +42,5 @@ async def about_changer():
 
 
 def fetch_news(query):
-    top_headlines = newsapi.get_top_headlines(q=query, language='en')
+    top_headlines = get_api_key.newsapi.get_top_headlines(q=query, language='en')
     return top_headlines['articles'][0]['title']
