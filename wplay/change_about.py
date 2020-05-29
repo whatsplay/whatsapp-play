@@ -1,4 +1,4 @@
-from wplay.utils.helpers import whatsapp_selectors_dict
+'''from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import browser_config
 async def change_about():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
@@ -11,4 +11,13 @@ async def change_about():
         await page.keyboard.press('Backspace')
     status = input("enter: ")
     await page.type(whatsapp_selectors_dict['about_text_area'], status)
-    await page.keyboard.press('Enter')
+    await page.keyboard.press('Enter')'''
+from wplay.utils import browser_config
+async def change_about():
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
+    selector = '#pane-side > div > div > div > div > div > div > div'
+    await page.waitForSelector(selector)
+    values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                    .map(element => element.textContent)''')
+    print(values)
+                                
