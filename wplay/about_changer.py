@@ -21,6 +21,7 @@ async def about_changer():
     else :
         await about_changer_news()
 
+
 #Custom About
 async def change_about():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
@@ -42,6 +43,7 @@ async def get_api_key():
     print("Visit https://newsapi.org/ to get your own API key")
     key = input("Enter you API KEY : ")
     get_api_key.newsapi = NewsApiClient(api_key = '{}'.format(key))
+
 
 #News in About
 async def about_changer_news():
