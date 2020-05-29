@@ -11,8 +11,8 @@ from wplay.utils import browser_config
 # endregion
 
 
- async def about_changer():
-    option = input("Choose(1/2) \n1.Write new about \n2.Change about with latest headline")
+async def about_changer():
+    option = input("Choose(1/2) \n1.Write new about \n2.Change about with latest headline\n")
     if option == '1':
         await change_about()
     else :
