@@ -41,7 +41,7 @@ def get_arg_parser():
         metavar="TARGET",
         type=str,
         default=None,
-        nargs="+",
+        nargs="*",
         help="""contact or group name, optional,
               target can be selected manually except for saving chat""")
 
