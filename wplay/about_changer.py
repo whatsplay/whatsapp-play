@@ -10,13 +10,37 @@ from wplay.utils.helpers import whatsapp_selectors_dict
 from wplay.utils import browser_config
 # endregion
 
+
+ async def about_changer():
+    option = input("Choose(1/2) \n1.Write new about \n2.Change about with latest headline")
+    if option == '1':
+        await change_about()
+    else :
+        await about_changer_news()
+
+
+async def change_about():
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()
+
+    await page.waitForSelector(whatsapp_selectors_dict['profile_photo_element'], visible=True)
+    await page.click(whatsapp_selectors_dict['profile_photo_element'])
+    await page.waitForSelector(whatsapp_selectors_dict['about_edit_button_element'])
+    await page.click(whatsapp_selectors_dict['about_edit_button_element'])
+    for _ in range(140):
+        await page.keyboard.press('Backspace')
+    status = input("Enter your new about: ")
+    await page.type(whatsapp_selectors_dict['about_text_area'], status)
+    await page.keyboard.press('Enter')
+    print("About changed to {}".format(status))
+
+
 async def get_api_key():
     print("Visit https://newsapi.org/ to get your own API key")
     key = input("Enter you API KEY : ")
     get_api_key.newsapi = NewsApiClient(api_key = '{}'.format(key))
 
 
-async def about_changer():
+async def about_changer_news():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     await get_api_key()
     query: str = str(input("What's the news theme? : "))
