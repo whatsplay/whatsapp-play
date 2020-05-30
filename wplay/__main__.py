@@ -65,7 +65,6 @@ def get_arg_parser():
         action="store_true",
         help='Download the peofile picture of target')
 
-
     group.add_argument(
         "-wms",
         "--message-service",
