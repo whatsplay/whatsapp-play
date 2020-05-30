@@ -22,6 +22,7 @@ from wplay import get_media
 from wplay import download_media
 from wplay import message_service
 from wplay import target_info
+from wplay import recent_chats
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -57,6 +58,12 @@ def get_arg_parser():
         "--chat-intermediator",
         action="store_true",
         help='Be an Intermediator from command line use -wi "sender" "receiver" ')
+
+    group.add_argument(
+        "-wrc",
+        "--recent-chats",
+        action="store_true",
+        help='Get the list of your recent chats')
 
     group.add_argument(
         "-wms",
@@ -171,6 +178,9 @@ async def get_and_match_args(parser):
 
     elif args.about_changer:
         await about_changer.about_changer()
+    
+    elif args.recent_chats:
+        await recent_chats.recent_chat()
 
     elif args.get_news:
         await get_news.get_news(args.target)
