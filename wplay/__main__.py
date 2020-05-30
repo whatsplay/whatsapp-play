@@ -22,6 +22,7 @@ from wplay import get_media
 from wplay import download_media
 from wplay import message_service
 from wplay import target_info
+from wplay import profile_download
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -57,6 +58,13 @@ def get_arg_parser():
         "--chat-intermediator",
         action="store_true",
         help='Be an Intermediator from command line use -wi "sender" "receiver" ')
+
+    group.add_argument(
+        "-wpd",
+        "--profile-download",
+        action="store_true",
+        help='Download the peofile picture of target')
+
 
     group.add_argument(
         "-wms",
@@ -156,6 +164,9 @@ async def get_and_match_args(parser):
 
     elif args.chat_intermediator:
         await chat_intermediator.intermediary(args.target)
+
+    elif args.profile_download:
+        await profile_download.get_profile_picture(args.target)
 
     elif args.broadcast:
         await broadcast_message.broadcast()
