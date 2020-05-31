@@ -55,6 +55,7 @@ async def chat(target):
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\nType '#_TTS' to convert text to speech and send audio file.\nType '#_FWD' to foward your last message received"))
 
     while True:
+        await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
         #Target Change

@@ -42,9 +42,12 @@ def get_arg_parser():
         metavar="TARGET",
         type=str,
         default=None,
-        nargs="*",
+        nargs="?",
         help="""contact or group name, optional,
               target can be selected manually except for saving chat""")
+
+    parser.add_argument('-s', '--sender', help='contact or group name')
+    parser.add_argument('-r', '--receiver', help='contact or group name')
 
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument(
@@ -57,7 +60,7 @@ def get_arg_parser():
         "-wi",
         "--chat-intermediator",
         action="store_true",
-        help='Be an Intermediator from command line use -wi "sender" "receiver" ')
+        help='Be an Intermediator from command line -wi -s <sender> -r <receiver> ')
 
     group.add_argument(
         "-wpd",
@@ -162,7 +165,7 @@ async def get_and_match_args(parser):
         await terminal_chat.chat(args.target)
 
     elif args.chat_intermediator:
-        await chat_intermediator.intermediary(args.target)
+        await chat_intermediator.intermediary(args.sender, args.receiver)
 
     elif args.profile_download:
         await profile_download.get_profile_picture(args.target)
