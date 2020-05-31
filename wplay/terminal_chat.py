@@ -33,10 +33,28 @@ async def chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
+    selector = "#main > div > div > div > div > div > div > div > div"
+    selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
+
+    # Getting all the messages of the chat
+    try:
+        __logger.info("Printing recent chat")
+        await page.waitForSelector(selector)
+        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+                                                    .map(element => element.textContent)''')
+        sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+                                                    .map(element => element.getAttribute("data-pre-plain-text"))''')
+        new_values = [x[:-8] for x in values]
+        new_list = [a + b for a, b in zip(sender, new_values)]
+        final_list = new_list[-6:] 
+        for s in final_list:
+            print("%s\n" % s)
+    except Exception as e:
+        print(e)
+
     print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\nType '#_TTS' to convert text to speech and send audio file.\nType '#_FWD' to foward your last message received"))
 
     while True:
-        await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
         #Target Change
