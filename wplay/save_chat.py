@@ -60,7 +60,8 @@ https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.
 
 EliteAndroidApps/WhatsApp-GD-Extractor is licensed under the
 GNU General Public License v3.0
-
+'''
+'''
 # region IMPORTS
 from pathlib import Path
 from configparser import ConfigParser
@@ -245,4 +246,5 @@ def runMain(mode, asset, bID):
             if len(drives) > 1:
                 print('Backup: ' + str(i))
                 folder = 'WhatsApp-' + str(i)
-            getMultipleFiles(drive[1], folder)'''
+            getMultipleFiles(drive[1], folder)
+'''
