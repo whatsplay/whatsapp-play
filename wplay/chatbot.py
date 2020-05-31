@@ -78,7 +78,11 @@ def _help_commands():
                "/all_commands (ist of all commands), " \
                "/good morning, " \
                "/good night, " \
-               "/how are you?"
+               "/how are you? " \
+               "/google {query} " \
+               "/image {query} " \
+               "/maps {origin}, {destination}, {mode:driving/bicycling/transit/two-wheeler/walking}"
+
 
 async def takeScreenshot(qry):
     browser = await launch()
