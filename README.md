@@ -65,7 +65,7 @@ Unix/Linux/Mac: `python3 -m pip install wplay` <br />
 `$ python3 -m wplay -h` <br />
 
 ## Usage
-<img src="images/usage2.png"><br />
+<img src="images/usage.png"><br />
 
 For detailed usage of command visit: [https://github.com/rpotter12/whatsapp-play/wiki/Usage](https://github.com/rpotter12/whatsapp-play/wiki/Usage)
 
