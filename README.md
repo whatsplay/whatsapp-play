@@ -18,7 +18,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
-***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line. Whatsapp-play can also act as a bot when a particular command is sent to it.
+***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line.Initially recent chat is displayed and then the last received message id diaplayed everytime you send a message.The chatbot gets activate when the target sends commands starting with /.Send /help command to see usage.
 
 ***chat_intermediator*** Be an intermediator between two people.
 
@@ -34,7 +34,7 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***schedule_message*** is a script to send message at a schedule time.
 
-***about_changer*** is a script to change the about section of your profile according to lastest headlines. Visit <https://newsapi.org/> to get your own API key and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY").
+***about_changer*** Change you about customizeable or you can change the about section of your profile according to lastest headlines.
 
 ***get_news*** is a script to get all types of news in your whatsapp group.Visit <https://newsapi.org/> to get your own API key and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY")
 
