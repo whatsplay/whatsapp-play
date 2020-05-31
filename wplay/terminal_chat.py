@@ -5,6 +5,8 @@ from wplay.utils import browser_config
 from wplay.utils import target_search
 from wplay.utils import target_select
 from wplay.utils import io
+from wplay.chat_intermediator import intermediary
+from wplay import text_to_speech
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import logs_path
 from colorama import Fore, Style
@@ -31,12 +33,13 @@ async def chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
-    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\n"))
+    print("\033[91m {}\033[00m".format("\nType '...' in a new line or alone in the message to change target person.\nType '#_FILE' to send Image/Video/Documentd etc.\nType '#_TTS' to convert text to speech and send audio file.\nType '#_FWD' to foward your last message received"))
 
     while True:
         await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
+        #Target Change
         if '...' in message:
             message.remove('...')
             await io.send_message(page, message)
@@ -47,10 +50,22 @@ async def chat(target):
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
 
+        #Be an Intermediator
+        if '#_FWD' in message:
+            await target_search.search_and_select_target(page, intermediary.rec)
+            await io.send_message(page, getMessages.foward_message)
+            message = io.ask_user_for_message_breakline_mode()
+
+        #Text to speech
+        if '#_TTS' in message:
+            await text_to_speech.text_to_speech(target)
+            await io.send_file(page)
+
         # File Share:
         if '#_FILE' in message:
             message.remove('#_FILE')
             await io.send_file(page)
+
         await getMessages(page, target)
         await io.send_message(page, message)
 
@@ -76,6 +91,8 @@ async def getMessages(pg, tg):
     if tg.lower() in last_message_sender.lower() and lastOutgoingMessage!=lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
+        print(Style.RESET_ALL)
+        getMessages.foward_message = lastMessage
         if '/image' in lastMessage:
             bot_msg=await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
@@ -83,5 +100,4 @@ async def getMessages(pg, tg):
         elif lastMessage[0] == '/':
             bot_msg=await chatbot.Bot(last_Message = lastMessage)
             await io.send_message(pg, bot_msg)
-        print(Style.RESET_ALL)
     lastOutgoingMessage = lastMessage

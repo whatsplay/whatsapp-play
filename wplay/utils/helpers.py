@@ -69,6 +69,7 @@ messages_json_path = data_folder_path / 'messagesJSON' / 'messages.json'
 open_messages_json_path = data_folder_path / 'messagesJSON' / 'system' / 'openMessages.json'
 media_path = data_folder_path / 'media' / 'media'
 save_chat_folder_path = data_folder_path / 'savedChats'
+audio_file_folder_path = data_folder_path / 'audioFiles'
 chatbot_image_folder_path = data_folder_path / 'ChatbotImage'
 # endregion
 
@@ -94,6 +95,7 @@ def create_dirs():
     messages_json_folder_path.mkdir(parents=True, exist_ok=True)
     media_path.mkdir(parents=True, exist_ok=True)
     save_chat_folder_path.mkdir(parents = True, exist_ok = True)
+    audio_file_folder_path.mkdir(parents = True, exist_ok = True)
     tracking_folder_path.mkdir(parents = True, exist_ok = True)
     messages_json_folder_path.mkdir(parents = True, exist_ok = True)
     chatbot_image_folder_path.mkdir(parents= True, exist_ok=True)

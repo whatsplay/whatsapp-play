@@ -11,6 +11,7 @@ from wplay import online_tracker
 from wplay import message_blast
 from wplay import message_timer
 from wplay import terminal_chat
+from wplay import chat_intermediator
 from wplay import broadcast_message
 from wplay import save_chat
 from wplay import telegram_bot
@@ -21,6 +22,7 @@ from wplay import get_media
 from wplay import download_media
 from wplay import message_service
 from wplay import target_info
+from wplay import profile_download
 from wplay.utils.Logger import Logger
 from wplay.utils.helpers import create_dirs
 from wplay.utils.helpers import kill_child_processes
@@ -40,7 +42,7 @@ def get_arg_parser():
         metavar="TARGET",
         type=str,
         default=None,
-        nargs="?",
+        nargs="*",
         help="""contact or group name, optional,
               target can be selected manually except for saving chat""")
 
@@ -50,6 +52,18 @@ def get_arg_parser():
         "--terminal-chat",
         action="store_true",
         help="chatting from command line")
+
+    group.add_argument(
+        "-wi",
+        "--chat-intermediator",
+        action="store_true",
+        help='Be an Intermediator from command line use -wi "sender" "receiver" ')
+
+    group.add_argument(
+        "-wpd",
+        "--profile-download",
+        action="store_true",
+        help='Download the peofile picture of target')
 
     group.add_argument(
         "-wms",
@@ -147,6 +161,12 @@ async def get_and_match_args(parser):
     elif args.terminal_chat:
         await terminal_chat.chat(args.target)
 
+    elif args.chat_intermediator:
+        await chat_intermediator.intermediary(args.target)
+
+    elif args.profile_download:
+        await profile_download.get_profile_picture(args.target)
+
     elif args.broadcast:
         await broadcast_message.broadcast()
 
@@ -176,17 +196,6 @@ async def get_and_match_args(parser):
 
     elif args.save_chat:
         await save_chat.save_chat(args.target)
-
-
-        # if args.target is None:
-        #      parser.print_help()
-        #      parser.exit()
-        #  try:
-        #      bID: int = int(sys.argv[3])
-        #  except (IndexError, ValueError):
-        #      bID: int = 0
-        #  save_chat.runMain('pull', str(args.target), bID)
-
 
 
 async def main():

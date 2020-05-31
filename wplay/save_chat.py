@@ -54,6 +54,7 @@ async def save_chat(target):
         # save the chat and close the file
         output.close()
         print(f'\nChat file saved in: {str(save_chat_folder_path/"chat_")}{target}.txt')
+              
 '''
 This code is copied by
 https://github.com/EliteAndroidApps/WhatsApp-GD-Extractor.

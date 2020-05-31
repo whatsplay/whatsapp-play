@@ -20,6 +20,8 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line. Whatsapp-play can also act as a bot when a particular command is sent to it.
 
+***chat_intermediator*** Be an intermediator between two people.
+
 ***message_service*** It's a substitute for the API, allow you to communicate your programs to wplay. You modify our file messages.json with the number and message and the service will read the JSON and send the message. Check [Wiki Usage](https://github.com/rpotter12/whatsapp-play/wiki/Usage#whatsapp-service) for details.
 
 ***telegram_bot*** sends the tracking status to our telegram bot.
