@@ -12,6 +12,7 @@ from gtts import gTTS
 __logger = Logger(Path(__file__).name)
 # endregion
 
+
 async def text_to_speech(target):
 
     try:
@@ -19,9 +20,8 @@ async def text_to_speech(target):
         # The text that you want to convert to audio
         text = input("\n\nWrite the text you want to convert to audio file: ")
 
-        list_laguages=['bn: Bengali', 'de: German', 'en: English','es: Spanish','fr: French','gu: Gujarati','hi: Hindi',
-        'it: Italian','ja: Japanese','kn: Kannada','ko: Korean','ml: Malayalam','mr: Marathi','pt-br: Portuguese (Brazil)','ru: Russian',
-        'ta: Tamil','te: Telugu','ur: Urdu',]
+        list_laguages = ['bn: Bengali', 'de: German', 'en: English', 'es: Spanish', 'fr: French', 'gu: Gujarati', 'hi: Hindi',
+        'it: Italian', 'ja: Japanese', 'kn: Kannada', 'ko: Korean', 'ml: Malayalam', 'mr: Marathi', 'pt-br: Portuguese (Brazil)', 'ru: Russian', 'ta: Tamil', 'te: Telugu', 'ur: Urdu']
 
         print('Choose a code for language of your choice from the following list\n')
         print(list_laguages)
@@ -32,7 +32,7 @@ async def text_to_speech(target):
         # Passing the text and language to the engine,
         myobj = gTTS(text=text, lang=language, slow=False)
         # Saving the converted audio in a mp3 file named
-        myobj.save( audio_file_folder_path / "{}.mp3".format(target))
+        myobj.save(audio_file_folder_path / "{}.mp3".format(target))
 
     except Exception as e:
         print(e)

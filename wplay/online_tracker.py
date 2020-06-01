@@ -20,15 +20,15 @@ async def tracker(target):
     '''
     This function checks the online and offline status of the target person.
     '''
-    page, _ = await browser_config.configure_browser_and_load_whatsapp() # open bot browser and load whatsapp web website
-    if target is not None: # checks if target is not none then it search for the target and select it
+    page, _ = await browser_config.configure_browser_and_load_whatsapp()  # open bot browser and load whatsapp web website
+    if target is not None:  # checks if target is not none then it search for the target and select it
         try:
             target_name = await target_search.search_and_select_target(page, target, hide_groups=True)
         except Exception as e:
             print(e)
             await page.reload()
             target_name = await target_search.search_and_select_target_without_new_chat_button(page, target, hide_groups=True)
-    else: # if target is none then it allow user to select target manually from browser
+    else:  # if target is none then it allow user to select target manually from browser
         target_name = await target_select.manual_select_target(page, hide_groups=True)
 
     # opens status file of the target person
@@ -43,10 +43,10 @@ async def tracker(target):
         __logger.info("Tracking target")
         status_file.write(f'Tracking: {target_name}\n')
         while True:
-            status: str = await target_data.get_last_seen_from_focused_target(page) # checks last seen
-            if status == 'online': # if last seen is online then shows online
+            status: str = await target_data.get_last_seen_from_focused_target(page)  # checks last seen
+            if status == 'online':  # if last seen is online then shows online
                 is_online: bool = True
-            else: # if nothing is there so shows offline
+            else:  # if nothing is there so shows offline
                 is_online: bool = False
                 status: str = 'offline'
             # play a notification sound on online

@@ -13,16 +13,16 @@ __logger = Logger(Path(__file__).name)
 # endregion
 
 
-#Asking user
+# Asking user
 async def about_changer():
     option = input("Choose(1/2) \n1.Write new about \n2.Change about with latest headline\n")
     if option == '1':
         await change_about()
-    else :
+    else:
         await about_changer_news()
 
 
-#Custom About
+# Custom About
 async def change_about():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     # opens photo element
@@ -42,10 +42,10 @@ async def get_api_key():
     __logger.info("Getting key")
     print("Visit https://newsapi.org/ to get your own API key")
     key = input("Enter you API KEY : ")
-    get_api_key.newsapi = NewsApiClient(api_key = '{}'.format(key))
+    get_api_key.newsapi = NewsApiClient(api_key='{}'.format(key))
 
 
-#News in About
+# News in About
 async def about_changer_news():
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     await get_api_key()
@@ -58,7 +58,7 @@ async def about_changer_news():
         current_news = str(fetch_news(query))
         print(current_news)
         if news != current_news:
-            #Click on edit about button
+            # Click on edit about button
             await page.waitForSelector(whatsapp_selectors_dict['about_edit_button_element'])
             await page.click(whatsapp_selectors_dict['about_edit_button_element'])
             for _ in range(140):

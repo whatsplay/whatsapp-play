@@ -59,7 +59,7 @@ async def download_media(target):
         try:
             try:
                 # If media is an image
-                countTry = 0 # Threshold of how many times to try looking for media
+                countTry = 0  # Threshold of how many times to try looking for media
                 while True:
                     if countTry > 500:
                         await page.waitForSelector(whatsapp_selectors_dict['left_arrow_button'])

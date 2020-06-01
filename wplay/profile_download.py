@@ -32,9 +32,9 @@ async def get_profile_picture(target):
     await page.waitForSelector(selector, timeout=2000)
     image_url = await page.evaluate(f'document.querySelector("{selector}").getAttribute("src")')
     try:
-            viewSource = await page.goto(image_url)
-            f = open(profile_photos_path / f'{target}.jpg', 'wb')
-            f.write(await viewSource.buffer())
-            f.close()
+        viewSource = await page.goto(image_url)
+        f = open(profile_photos_path / f'{target}.jpg', 'wb')
+        f.write(await viewSource.buffer())
+        f.close()
     except Exception as e:
         print("Error saving image")

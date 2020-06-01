@@ -46,7 +46,7 @@ async def chat(target):
                                                     .map(element => element.getAttribute("data-pre-plain-text"))''')
         new_values = [x[:-8] for x in values]
         new_list = [a + b for a, b in zip(sender, new_values)]
-        final_list = new_list[-6:] 
+        final_list = new_list[-6:]
         for s in final_list:
             print("%s\n" % s)
     except Exception as e:
@@ -58,7 +58,7 @@ async def chat(target):
         await getMessages(page, target)
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
-        #Target Change
+        # Target Change
         if '...' in message:
             message.remove('...')
             await io.send_message(page, message)
@@ -69,13 +69,13 @@ async def chat(target):
                 await target_select.manual_select_target(page)
             message = io.ask_user_for_message_breakline_mode()
 
-        #Be an Intermediator
+        # Be an Intermediator
         if '#_FWD' in message:
             await target_search.search_and_select_target(page, intermediary.rec)
             await io.send_message(page, getMessages.foward_message)
             message = io.ask_user_for_message_breakline_mode()
 
-        #Text to speech
+        # Text to speech
         if '#_TTS' in message:
             await text_to_speech.text_to_speech(target)
             await io.send_file(page)
@@ -87,6 +87,7 @@ async def chat(target):
 
         await getMessages(page, target)
         await io.send_message(page, message)
+
 
 async def getMessages(pg, tg):
     selector = "#main > div > div > div > div > div > div > div > div"
@@ -107,16 +108,16 @@ async def getMessages(pg, tg):
         print(e)
         lastMessage = ""
     lastOutgoingMessage = ''
-    if lastOutgoingMessage!=lastMessage:
+    if lastOutgoingMessage != lastMessage:
         print(Fore.GREEN + f"{tg}-", end="")
         print(lastMessage, end="")
         print(Style.RESET_ALL)
         getMessages.foward_message = lastMessage
         if '/image' in lastMessage:
-            bot_msg=await chatbot.Bot(last_Message = lastMessage)
+            bot_msg = await chatbot.Bot(last_Message=lastMessage)
             await io.send_message(pg, bot_msg)
             await io.send_file(pg)
         elif lastMessage[0] == '/':
-            bot_msg=await chatbot.Bot(last_Message = lastMessage)
+            bot_msg = await chatbot.Bot(last_Message=lastMessage)
             await io.send_message(pg, bot_msg)
     lastOutgoingMessage = lastMessage

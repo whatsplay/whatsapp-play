@@ -2,10 +2,11 @@ from googlesearch import search
 from pyppeteer import launch
 from wplay.utils.helpers import chatbot_image_folder_path
 
+
 async def Bot(last_Message):
     print('\n Bot activated')
-    first_last_Message= "".join(last_Message.split())
-    simple_menu = {                                 # function requires no extra arguments
+    first_last_Message = "".join(last_Message.split())
+    simple_menu = {
                 "hi": say_hi,
                 "help": _help_commands,
                 "goodmorning": say_goodmorning,
@@ -40,10 +41,7 @@ async def Bot(last_Message):
             map_parameters_list = query.replace(" ", "")
             map_parameters = map_parameters_list.split(',')
             base_url = "https://www.google.com/maps/dir/?api=1&"
-            custom_url = base_url + "origin={ori}&destination={dest}&travelmode={t_mode}".format(
-            ori=map_parameters[0],
-            dest=map_parameters[1],
-            t_mode=map_parameters[2])
+            custom_url = base_url + "origin={ori}&destination={dest}&travelmode={t_mode}".format(ori=map_parameters[0], dest=map_parameters[1], t_mode=map_parameters[2])
             print("Sending link for google maps")
             return custom_url
 
@@ -51,28 +49,32 @@ async def Bot(last_Message):
             return "Wrong command. Send me /help to see a list of valid commands"
 
     except KeyError as e:
-            print("Key Error Exception: {err}".format(err=str(e)))
+        print("Key Error Exception: {err}".format(err=str(e)))
 
 
 def say_hi():
     print("Saying hi")
     return "Wplay chatbot says hi! Hope you are having a nice day..."
 
-def say_goodmorning() :
+
+def say_goodmorning():
     print("Saying good morning")
     return "Bot says Good Morning! Have a Good Day..."
 
-def say_goodnight() :
+
+def say_goodnight():
     print("Saying good night")
     return "Bot says Good Night! Sweet Dreams..."
 
-def say_fine() :
+
+def say_fine():
     print("Saying I am Fine!")
     return "Bot says I am Fine Thank You! How are you?"
 
+
 def _help_commands():
-        print("Asking for help")
-        return "How may I assist you with help\n"\
+    print("Asking for help")
+    return "How may I assist you with help\n"\
                "List of commands:\n" \
                "/hi (bot says hi), " \
                "/all_commands (ist of all commands), " \
@@ -91,4 +93,3 @@ async def takeScreenshot(qry):
     image_path = str(chatbot_image_folder_path / '{}.png'.format(qry))
     await page.screenshot({'path': image_path})
     await browser.close()
-    
