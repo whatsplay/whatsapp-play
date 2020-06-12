@@ -27,7 +27,7 @@ setup(
                       "python-telegram-bot>=11.1.0",
                       "requests>=2.22.0",
                       "transitions>=0.7.2",
-                      "urllib3==1.24.3",
+                      "urllib3>=1.25.8",
                       "websockets>=8.1",
                       "whaaaaat>=0.5.2",
                       ],
