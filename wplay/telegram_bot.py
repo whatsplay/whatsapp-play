@@ -80,7 +80,7 @@ def telegram_status(name):
             pickle.dump(TOKEN, token_file)
 
     # Added all the essential command handlers
-    updater = Updater(TOKEN)
+    updater = Updater(TOKEN, use_context=True)
     dp = updater.dispatcher
     dp.add_handler(CommandHandler('start', startmessage))
     dp.add_handler(CommandHandler('status', send_status))
