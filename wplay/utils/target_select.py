@@ -18,6 +18,7 @@ async def manual_select_target(page: Page, hide_groups: bool = False):
     __print_selected_target_title(target_focused_title)
     complete_target_info =  await target_search.__get_complete_info_on_target(page)
     target_search.__print_complete_target_info(complete_target_info)
+    await __close_contact_info_page(page)
     return target_focused_title
 # endregion
 
@@ -29,6 +30,18 @@ def __print_manual_selection_info():
 
 def __print_selected_target_title(target_focused_title: str):
     print(f"You've selected the target named by: {target_focused_title}")
+
+
+async def __close_contact_info_page(page: Page):
+    try:
+        await page.waitForSelector(
+            whatsapp_selectors_dict['contact_info_page_close_button'],
+            visible=True,
+            timeout=5000
+        )
+        await page.click(whatsapp_selectors_dict['contact_info_page_close_button'])
+    except Exception as e:
+        print(e)
 
 
 async def __open_new_chat(page: Page):
