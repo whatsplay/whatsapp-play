@@ -18,6 +18,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def schedule_message(target):
+    """
+    Sends message to the target person at a scheduled time.
+    """
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
         await target_search.search_and_select_target(page, target)

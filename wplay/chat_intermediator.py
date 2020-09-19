@@ -11,6 +11,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def intermediary(sender, receiver):
+    """
+    Function to create intermediate between two person.
+    """
     __logger.info("Being and Intermediator")
     intermediary.rec = receiver
     await terminal_chat.chat(sender)

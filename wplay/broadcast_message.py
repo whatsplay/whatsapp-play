@@ -39,7 +39,6 @@ def ProcessNumbers():
 
 async def broadcast():
     __logger.info("Broadcast message.")
-    FailureReport = list()
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     numbers = ProcessNumbers()
     message: List[str] = io.ask_user_for_message_breakline_mode()

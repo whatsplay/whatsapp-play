@@ -22,7 +22,13 @@ Visit https://newsapi.org/ to get your own API key.
 newsapi = NewsApiClient(api_key="YOUR API KEY")
 
 async def get_news(target):
+    """
+    Sends news as a message in every two minutes.
+    """
     def fetch_news(country_code):
+        """
+        Return the title and url of the news.
+        """
         headlines = newsapi.get_top_headlines(country=country_code, language='en')
         url = headlines['articles'][0]['url']
         title = headlines['articles'][0]['title']

@@ -53,6 +53,7 @@ def send_status(bot, update):
         text: Union[str, bytes] = file_data[len(file_data) - 1]
         bot.send_message(chat_id=chat_id, text=text)
     except Exception as e:
+        print(e)
         bot.send_message(chat_id=chat_id, text='oops! An error occurred')
 
 

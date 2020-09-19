@@ -33,14 +33,15 @@ async def chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
-    selector = "#main > div > div > div > div > div > div > div > div"
+    # selectors
+    selector_values = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
 
     # Getting all the messages of the chat
     try:
         __logger.info("Printing recent chat")
-        await page.waitForSelector(selector)
-        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+        await page.waitForSelector(selector_values)
+        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_values}')]
                                                     .map(element => element.textContent)''')
         sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
                                                     .map(element => element.getAttribute("data-pre-plain-text"))''')
@@ -59,7 +60,7 @@ async def chat(target):
         message: list[str] = io.ask_user_for_message_breakline_mode()
 
         # Target Change
-        if '...' in message:
+        if "..." in message:
             message.remove('...')
             await io.send_message(page, message)
             target = input("\n\nNew Target Name: ")
@@ -70,54 +71,57 @@ async def chat(target):
             message = io.ask_user_for_message_breakline_mode()
 
         # Be an Intermediator
-        if '#_FWD' in message:
+        if "#_FWD" in message:
             await target_search.search_and_select_target(page, intermediary.rec)
             await io.send_message(page, getMessages.foward_message)
             message = io.ask_user_for_message_breakline_mode()
 
         # Text to speech
-        if '#_TTS' in message:
+        if "#_TTS" in message:
             await text_to_speech.text_to_speech(target)
             await io.send_file(page)
 
         # File Share:
-        if '#_FILE' in message:
-            message.remove('#_FILE')
+        if "#_FILE" in message:
+            message.remove("#_FILE")
             await io.send_file(page)
 
         await getMessages(page, target)
         await io.send_message(page, message)
 
 
-async def getMessages(pg, tg):
-    selector = "#main > div > div > div > div > div > div > div > div"
+async def getMessages(page, target):
+    """
+    Get the last messages of the chats.
+    """
+    # selectors
+    selector_values = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
     try:
         # Getting all the messages of the chat
-        await pg.waitForSelector(selector)
-        values = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+        await page.waitForSelector(selector_values)
+        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_values}')]
                                                     .map(element => element.textContent)''')
-        sender = await pg.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
+        sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
                                                     .map(element => element.getAttribute("data-pre-plain-text"))''')
         lastMessage = values[-1]
-        last_message_sender = sender[-1]
         last_message_time = sender[-1].split(',')
         last_message_time = last_message_time[0].replace('[', '')
         lastMessage = lastMessage.replace(last_message_time, '')
     except Exception as e:
         print(e)
         lastMessage = ""
-    lastOutgoingMessage = ''
+    lastOutgoingMessage = ""
     if lastOutgoingMessage != lastMessage:
-        print(Fore.GREEN + f"{tg}-", end="")
+        print(Fore.GREEN + f"{target}-", end="")
         print(lastMessage, end="")
         print(Style.RESET_ALL)
         getMessages.foward_message = lastMessage
-        if '/image' in lastMessage:
+        if "/image" in lastMessage:
             bot_msg = await chatbot.Bot(last_Message=lastMessage)
-            await io.send_message(pg, bot_msg)
-            await io.send_file(pg)
-        elif lastMessage[0] == '/':
+            await io.send_message(page, bot_msg)
+            await io.send_file(page)
+        elif lastMessage[0] == "/":
             bot_msg = await chatbot.Bot(last_Message=lastMessage)
-            await io.send_message(pg, bot_msg)
+            await io.send_message(page, bot_msg)
     lastOutgoingMessage = lastMessage
