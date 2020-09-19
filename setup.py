@@ -5,7 +5,7 @@ with open("README.md", "r") as f:
 
 setup(
     name="wplay",
-    version="8.0.4",
+    version="8.0.5",
     install_requires=["argparse >= 1.4.0",
                       "beautifulsoup4>=4.8.1",
                       "colorama>=0.4.3",
