@@ -4,6 +4,9 @@ from wplay.utils.helpers import chatbot_image_folder_path
 
 
 async def Bot(last_Message):
+    """
+    Function to perform instruction as instructed to bot.
+    """
     print('\n Bot activated')
     first_last_Message = "".join(last_Message.split())
     simple_menu = {

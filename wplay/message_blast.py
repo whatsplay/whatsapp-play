@@ -17,6 +17,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def message_blast(target: str):
+    """
+    Sends n number of messages to the target person.
+    """
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
         await target_search.search_and_select_target_all_ways(page, target)

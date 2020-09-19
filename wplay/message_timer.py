@@ -18,6 +18,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def message_timer(target):
+    """
+    Sends message in a particular time interval.
+    """
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
     if target is not None:
         try:
@@ -28,7 +31,7 @@ async def message_timer(target):
             await target_search.search_and_select_target_without_new_chat_button(page, target)
     else:
         await target_select.manual_select_target(page)
-    # Region INPUTS
+    # Region inputs
     __logger.info("Input message information for message timer")
     message_type_numbers: int = int(input("How many types of messages will you send? "))
     messages: list[str] = list()

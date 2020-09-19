@@ -15,6 +15,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def save_chat(target):
+    """
+    Save the whole chat of the target person in .txt file.
+    """
     page, _ = await browser_config.configure_browser_and_load_whatsapp()
 
     if target is not None:
@@ -27,14 +30,15 @@ async def save_chat(target):
     else:
         target = await target_select.manual_select_target(page)
 
-    selector = "#main > div > div > div > div > div > div > div > div"
+    # selectors
+    selector_values = "#main > div > div > div > div > div > div > div > div"
     selector_sender = "#main > div > div > div > div > div > div > div > div > div.copyable-text"
 
     # Getting all the messages of the chat
     try:
         __logger.info("Saving chats with target")
-        await page.waitForSelector(selector)
-        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector}')]
+        await page.waitForSelector(selector_values)
+        values = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_values}')]
                                                     .map(element => element.textContent)''')
         sender = await page.evaluate(f'''() => [...document.querySelectorAll('{selector_sender}')]
                                                     .map(element => element.getAttribute("data-pre-plain-text"))''')

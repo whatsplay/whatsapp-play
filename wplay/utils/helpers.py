@@ -6,7 +6,7 @@ import psutil
 from whaaaaat import style_from_dict, Token
 # endregion
 
-# region WEBSITES
+# region Whatsapp WEBSITES
 websites = {'whatsapp': 'https://web.whatsapp.com/', 'wpp_unknown': 'https://web.whatsapp.com/send?phone='}
 # endregion
 

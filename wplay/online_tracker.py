@@ -17,9 +17,9 @@ __logger = Logger(Path(__file__).name)
 
 
 async def tracker(target):
-    '''
+    """
     This function checks the online and offline status of the target person.
-    '''
+    """
     page, _ = await browser_config.configure_browser_and_load_whatsapp()  # open bot browser and load whatsapp web website
     if target is not None:  # checks if target is not none then it search for the target and select it
         try:

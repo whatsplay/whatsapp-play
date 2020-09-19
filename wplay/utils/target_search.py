@@ -44,7 +44,7 @@ __logger = Logger(Path(__file__).name)
 # region FOR SCRIPTING
 async def search_and_select_target_all_ways(page: Page, target: str, hide_groups: bool = False):
     """
-    This function try to search with 'search_and_select_target' function,
+    Function try to search with 'search_and_select_target' function,
     if any error occurs we try to search with 'search_and_select_target_without_new_chat_button' function.
 
     Arguments:
@@ -76,7 +76,7 @@ async def search_target_by_number(page: Page, target: str):
 
 async def search_and_select_target(page: Page, target: str, hide_groups: bool = False):
     """
-    This function search for targets using the whatsapp new chat button.
+    Function search for targets using the whatsapp new chat button.
     When this function print the list of target found it doesn't print the phone number,
     the phone is printed only after you choose the target.
 
@@ -113,7 +113,7 @@ async def search_and_select_target(page: Page, target: str, hide_groups: bool = 
 
 async def search_and_select_target_without_new_chat_button(page: Page, target: str, hide_groups: bool = False):
     """
-    This function search for targets search bar in the whatsapp, without using the new chat button.
+    Function search for targets search bar in the whatsapp, without using the new chat button.
     Here we don't look for the contact by the number, we look for the number as if it were a string,
     just to be an alternative to the method used in the other function.
     When this function print the list of target found it print the phone number of every target,
