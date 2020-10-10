@@ -40,7 +40,11 @@ It is command line software through which you can play with your WhatsApp. It is
 
 ***get_profile_photos*** is a script to download profile photos of all the contacts in your whatsapp contact list.
 
+***broadcast_message*** is a script to allow the terminal to send a broadcast message to all the selected target persons.
+
 ***target_info*** is a script to get information about target's contact number like location(Country&city/Area),Carrier and Timezone.
+
+***download_media*** is a script to download all the media present in the taget person's chat.
 
 ---
 
