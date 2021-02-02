@@ -16,7 +16,7 @@
 
 It is command line software through which you can play with your WhatsApp. It is having different options to play with your WhatsApp like message blast, online tracking, whatsapp chat.. This software aims to provide all facilities which we can do with WhatsApp. This CLI software does not require any API key for the execution.
 
-***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
+***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately stores that data into a .txt file. In order to make this work, make sure your Whatsapp language is set to English. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
 ***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line.Initially recent chat is displayed and then the last received message id diaplayed everytime you send a message.The chatbot gets activate when the target sends commands starting with /.Send /help command to see usage.
 
