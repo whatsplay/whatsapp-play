@@ -57,16 +57,20 @@ Unix/Linux/Mac: `python3 -m pip install wplay` <br />
 
 ### Alternate way - Run whatsapp-play from source code: <br />
 **Windows**<br />
-`$ git clone https://github.com/rpotter12/whatsapp-play.git` <br />
-`$ cd 'whatsapp-play'` <br />
-`$ python -m pip install -r requirements.txt` <br />
-`$ python -m wplay -h` <br />
+```
+$ git clone https://github.com/rpotter12/whatsapp-play.git
+$ cd whatsapp-play
+$ python -m pip install -r requirements.txt
+$ python -m wplay -h
+```
 
 **Unix/Linux/Mac**<br />
-`$ git clone https://github.com/rpotter12/whatsapp-play.git` <br />
-`$ cd 'whatsapp-play'` <br />
-`$ python3 -m pip install -r requirements.txt` <br />
-`$ python3 -m wplay -h` <br />
+```
+$ git clone https://github.com/rpotter12/whatsapp-play.git
+$ cd whatsapp-play
+$ python3 -m pip install -r requirements.txt
+$ python3 -m wplay -h
+```
 
 ## Usage
 <img src="images/usage.png"><br />
