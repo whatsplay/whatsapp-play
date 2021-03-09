@@ -2,6 +2,7 @@
 name: 📚 Documentation
 about: Report an issue related to documentation
 labels: "documentation"
+assignees: ''
 ---
 
 ## 📚 Documentation
