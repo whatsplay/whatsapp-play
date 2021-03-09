@@ -100,3 +100,26 @@ This software is for educational purpose only. Keeping eye on a innocent person 
 [![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
 
 ***If you like the project, support us by star***
+## Face-X is a part of these open source programs❄
+
+<p align="center">
+  <a>
+   <img  width="420" height="120"  src="https://gssoc.girlscript.tech/images/type-logo.png">
+
+</p>
+
+</br>
+
+## 🌟 Contributors 
+
+Thanks to these wonderful people ✨✨:
+
+<table>
+	<tr>
+		<td>
+			<a href="https://github.com/rpotter12/whatsapp-play/graphs/contributors">
+  				<img src="https://contrib.rocks/image?repo=rpotter12/whatsapp-play" />
+			</a>
+		</td>
+	</tr>
+</table>
