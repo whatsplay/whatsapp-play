@@ -100,7 +100,7 @@ This software is for educational purpose only. Keeping eye on a innocent person 
 [![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
 
 ***If you like the project, support us by star***
-## Face-X is a part of these open source programs❄
+## whatsapp-play is a part of these open source programs❄
 
 <p align="center">
   <a>
