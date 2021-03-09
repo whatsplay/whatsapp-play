@@ -104,7 +104,7 @@ This software is for educational purpose only. Keeping eye on a innocent person 
 
 <p align="center">
   <a>
-   <img  width="420" height="120"  src="https://gssoc.girlscript.tech/images/type-logo.png">
+   <img  width="420" height="120"  src="https://miro.medium.com/max/2624/1*fqJaH_oISOR96gLgpJBwWQ.png">
 
 </p>
 
