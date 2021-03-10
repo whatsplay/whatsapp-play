@@ -15,6 +15,8 @@
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rpotter12/whatsapp-play) 
 
 It is a command line software through which you can play with your WhatsApp. It has different options to play with your WhatsApp, like message blast, online tracking, whatsapp chat. This software aims to provide all the facilities to use and implement a multitude of WhatsApp features. This CLI software does not require any API key for the execution.
+This software works in whatsapp web only. This will not work in whatsapp desktop software in case if you have that installed in your machine.
+Currently this software only uses Chromium browser to login to whatsapp web. If you don't have that installed this software will automatically install Chromium browser in your machine. Currently this software will not work in any other browser like Chrome, Safari, Edge, Opera etc. 
 
 ***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately store that data into a .txt file. In order to make this work, make sure your Whatsapp language is set to English. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
@@ -94,7 +96,7 @@ Steps to create a launcher with arguments follow the steps bellow: <br />
 Check more about contribution guidelines [here](https://www.github.com/rpotter12/whatsapp-play/CONTRIBUTION.md)
 
 ## Disclaimer
-This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful.
+This software is for educational purpose only. Keeping eye on a innocent person can make person's life stressful. Please don't use it for personal uses. 
 
 ## License
 [![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
