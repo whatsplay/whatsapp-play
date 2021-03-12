@@ -143,6 +143,24 @@ Finally, go to your repository in browser and click on `compare and pull request
 Use our [pull request template format]( https://github.com/rpotter12/whatsapp-play/blob/master/.github/Pull_Request_Template.md)
 Then add a title and description to your pull request that explains your precious effort. 
 
+### 7. ADD A REMOTE (UPSTREAM) TO ORIGINAL PROJECT REPOSITORY 
+***
+Remote means the remote location of project on Github. By cloning, we have a remote called origin which points to your forked repository. Now we will add a remote to the original repository from where we had forked.
+
+```$ cd <your-forked-project-folder>```
+```$ git remote add upstream https://github.com/<author-account-username>/<project>.git```
+You will see the benefits of adding remote later.
+
+### 8. SYNCHRONIZING YOUR FORK -
+***
+Open Source projects have a number of contributors who can push code anytime. So it is necessary to make your forked copy equal with the original repository. The remote added above called Upstream helps in this.
+
+```$ git checkout master```
+```$ git fetch upstream```
+```$ git merge upstream/master```
+```$ git push origin master```
+The last command pushes the latest code to your forked repository on Github. The origin is the remote pointing to your forked repository on github.
+
 Sit and relax till we review your PR, you've made your contribution to our project.
 
 :tada: :confetti_ball: :smiley: _**Happy Contributing**_ :smiley: :confetti_ball: :tada:
