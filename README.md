@@ -115,4 +115,5 @@ This software is for educational purpose only. Keeping eye on a innocent person 
 ## License 🤝
 [![License](https://img.shields.io/github/license/rpotter12/whatsapp-play.svg)](https://github.com/rpotter12/whatsapp-play/blob/master/README.md)
 
-🎊 ***If you like the project, support us by staring the repository!*** 🎊
+ ***If you like the project, support us by starring the repository!⭐*** 
+
