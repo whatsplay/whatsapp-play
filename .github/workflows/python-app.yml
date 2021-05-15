@@ -33,4 +33,7 @@ jobs:
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Test with pytest
       run: |
-        pytest
+        pytest tests/test_func.py
+        pytest tests/test_helpers.py
+        pytest tests/test_kill_child_process.py
+        pytest tests/test_logger.py
