@@ -19,4 +19,22 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint `ls -R|grep .py$|xargs`
+        # pylint `ls -R|grep .py$|xargs`
+        pylint about_changer.py
+        pylint broadcast_message.py
+        pylint chat_intermediator.py
+        pylint chatbot.py
+        pylint download_media.py
+        pylint get_media.py
+        pylint get_news.py
+        pylint message_blast.py
+        pylint message_service.py
+        pylint message_timer.py
+        pylint online_tracker.py
+        pylint profile_download.py
+        pylint save_chat.py
+        pylint schedule_message.py
+        pylint target_info.py
+        pylint telegram_bot.py
+        pylint terminal_chat.py
+        pylint text_to_speech.py
