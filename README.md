@@ -1,7 +1,8 @@
-<p align="center">
+<div align="center">
   <img src="images/logo.png">
-</p>
             
+# whatsapp-play
+
 [![Downloads](https://pepy.tech/badge/wplay)](https://pepy.tech/project/wplay)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/749acf4cad424fbeb96a412963aa83ea)](https://app.codacy.com/app/rpotter12/whatsapp-play?utm_source=github.com&utm_medium=referral&utm_content=rpotter12/whatsapp-play&utm_campaign=Badge_Grade_Settings)
 [![PyPi](https://img.shields.io/pypi/v/wplay)](https://pypi.org/project/wplay/)
@@ -14,37 +15,27 @@
 [![Gitter](https://badges.gitter.im/whatsapp-play/community.svg)](https://gitter.im/whatsapp-play/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 [![Gitpod Ready-to-Code](https://img.shields.io/badge/Gitpod-Ready--to--Code-blue?logo=gitpod)](https://gitpod.io/#https://github.com/rpotter12/whatsapp-play) 
 
-It is a command line software through which you can play with your WhatsApp. It has different options to play with your WhatsApp, like message blast, online tracking, whatsapp chat. This software aims to provide all the facilities to use and implement a multitude of WhatsApp features. This CLI software does not require any API key for the execution.
+</div>
 
-***online_tracker*** tracks the online and offline timings of your WhatsApp contact. It will check the online status and will immediately store that data into a .txt file. In order to make this work, make sure your Whatsapp language is set to English. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
-***terminal_chat*** stands for WhatsApp chat. Through this you can chat with your WhatsApp contact directly from the command line. Initially, recent chat is displayed and then the last received message is displayed every time you send a message. The chatbot gets activated when the target sends commands starting with /.Send /help command to see usage.
+A command line software through which you can play with your WhatsApp. The software aims to provide all the facilities to use and implement a multitude of WhatsApp features. Blog link: [https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md](https://github.com/rpotter12/rpotter12.github.io/blob/master/blogs/blog3-tracking-26-07-2019.md)
 
-***chat_intermediator*** lets you be an intermediator between two people.
-
-***message_service*** is a substitute for the API; it allows you to communicate your programs to wplay. You can modify our file messages.json with the number and message and the service will read the JSON and send the message. Check [Wiki Usage](https://github.com/rpotter12/whatsapp-play/wiki/Usage#whatsapp-service) for details.
-
-***telegram_bot*** sends the tracking status to our telegram bot.
-
-***message_blast*** is a message bomb script. It sends messages to your WhatsApp contact continously. The number of messages is decided by you. You can blast infinite number of messages to your WhatsApp contact.
-
-***message_timer*** is a message timer script. It sends messages to your WhatsApp contact from time to time. The number of messages and type of messages is decided by you. It's possible to send messages at random intervals, with the message type chosen randomly.
-
-***save_chat*** is a script to save the chat of the particular target.
-
-***schedule_message*** is a script to send message at a schedule time.
-
-***about_changer*** lets you create a customizable about you section for your profile, or, lets you change the about section of your profile according to lastest headlines.
-
-***get_news*** is a script to get all types of news in your whatsapp group. Visit <https://newsapi.org/> to get your own API key and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY")
-
-***get_profile_photos*** is a script to download profile photos of all the contacts in your whatsapp contact list.
-
-***broadcast_message*** is a script to allow the terminal to send a broadcast message to all the selected target persons.
-
-***target_info*** is a script to get information about the target user's contact number like Location (Country & City/Area), Carrier and Timezone.
-
-***download_media*** is a script to download all the media present in the target user's chat.
+## Features
+  - Online/offline Tracker
+  - Terminal Chat
+  - Chat Intermediator
+  - Message Service
+  - Telegram Bot
+  - Message Blast
+  - Message Timer
+  - Save Chat
+  - Schedule Message
+  - About Changer
+  - Get News (Get API from <https://newsapi.org/> and paste it in newsapi = NewsApiClient(api_key="YOUR API KEY"))
+  - Get Profile Photos
+  - Broadcast Message
+  - Target Info (Profile Info)
+  - Download Media
 
 ---
 
