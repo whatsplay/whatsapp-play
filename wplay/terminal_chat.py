@@ -68,7 +68,6 @@ async def chat(target):
                 await target_search.search_and_select_target(page, target)
             else:
                 await target_select.manual_select_target(page)
-            message = io.ask_user_for_message_breakline_mode()
 
         # Be an Intermediator
         if "#_FWD" in message:
